@@ -32,10 +32,9 @@ class FuelPriceAdjustmentController extends Controller
     {
         $validated = $request->validate(
             [
-                'start-date' => 'required',
+                'voltage-type' => 'required',
             ]
         );
-        dd($validated);
 
         $request->user()->fuelPriceAdjustments()->create($validated);
         return redirect('/adjustments');
