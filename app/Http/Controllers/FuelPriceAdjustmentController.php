@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FuelPriceAdjustment;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class FuelPriceAdjustmentController extends Controller
@@ -28,9 +28,14 @@ class FuelPriceAdjustmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request):RedirectResponse
     {
-        //
+        $validated = $request->validate([
+
+            'message' => 'required|string|max:255',
+
+        ]);
+        return redirect(route('chirps.index'));
     }
 
     /**
