@@ -43,7 +43,7 @@
                 <option value="medium">{{ __('Medium') }}</option>
                 <option value="high">{{ __('High') }}</option>
             </select>
-            <fieldset class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+            <fieldset class="inline-block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         >
                 <legend>{{ __('Fuel Adjustment') }}</legend>
                 <div class="flex w-full pb-3">

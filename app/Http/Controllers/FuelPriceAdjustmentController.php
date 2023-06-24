@@ -28,14 +28,17 @@ class FuelPriceAdjustmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request):RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
+        $validated = $request->validate(
+            [
+                'start-date' => 'required',
+            ]
+        );
+        dd($validated);
 
-            'message' => 'required|string|max:255',
-
-        ]);
-        return redirect(route('chirps.index'));
+        $request->user()->fuelPriceAdjustments()->create($validated);
+        return redirect('/adjustments');
     }
 
     /**
