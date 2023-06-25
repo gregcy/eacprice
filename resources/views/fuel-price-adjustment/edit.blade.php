@@ -1,7 +1,8 @@
 <x-app-layout>
     <div class="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8">
-        <form method="POST" action="{{ route('adjustments.store') }}">
+        <form method="POST" action="{{ route('adjustments.update', $adjustment) }}">
             @csrf
+            @method('patch')
             <label for="start_date">{{ __('Start Date') }}</label>
             <input type="date"
                 name="start_date"
