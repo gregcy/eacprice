@@ -2,43 +2,41 @@
     <div class="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('adjustments.store') }}">
             @csrf
-            <label for="start-date">{{ __('Start Date') }}</label>
+            <label for="start_date">{{ __('Start Date') }}</label>
             <input type="date"
-                name="start-date"
+                name="start_date"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             />
-            <label for="end-date">{{ __('End Date') }}</label>
+            <label for="end_date">{{ __('End Date') }}</label>
             <input type="date"
-                name="end-date"
+                name="end_date"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             />
-            <label for="consumer-type">{{ __('Consumer Type') }}</label>
-            <select name="consumer-type"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            >
+            <label for="consumer_type">{{ __('Consumer Type') }}</label>
+            <select name="consumer_type"class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                 <option value="monthly">{{ __('Monthly') }}</option>
-                <option value="bi-monthly">{{ __('Bi-Monthly') }}</option>
+                <option value="bi_monthly">{{ __('Bi-Monthly') }}</option>
             </select>
-            <label for="weighted-average-fuel-price">{{ __('Weighted Average Fuel Price  (€)') }}</label>
+            <label for="weighted_average_fuel_price">{{ __('Weighted Average Fuel Price  (€)') }}</label>
             <input type="number"
-                name="weighted-average-fuel-price"
+                name="weighted_average_fuel_price"
                 step="0.01"
                 min="0"
                 placeholder="0.00"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-            <label for="Fuel Adjustment Coefficient">{{ __('Fuel Adjustment Coefficient') }}</label>
+            <label for="fuel_adjustment_coefficient">{{ __('Fuel Adjustment Coefficient') }}</label>
             <input type="number"
-                name="Fuel Adjustment Coefficient"
+                name="fuel_adjustment_coefficient"
                 step = "0.00000001"
                 min="0"
                 placeholder="0.00000000"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-            <label for="voltage-type">{{ __('Voltage Type') }}</label>
-            <select name="voltage-type"
+            <label for="voltage_type">{{ __('Voltage Type') }}</label>
+            <select name="voltage_type"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            >
+                >
                 <option value="low">{{ __('Low') }}</option>
                 <option value="medium">{{ __('Medium') }}</option>
                 <option value="high">{{ __('High') }}</option>
@@ -54,7 +52,7 @@
                         min="0"
                         placeholder="0.00000000"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        >
+                        />
                 </div>
                 <div class="flex w-full pb-3">
                     <label for="fuel" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('Fuel:') }}</label>
@@ -64,17 +62,17 @@
                         min="0"
                         placeholder="0.00000000"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        >
+                        />
                 </div>
                 <div class="flex w-full pb-3">
-                    <label for="co2-emissions" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('CO2 Emissions:') }}</label>
+                    <label for="co2_emissions" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('CO2 Emissions:') }}</label>
                     <input type="number"
-                        name="co2-emissions"
+                        name="co2_emissions"
                         step="0.00000001"
                         min="0"
                         placeholder="0.00000000"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        >
+                        />
                 </div>
                 <div class="flex w-full pb-3">
                     <label for="cosmos" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('COSMOS:') }}</label>
@@ -84,11 +82,60 @@
                         min="0"
                         placeholder="0.00000000"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        >
+                        />
                 </div>
             </fieldset>
-            <x-input-error :messages="$errors->get('message')" class="mt-2" />
+            @if ($errors->any())
+                <div class="block p-2 text-red-800 bg-opacity-30 bg-red-300 w-full border-red-500 focus:border-red-700 focus:ring focus:ring-red-300 focus:ring-opacity-50 rounded-md shadow-sm">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <x-primary-button class="mt-4">{{ __('Save') }}</x-primary-button>
         </form>
+        <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+            @foreach ($fuelAdjustments as $fuelAdjustment)
+                <div class="p-6 flex space-x-2">
+                    <div class="flex-1">
+                        <div class="pb-4 flex justify-between items-center">
+                            <div>
+                                <span class="text-gray-800"> {{__('Fuel Adjustment Coefficient') }}</span>
+                            </div>
+                            <div>
+                                <svg class="inline w-[19px] h-[19px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v3m5-3v3m5-3v3M1 7h18M5 11h10M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
+                                </svg>
+                                <span class="inline text-gray-800">{{ date('d/m/Y', strtotime($fuelAdjustment->start_date)) }} - {{ date('d/m/Y', strtotime($fuelAdjustment->end_date)) }}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-start items-center">
+                            <div>
+                                <span class="text-gray-500 text-sm"> {{__('Consumer Type:') }}</span>
+                                <span class="inline text-gray-500 text-sm">{{ ucfirst(__($fuelAdjustment->consumer_type)) }}</span>
+                            </div>
+                            <div>
+                                <span class="pl-3 text-gray-500 text-sm"> {{__('Voltage:') }}</span>
+                                <span class="inline text-gray-500 text-sm">{{ ucfirst(__($fuelAdjustment->voltage_type)) }}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-start items-center divide-y">
+                            <div>
+                                <span class="text-gray-800"> {{__('Average Weighted Fuel Price:') }}</span>
+                                <span class="inline text-gray-800">€{{ number_format($fuelAdjustment->weighted_average_fuel_price, 2) }}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-start items-center">
+                            <div>
+                                <span class="text-gray-800"> {{__('Fuel Adjustment Coefficient:') }}</span>
+                                <span class="inline text-gray-800">{{ $fuelAdjustment->fuel_adjustment_coefficient }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 </x-app-layout>

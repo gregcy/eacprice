@@ -14,7 +14,12 @@ class FuelPriceAdjustmentController extends Controller
      */
     public function index():View
     {
-        return view('fuel-price-adjustment.index');
+        return view(
+            'fuel-price-adjustment.index',
+            [
+                'fuelAdjustments' => FuelPriceAdjustment::with('user')->latest()->paginate(10),
+            ]
+        );
     }
 
     /**
@@ -32,10 +37,18 @@ class FuelPriceAdjustmentController extends Controller
     {
         $validated = $request->validate(
             [
-                'voltage-type' => 'required',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date|after:start-date',
+                'consumer_type' => 'required',
+                'weighted_average_fuel_price' => 'required|numeric',
+                'fuel_adjustment_coefficient' => 'required|numeric',
+                'voltage_type' => 'required',
+                'total' => 'required|numeric',
+                'fuel' => 'required|numeric',
+                'co2_emissions' => 'required|numeric',
+                'cosmos' => 'required|numeric',
             ]
         );
-
         $request->user()->fuelPriceAdjustments()->create($validated);
         return redirect('/adjustments');
     }
