@@ -100,18 +100,18 @@
             @foreach ($fuelAdjustments as $fuelAdjustment)
                 <div class="p-6 flex space-x-2">
                     <div class="flex-1">
-                        <div class="pb-4 flex justify-between items-center">
+                        <div class="pb-2 flex justify-between items-center">
                             <div>
-                                <span class="text-gray-800"> {{__('Fuel Adjustment Coefficient') }}</span>
+                                <span class="text-gray-800 font-bold text-lg"> {{__('Fuel Adjustment Coefficient') }}</span>
                             </div>
                             <div>
                                 <svg class="inline w-[19px] h-[19px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v3m5-3v3m5-3v3M1 7h18M5 11h10M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
                                 </svg>
-                                <span class="inline text-gray-800">{{ date('d/m/Y', strtotime($fuelAdjustment->start_date)) }} - {{ date('d/m/Y', strtotime($fuelAdjustment->end_date)) }}</span>
+                                <span class="inline text-gray-800 font-bold text-lg">{{ date('d/m/Y', strtotime($fuelAdjustment->start_date)) }} - {{ date('d/m/Y', strtotime($fuelAdjustment->end_date)) }}</span>
                             </div>
                         </div>
-                        <div class="flex justify-start items-center">
+                        <div class="flex justify-start items-center border-b pb-2 mb-2">
                             <div>
                                 <span class="text-gray-500 text-sm"> {{__('Consumer Type:') }}</span>
                                 <span class="inline text-gray-500 text-sm">{{ ucfirst(__($fuelAdjustment->consumer_type)) }}</span>
@@ -121,17 +121,38 @@
                                 <span class="inline text-gray-500 text-sm">{{ ucfirst(__($fuelAdjustment->voltage_type)) }}</span>
                             </div>
                         </div>
-                        <div class="flex justify-start items-center divide-y">
-                            <div>
-                                <span class="text-gray-800"> {{__('Average Weighted Fuel Price:') }}</span>
-                                <span class="inline text-gray-800">€{{ number_format($fuelAdjustment->weighted_average_fuel_price, 2) }}</span>
-                            </div>
-                        </div>
-                        <div class="flex justify-start items-center">
-                            <div>
-                                <span class="text-gray-800"> {{__('Fuel Adjustment Coefficient:') }}</span>
-                                <span class="inline text-gray-800">{{ $fuelAdjustment->fuel_adjustment_coefficient }}</span>
-                            </div>
+                        <div class="flex justify-between items-start">
+                            <table>
+                                <tr>
+                                    <td class="text-grey-800 font-bold pb-1">{{ __('Fuel Adjustment Cost per kWh:') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-gray-800"> {{__('Fuel Cost') }}</td>
+                                    <td class="pl-4 inline text-gray-800">€{{ number_format($fuelAdjustment->fuel, 4) }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-gray-800"> {{__('CO2 Emissions Cost') }}</td>
+                                    <td class="pl-4 inline text-gray-800">€{{ number_format($fuelAdjustment->co2_emissions, 4) }}</td>
+                                </tr>
+                                <tr class="border-b border-black">
+                                    <td class="text-gray-800"> {{__('COSMOS Cost') }}</td>
+                                    <td class="pl-4 inline text-gray-800">€{{ number_format($fuelAdjustment->cosmos, 4) }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-gray-800 font-bold"> {{__('Total') }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-bold">€{{ number_format($fuelAdjustment->total, 4) }}</td>
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    <td class="text-gray-800 font-bold"> {{__('Average Weighted Fuel Price:') }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-bold">€{{ number_format($fuelAdjustment->weighted_average_fuel_price, 2) }}</span>
+                                </tr>
+                                <tr>
+                                    <td class="text-gray-800 font-bold"> {{__('Fuel Adjustment Coefficient:') }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-bold">{{ $fuelAdjustment->fuel_adjustment_coefficient }}</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
