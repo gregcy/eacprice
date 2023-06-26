@@ -1,22 +1,22 @@
 <x-app-layout>
     <div class="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8">
-        <form method="POST" action="{{ route('adjustments.update', $adjustment) }}">
+        <form method="POST" action="{{ route('fuel-price-adjustment.update', $adjustment) }}">
             @csrf
             @method('patch')
             <label for="start_date">{{ __('Start Date') }}</label>
             <input type="date"
                 name="start_date"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            />
+            >{{ old('start_date', $adjustment->start_date) }}</input>
             <label for="end_date">{{ __('End Date') }}</label>
             <input type="date"
                 name="end_date"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            />
+            >{{ old('end_date', $adjustment->end_date) }}</input>
             <label for="consumer_type">{{ __('Consumer Type') }}</label>
             <select name="consumer_type"class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                <option value="monthly">{{ __('Monthly') }}</option>
-                <option value="bi_monthly">{{ __('Bi-Monthly') }}</option>
+                <option value="Monthly">{{ __('Monthly') }}</option>
+                <option value="Bi-Monthly">{{ __('Bi-Monthly') }}</option>
             </select>
             <label for="weighted_average_fuel_price">{{ __('Weighted Average Fuel Price  (€)') }}</label>
             <input type="number"
@@ -96,6 +96,7 @@
                 </div>
             @endif
             <x-primary-button class="mt-4">{{ __('Save') }}</x-primary-button>
+            <a href="{{ route('adjustments.index') }}">{{ __('Cancel') }}</a>
         </form>
         <div class="mt-6 bg-transparent shadow-sm rounded-lg divide-y space-y-4">
             @foreach ($fuelAdjustments as $fuelAdjustment)

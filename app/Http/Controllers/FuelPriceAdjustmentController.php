@@ -66,7 +66,11 @@ class FuelPriceAdjustmentController extends Controller
      */
     public function edit(FuelPriceAdjustment $fuelPriceAdjustment)
     {
-        //
+        $this->authorize('update', $fuelPriceAdjustment);
+
+        return view('fuel-price-adjustment.edit', [
+            'adjustment' => $fuelPriceAdjustment,
+        ]);
     }
 
     /**
@@ -74,7 +78,26 @@ class FuelPriceAdjustmentController extends Controller
      */
     public function update(Request $request, FuelPriceAdjustment $fuelPriceAdjustment)
     {
-        //
+        $this->authorize('update', $fuelPriceAdjustment);
+
+        $validated = $request->validate(
+            [
+                'start_date' => 'required|date',
+                'end_date' => 'required|date|after:start-date',
+                'consumer_type' => 'required',
+                'weighted_average_fuel_price' => 'required|numeric',
+                'fuel_adjustment_coefficient' => 'required|numeric',
+                'voltage_type' => 'required',
+                'total' => 'required|numeric',
+                'fuel' => 'required|numeric',
+                'co2_emissions' => 'required|numeric',
+                'cosmos' => 'required|numeric',
+            ]
+        );
+
+        $fuelPriceAdjustment->update($validated);
+
+        return redirect(route('fuelPriceAdjustment.index'));
     }
 
     /**
