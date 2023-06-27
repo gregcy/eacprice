@@ -12,7 +12,7 @@ class FuelPriceAdjustmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index():View
+    public function index(): View
     {
         return view(
             'fuel-price-adjustment.index',
@@ -64,19 +64,17 @@ class FuelPriceAdjustmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FuelPriceAdjustment $fuelPriceAdjustment)
+    public function edit(FuelPriceAdjustment $fuelPriceAdjustment): View
     {
         $this->authorize('update', $fuelPriceAdjustment);
 
-        return view('fuel-price-adjustment.edit', [
-            'adjustment' => $fuelPriceAdjustment,
-        ]);
+        return view('fuel-price-adjustment.edit', ['fuelAdjustments' => $fuelPriceAdjustment]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FuelPriceAdjustment $fuelPriceAdjustment)
+    public function update(Request $request, FuelPriceAdjustment $fuelPriceAdjustment): RedirectResponse
     {
         $this->authorize('update', $fuelPriceAdjustment);
 
@@ -97,7 +95,7 @@ class FuelPriceAdjustmentController extends Controller
 
         $fuelPriceAdjustment->update($validated);
 
-        return redirect(route('fuelPriceAdjustment.index'));
+        return redirect(route('adjustments.index'));
     }
 
     /**
