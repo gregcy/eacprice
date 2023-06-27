@@ -6,17 +6,24 @@
             <label for="start_date">{{ __('Start Date') }}</label>
             <input type="date"
                 name="start_date"
+                value = "{{ old('start_date', $adjustment->start_date) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            >{{ old('start_date', $adjustment->start_date) }}</input>
+            ></input>
             <label for="end_date">{{ __('End Date') }}</label>
             <input type="date"
                 name="end_date"
+                value="{{ old('end_date', $adjustment->end_date) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            >{{ old('end_date', $adjustment->end_date) }}</input>
+            ></input>
             <label for="consumer_type">{{ __('Consumer Type') }}</label>
             <select name="consumer_type"class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                <option value="Monthly">{{ __('Monthly') }}</option>
-                <option value="Bi-Monthly">{{ __('Bi-Monthly') }}</option>
+                @if(old('consumer_type', $adjustment->consumer_type) == 'Monthly')
+                    <option value="Monthly" selected>{{ __('Monthly') }}</option>
+                    <option value="Bi-Monthly">{{ __('Bi-Monthly') }}</option>
+                @else
+                    <option value="Monthly">{{ __('Monthly') }}</option>
+                    <option value="Bi-Monthly" selected>{{ __('Bi-Monthly') }}</option>
+                @endif
             </select>
             <label for="weighted_average_fuel_price">{{ __('Weighted Average Fuel Price  (€)') }}</label>
             <input type="number"
@@ -24,6 +31,7 @@
                 step="0.01"
                 min="0"
                 placeholder="0.00"
+                value="{{ old('weighted_average_fuel_price', $adjustment->weighted_average_fuel_price) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="fuel_adjustment_coefficient">{{ __('Fuel Adjustment Coefficient') }}</label>
@@ -33,14 +41,25 @@
                 min="0"
                 placeholder="0.00000000"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                value = "{{ old('fuel_adjustment_coefficient', $adjustment->fuel_adjustment_coefficient) }}"
                 >
             <label for="voltage_type">{{ __('Voltage Type') }}</label>
             <select name="voltage_type"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-                <option value="low">{{ __('Low') }}</option>
-                <option value="medium">{{ __('Medium') }}</option>
-                <option value="high">{{ __('High') }}</option>
+                @if(old('voltage_type', $adjustment->voltage_type) == 'Low')
+                    <option value="Low" selected>{{ __('Low') }}</option>
+                    <option value="Medium">{{ __('Medium') }}</option>
+                    <option value="High">{{ __('High') }}</option>
+                @elseif(old('voltage_type', $adjustment->voltage_type) == 'Medium')
+                    <option value="Low">{{ __('Low') }}</option>
+                    <option value="Medium" selected>{{ __('Medium') }}</option>
+                    <option value="High">{{ __('High') }}</option>
+                @else
+                    <option value="Low">{{ __('Low') }}</option>
+                    <option value="Medium">{{ __('Medium') }}</option>
+                    <option value="High" selected>{{ __('High') }}</option>
+                @endif
             </select>
             <fieldset class="inline-block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         >
@@ -53,6 +72,7 @@
                         min="0"
                         placeholder="0.00000000"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        value = "{{ old('total', $adjustment->total) }}"
                         />
                 </div>
                 <div class="flex w-full pb-1">
@@ -63,6 +83,7 @@
                         min="0"
                         placeholder="0.00000000"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        value = "{{ old('fuel', $adjustment->fuel) }}"
                         />
                 </div>
                 <div class="flex w-full pb-1">
@@ -73,6 +94,7 @@
                         min="0"
                         placeholder="0.00000000"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        value = "{{ old('co2_emissions', $adjustment->co2_emissions) }}"
                         />
                 </div>
                 <div class="flex w-full pb-3">
@@ -83,6 +105,7 @@
                         min="0"
                         placeholder="0.00000000"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        value="{{ old('cosmos', $adjustment->cosmos) }}"
                         />
                 </div>
             </fieldset>

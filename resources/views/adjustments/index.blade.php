@@ -14,8 +14,8 @@
             />
             <label for="consumer_type">{{ __('Consumer Type') }}</label>
             <select name="consumer_type"class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                <option value="monthly">{{ __('Monthly') }}</option>
-                <option value="bi_monthly">{{ __('Bi-Monthly') }}</option>
+                <option value="Monthly">{{ __('Monthly') }}</option>
+                <option value="Bi-Monthly">{{ __('Bi-Monthly') }}</option>
             </select>
             <label for="weighted_average_fuel_price">{{ __('Weighted Average Fuel Price  (€)') }}</label>
             <input type="number"
@@ -37,9 +37,9 @@
             <select name="voltage_type"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-                <option value="low">{{ __('Low') }}</option>
-                <option value="medium">{{ __('Medium') }}</option>
-                <option value="high">{{ __('High') }}</option>
+                <option value="Low">{{ __('Low') }}</option>
+                <option value="Medium">{{ __('Medium') }}</option>
+                <option value="High">{{ __('High') }}</option>
             </select>
             <fieldset class="inline-block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         >
