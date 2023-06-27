@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\FuelPriceAdjustment;
+use App\Models\Adjustment;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class FuelPriceAdjustmentPolicy
+class AdjustmentPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class FuelPriceAdjustmentPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, FuelPriceAdjustment $adjustment): bool
+    public function view(User $user, Adjustment $adjustment): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class FuelPriceAdjustmentPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, FuelPriceAdjustment $adjustment): bool
+    public function update(User $user, Adjustment $adjustment): bool
     {
         return true;
     }
@@ -43,7 +43,7 @@ class FuelPriceAdjustmentPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, FuelPriceAdjustment $adjustment): bool
+    public function delete(User $user, Adjustment $adjustment): bool
     {
         //
     }
@@ -51,7 +51,7 @@ class FuelPriceAdjustmentPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, FuelPriceAdjustment $adjustment): bool
+    public function restore(User $user, Adjustment $adjustment): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class FuelPriceAdjustmentPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, FuelPriceAdjustment $adjustment): bool
+    public function forceDelete(User $user, Adjustment $adjustment): bool
     {
         //
     }

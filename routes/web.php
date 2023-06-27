@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FuelPriceAdjustmentController;
-use App\Models\FuelPriceAdjustment;
+use App\Http\Controllers\AdjustmentController;
+use App\Models\Adjustment;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('adjustments', FuelPriceAdjustmentController::class)
+Route::resource('adjustments', AdjustmentController::class)
     ->only(['index', 'store', 'edit', 'update'])
     ->middleware(['auth', 'verified']);
 

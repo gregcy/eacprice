@@ -44,8 +44,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function fuelPriceAdjustments(): HasMany
+    public function adjustments(): HasMany
     {
-        return $this->hasMany(FuelPriceAdjustment::class);
+        return $this->hasMany(Adjustment::class);
     }
 }

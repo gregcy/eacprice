@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FuelPriceAdjustment;
+use App\Models\Adjustment;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
-class FuelPriceAdjustmentController extends Controller
+class AdjustmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class FuelPriceAdjustmentController extends Controller
     public function index(): View
     {
         return view(
-            'fuel-price-adjustment.index',
+            'adjustments.index',
             [
-                'fuelAdjustments' => FuelPriceAdjustment::with('user')->latest()->paginate(10),
+                'adjustments' => Adjustment::with('user')->latest()->paginate(10),
             ]
         );
     }
@@ -49,14 +49,14 @@ class FuelPriceAdjustmentController extends Controller
                 'cosmos' => 'required|numeric',
             ]
         );
-        $request->user()->fuelPriceAdjustments()->create($validated);
-        return redirect('/adjustments');
+        $request->user()->adjustments()->create($validated);
+        return redirect(route('adjustments.index'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(FuelPriceAdjustment $fuelPriceAdjustment)
+    public function show(Adjustment $adjustment)
     {
         //
     }
@@ -64,19 +64,19 @@ class FuelPriceAdjustmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FuelPriceAdjustment $fuelPriceAdjustment): View
+    public function edit(Adjustment $adjustment): View
     {
-        $this->authorize('update', $fuelPriceAdjustment);
+        $this->authorize('update', $adjustment);
 
-        return view('fuel-price-adjustment.edit', ['fuelAdjustments' => $fuelPriceAdjustment]);
+        return view('adjustments.edit', ['adjustment' => $adjustment]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FuelPriceAdjustment $fuelPriceAdjustment): RedirectResponse
+    public function update(Request $request, Adjustment $adjustment): RedirectResponse
     {
-        $this->authorize('update', $fuelPriceAdjustment);
+        $this->authorize('update', $adjustment);
 
         $validated = $request->validate(
             [
@@ -93,7 +93,7 @@ class FuelPriceAdjustmentController extends Controller
             ]
         );
 
-        $fuelPriceAdjustment->update($validated);
+        $adjustment->update($validated);
 
         return redirect(route('adjustments.index'));
     }
@@ -101,7 +101,7 @@ class FuelPriceAdjustmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FuelPriceAdjustment $fuelPriceAdjustment)
+    public function destroy(Adjustment $adjustment)
     {
         //
     }
