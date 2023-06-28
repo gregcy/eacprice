@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdjustmentController;
+use App\Http\Controllers\TariffController;
 use App\Models\Adjustment;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('adjustments', AdjustmentController::class)
+    ->only(['index', 'store', 'edit', 'update', 'create', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('tariffs', TariffController::class)
     ->only(['index', 'store', 'edit', 'update', 'create', 'destroy'])
     ->middleware(['auth', 'verified']);
 
