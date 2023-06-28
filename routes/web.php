@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('adjustments', AdjustmentController::class)
-    ->only(['index', 'store', 'edit', 'update'])
+    ->only(['index', 'store', 'edit', 'update', 'create', 'destroy'])
     ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

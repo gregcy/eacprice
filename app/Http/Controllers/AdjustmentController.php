@@ -25,10 +25,13 @@ class AdjustmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        $this->authorize('create', Adjustment::class);
+
+        return view('adjustments.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -101,8 +104,12 @@ class AdjustmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Adjustment $adjustment)
+    public function destroy(Adjustment $adjustment): RedirectResponse
     {
-        //
+        $this->authorize('delete', $adjustment);
+
+        $adjustment->delete();
+
+        return redirect(route('adjustments.index'));
     }
 }

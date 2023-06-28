@@ -29,7 +29,7 @@ class AdjustmentPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class AdjustmentPolicy
      */
     public function delete(User $user, Adjustment $adjustment): bool
     {
-        //
+        return true;
     }
 
     /**

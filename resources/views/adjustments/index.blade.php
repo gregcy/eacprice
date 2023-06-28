@@ -1,101 +1,6 @@
 <x-app-layout>
     <div class="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8">
-        <form method="POST" action="{{ route('adjustments.store') }}">
-            @csrf
-            <label for="start_date">{{ __('Start Date') }}</label>
-            <input type="date"
-                name="start_date"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            />
-            <label for="end_date">{{ __('End Date') }}</label>
-            <input type="date"
-                name="end_date"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            />
-            <label for="consumer_type">{{ __('Consumer Type') }}</label>
-            <select name="consumer_type"class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                <option value="Monthly">{{ __('Monthly') }}</option>
-                <option value="Bi-Monthly">{{ __('Bi-Monthly') }}</option>
-            </select>
-            <label for="weighted_average_fuel_price">{{ __('Weighted Average Fuel Price  (€)') }}</label>
-            <input type="number"
-                name="weighted_average_fuel_price"
-                step="0.01"
-                min="0"
-                placeholder="0.00"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                >
-            <label for="fuel_adjustment_coefficient">{{ __('Fuel Adjustment Coefficient') }}</label>
-            <input type="number"
-                name="fuel_adjustment_coefficient"
-                step = "0.00000001"
-                min="0"
-                placeholder="0.00000000"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                >
-            <label for="voltage_type">{{ __('Voltage Type') }}</label>
-            <select name="voltage_type"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                >
-                <option value="Low">{{ __('Low') }}</option>
-                <option value="Medium">{{ __('Medium') }}</option>
-                <option value="High">{{ __('High') }}</option>
-            </select>
-            <fieldset class="inline-block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        >
-                <legend>{{ __('Fuel Adjustment') }}</legend>
-                <div class="flex w-full pb-1">
-                    <label for="total" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('Total:') }}</label>
-                    <input type="number"
-                        name="total"
-                        step="0.00000001"
-                        min="0"
-                        placeholder="0.00000000"
-                        class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        />
-                </div>
-                <div class="flex w-full pb-1">
-                    <label for="fuel" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('Fuel:') }}</label>
-                    <input type="number"
-                        name="fuel"
-                        step="0.00000001"
-                        min="0"
-                        placeholder="0.00000000"
-                        class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        />
-                </div>
-                <div class="flex w-full pb-1">
-                    <label for="co2_emissions" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('CO2 Emissions:') }}</label>
-                    <input type="number"
-                        name="co2_emissions"
-                        step="0.00000001"
-                        min="0"
-                        placeholder="0.00000000"
-                        class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        />
-                </div>
-                <div class="flex w-full pb-3">
-                    <label for="cosmos" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('COSMOS:') }}</label>
-                    <input type="number"
-                        name="cosmos"
-                        step="0.00000001"
-                        min="0"
-                        placeholder="0.00000000"
-                        class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        />
-                </div>
-            </fieldset>
-            @if ($errors->any())
-                <div class="block p-2 text-red-800 bg-opacity-30 bg-red-300 w-full border-red-500 focus:border-red-700 focus:ring focus:ring-red-300 focus:ring-opacity-50 rounded-md shadow-sm">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <x-primary-button class="mt-4">{{ __('Save') }}</x-primary-button>
-        </form>
+        <a class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 mt-4" href="{{ route('adjustments.create') }}">{{ __('Add new') }}</a>
         <div class="mt-6 bg-transparent shadow-sm rounded-lg divide-y space-y-4">
             @foreach ($adjustments as $adjustment)
                 <div class="p-6 bg-white flex space-y-2">
@@ -123,6 +28,13 @@
                                         <x-dropdown-link :href="route('adjustments.edit', $adjustment)">
                                             {{ __('Edit') }}
                                         </x-dropdown-link>
+                                        <form method="POST" action="{{ route('adjustments.destroy', $adjustment) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <x-dropdown-link :href="route('adjustments.destroy', $adjustment)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                {{ __('Delete') }}
+                                            </x-dropdown-link>
+                                        </form>
                                     </x-slot>
                                 </x-dropdown>
                             @endif
