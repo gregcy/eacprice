@@ -42,14 +42,18 @@ class TariffController extends Controller
             [
                 'start_date' => 'required|date',
                 'end_date' => 'required|date|after:start-date',
-                'consumer_type' => 'required',
-                'weighted_average_fuel_price' => 'required|numeric',
-                'fuel_Tariff_coefficient' => 'required|numeric',
-                'voltage_type' => 'required',
-                'total' => 'required|numeric',
-                'fuel' => 'required|numeric',
-                'co2_emissions' => 'required|numeric',
-                'cosmos' => 'required|numeric',
+                'code' => 'required',
+                'public_service_obligation' => 'required|numeric',
+                'recurring_supply_charge' => 'required|numeric',
+                'recurring_meter_reading' => 'required|numeric',
+                'energy_charge_normal' => 'required|numeric',
+                'energy_charge_reduced' => 'required|numeric',
+                'network_charge_normal' => 'required|numeric',
+                'ancilary_services_normal' => 'required|numeric',
+                'network_charge_reduced' => 'required|numeric',
+                'ancilary_services_reduced' => 'required|numeric',
+                'consumption_from' => 'required|numeric',
+                'consumption_to' => 'required|numeric',
             ]
         );
         $request->user()->tariffs()->create($validated);
@@ -85,14 +89,18 @@ class TariffController extends Controller
             [
                 'start_date' => 'required|date',
                 'end_date' => 'required|date|after:start-date',
-                'consumer_type' => 'required',
-                'weighted_average_fuel_price' => 'required|numeric',
-                'fuel_Tariff_coefficient' => 'required|numeric',
-                'voltage_type' => 'required',
-                'total' => 'required|numeric',
-                'fuel' => 'required|numeric',
-                'co2_emissions' => 'required|numeric',
-                'cosmos' => 'required|numeric',
+                'code' => 'required',
+                'public_service_obligation' => 'required|numeric',
+                'recurring_supply_charge' => 'required|numeric',
+                'recurring_meter_reading' => 'required|numeric',
+                'energy_charge_normal' => 'required|numeric',
+                'energy_charge_reduced' => 'required|numeric',
+                'network_charge_normal' => 'required|numeric',
+                'ancilary_services_normal' => 'required|numeric',
+                'network_charge_reduced' => 'required|numeric',
+                'ancilary_services_reduced' => 'required|numeric',
+                'consumption_from' => 'required|numeric',
+                'consumption_to' => 'required|numeric',
             ]
         );
 
