@@ -79,6 +79,9 @@
             <x-responsive-nav-link :href="route('adjustments.index')" :active="request()->routeIs('adjustments.index')">
                 {{ __('Adjustments') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('tariffs.index')" :active="request()->routeIs('tariffs.index')">
+                {{ __('Tariffs') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

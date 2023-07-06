@@ -20,9 +20,9 @@
             <label for="public_service_obligation">{{ __('Public Service Obligation (€/kWh)') }}</label>
             <input type="number"
                 name="public_service_obligation"
-                step="0.01"
+                step="0.0001"
                 min="0"
-                placeholder="0.00"
+                placeholder="0.0000"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="recurring_supply_charge">{{ __('Supply Charge (€)') }}</label>

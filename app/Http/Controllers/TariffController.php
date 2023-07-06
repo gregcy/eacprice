@@ -52,8 +52,8 @@ class TariffController extends Controller
                 'ancilary_services_normal' => 'required|numeric',
                 'network_charge_reduced' => 'required|numeric',
                 'ancilary_services_reduced' => 'required|numeric',
-                'consumption_from' => 'required|numeric',
-                'consumption_to' => 'required|numeric',
+                'consumption_from' => 'numeric',
+                'consumption_to' => 'numeric',
             ]
         );
         $request->user()->tariffs()->create($validated);

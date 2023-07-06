@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Adjustment::class);
     }
+
+    public function tariffs(): HasMany
+    {
+        return $this->hasMany(Tariff::class);
+    }
 }
