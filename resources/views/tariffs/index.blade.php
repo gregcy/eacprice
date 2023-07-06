@@ -48,15 +48,15 @@
                         <div class="flex justify-between items-start">
                             <table>
                                 <tr>
-                                    <td class="text-grey-800 font-bold pb-1">{{ __('Fuel tariff Cost per kWh:') }}</td>
+                                    <td colspan="2" class="text-grey-800 font-bold">{{ __('Usage Cost per kWh') }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-gray-800"> {{__('Fuel Cost') }}</td>
-                                    <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->fuel, 4) }}</td>
+                                    <td class="text-gray-800"> {{__('Energy Charge (Standard)') }}</td>
+                                    <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->energy_charge_normal, 4) }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-gray-800"> {{__('CO2 Emissions Cost') }}</td>
-                                    <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->co2_emissions, 4) }}</td>
+                                    <td class="text-gray-800"> {{__('Energy Charge (Reduced)') }}</td>
+                                    <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->energy_charge_reduced, 4) }}</td>
                                 </tr>
                                 <tr class="border-b border-black">
                                     <td class="text-gray-800"> {{__('COSMOS Cost') }}</td>
