@@ -5,17 +5,19 @@
             <label for="start_date">{{ __('Start Date') }}</label>
             <input type="date"
                 name="start_date"
+                value = "{{ old('start_date') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             />
             <label for="end_date">{{ __('End Date') }}</label>
             <input type="date"
                 name="end_date"
+                value = "{{ old('end_date') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             />
             <label for="consumer_type">{{ __('Consumer Type') }}</label>
             <select name="consumer_type"class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                <option value="Monthly">{{ __('Monthly') }}</option>
-                <option value="Bi-Monthly">{{ __('Bi-Monthly') }}</option>
+                <option value="Monthly" {{ old('consumer_type') == __('Monthly') ? 'selected' : '' }}>{{ __('Monthly') }}</option>
+                <option value="Bi-Monthly" {{ old('consumer_type') == __('Bi-Monthly') ? 'selected' : '' }}>{{ __('Bi-Monthly') }}</option>
             </select>
             <label for="weighted_average_fuel_price">{{ __('Weighted Average Fuel Price  (€)') }}</label>
             <input type="number"
@@ -23,6 +25,7 @@
                 step="0.01"
                 min="0"
                 placeholder="0.00"
+                value = "{{ old('weighted_average_fuel_price') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="fuel_adjustment_coefficient">{{ __('Fuel Adjustment Coefficient') }}</label>
@@ -31,15 +34,16 @@
                 step = "0.00000001"
                 min="0"
                 placeholder="0.00000000"
+                value = "{{ old('fuel_adjustment_coefficient') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="voltage_type">{{ __('Voltage Type') }}</label>
             <select name="voltage_type"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-                <option value="Low">{{ __('Low') }}</option>
-                <option value="Medium">{{ __('Medium') }}</option>
-                <option value="High">{{ __('High') }}</option>
+                <option value="Low" {{ old('voltage_type') == __('Low') ? 'selected' : '' }}>{{ __('Low') }}</option>
+                <option value="Medium" {{ old('voltage_type') == __('Medium') ? 'selected' : '' }}>{{ __('Medium') }}</option>
+                <option value="High" {{ old('voltage_type') == __('High') ? 'selected' : '' }}>{{ __('High') }}</option>
             </select>
             <fieldset class="inline-block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         >
@@ -51,6 +55,7 @@
                         step="0.00000001"
                         min="0"
                         placeholder="0.00000000"
+                        value="{{ old('total') }}"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         />
                 </div>
@@ -61,6 +66,7 @@
                         step="0.00000001"
                         min="0"
                         placeholder="0.00000000"
+                        value="{{ old('fuel') }}"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         />
                 </div>
@@ -71,6 +77,7 @@
                         step="0.00000001"
                         min="0"
                         placeholder="0.00000000"
+                        value="{{ old('co2_emissions') }}"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         />
                 </div>
@@ -81,6 +88,7 @@
                         step="0.00000001"
                         min="0"
                         placeholder="0.00000000"
+                        value="{{ old('cosmos') }}"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         />
                 </div>

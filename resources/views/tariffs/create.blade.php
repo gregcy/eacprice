@@ -4,11 +4,13 @@
             @csrf
             <label for="start_date">{{ __('Start Date') }}</label>
             <input type="date"
+                value = "{{ old('start_date') }}"
                 name="start_date"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             />
             <label for="end_date">{{ __('End Date') }}</label>
             <input type="date"
+                value = "{{ old('end_date') }}"
                 name="end_date"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             />
@@ -16,11 +18,13 @@
             <input type="text"
                 name="code"
                 placeholder="Code"
+                value = "{{ old('code') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
             <label for="public_service_obligation">{{ __('Public Service Obligation (€/kWh)') }}</label>
             <input type="number"
                 name="public_service_obligation"
                 step="0.0001"
+                value="{{ old('public_service_obligation') }}"
                 min="0"
                 placeholder="0.0000"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
@@ -31,6 +35,7 @@
                 step = "0.01"
                 min="0"
                 placeholder="0.00"
+                value="{{ old('recurring_supply_charge') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="recurring_meter_reading">{{ __('Meter Reading Charge (€)') }}</label>
@@ -39,6 +44,7 @@
                 step = "0.01"
                 min="0"
                 placeholder="0.00"
+                value="{{ old('recurring_meter_reading') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="energy_charge_normal">{{ __('Energy Charge Normal (€/kWh)') }}</label>
@@ -47,6 +53,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
+                value="{{ old('energy_charge_normal') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="energy_charge_reduced">{{ __('Energy Charge Reduced (€/kWh)') }}</label>
@@ -55,6 +62,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
+                value="{{ old('energy_charge_reduced') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="network_charge_normal">{{ __('Network Charge Normal (€/kWh)') }}</label>
@@ -63,6 +71,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
+                value="{{ old('network_charge_normal') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="network_charge_reduced">{{ __('Network Charge Reduced (€/kWh)') }}</label>
@@ -71,6 +80,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
+                value="{{ old('network_charge_reduced') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="ancilary_services_normal">{{ __('Ancilary Services Normal (€/kWh)') }}</label>
@@ -79,6 +89,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
+                value="{{ old('ancilary_services_normal') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="ancilary_services_reduced">{{ __('Ancilary Services Reduced (€/kWh)') }}</label>
@@ -87,6 +98,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
+                value="{{ old('ancilary_services_reduced') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="consumption_from">{{ __('Consumption From') }}</label>
@@ -95,6 +107,7 @@
                 step = "1"
                 min="0"
                 placeholder="0"
+                value="{{ old('consumption_from') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="consumption_to">{{ __('Consumption To') }}</label>
@@ -103,6 +116,7 @@
                 step = "1"
                 min="0"
                 placeholder="0"
+                value="{{ old('consumption_to') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             @if ($errors->any())
