@@ -75,7 +75,7 @@ class TariffController extends Controller
     {
         $this->authorize('update', $Tariff);
 
-        return view('tariffs.edit', ['Tariff' => $Tariff]);
+        return view('tariffs.edit', ['tariff' => $Tariff]);
     }
 
     /**

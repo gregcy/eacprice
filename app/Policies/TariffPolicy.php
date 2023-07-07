@@ -37,7 +37,7 @@ class TariffPolicy
      */
     public function update(User $user, Tariff $tariff): bool
     {
-        //
+        return true;
     }
 
     /**
