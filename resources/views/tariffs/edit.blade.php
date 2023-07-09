@@ -36,7 +36,7 @@
                 step = "0.01"
                 min="0"
                 placeholder="0.00"
-                value="{{ old('recurring_supply_charge') }}"
+                value="{{ old('recurring_supply_charge', $tariff->recurring_supply_charge) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="recurring_meter_reading">{{ __('Meter Reading Charge (€)') }}</label>
@@ -45,7 +45,7 @@
                 step = "0.01"
                 min="0"
                 placeholder="0.00"
-                value="{{ old('recurring_meter_reading') }}"
+                value="{{ old('recurring_meter_reading', $tariff->recurring_meter_reading ) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="energy_charge_normal">{{ __('Energy Charge Normal (€/kWh)') }}</label>
@@ -54,7 +54,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
-                value="{{ old('energy_charge_normal') }}"
+                value="{{ old('energy_charge_normal', $tariff->energy_charge_normal) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="energy_charge_reduced">{{ __('Energy Charge Reduced (€/kWh)') }}</label>
@@ -63,7 +63,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
-                value="{{ old('energy_charge_reduced') }}"
+                value="{{ old('energy_charge_reduced', $tariff->energy_charge_reduced) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="network_charge_normal">{{ __('Network Charge Normal (€/kWh)') }}</label>
@@ -72,7 +72,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
-                value="{{ old('network_charge_normal') }}"
+                value="{{ old('network_charge_normal', $tariff->network_charge_normal) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="network_charge_reduced">{{ __('Network Charge Reduced (€/kWh)') }}</label>
@@ -81,7 +81,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
-                value="{{ old('network_charge_reduced') }}"
+                value="{{ old('network_charge_reduced',$tariff->network_charge_reduced) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="ancilary_services_normal">{{ __('Ancilary Services Normal (€/kWh)') }}</label>
@@ -90,7 +90,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
-                value="{{ old('ancilary_services_normal') }}"
+                value="{{ old('ancilary_services_normal', $tariff->ancilary_services_normal) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="ancilary_services_reduced">{{ __('Ancilary Services Reduced (€/kWh)') }}</label>
@@ -99,7 +99,7 @@
                 step = "0.0001"
                 min="0"
                 placeholder="0.0000"
-                value="{{ old('ancilary_services_reduced') }}"
+                value="{{ old('ancilary_services_reduced', $tariff->ancilary_services_reduced) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="consumption_from">{{ __('Consumption From') }}</label>
@@ -108,7 +108,7 @@
                 step = "1"
                 min="0"
                 placeholder="0"
-                value="{{ old('consumption_from') }}"
+                value="{{ old('consumption_from', $tariff->consumption_from) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             <label for="consumption_to">{{ __('Consumption To') }}</label>
@@ -117,7 +117,7 @@
                 step = "1"
                 min="0"
                 placeholder="0"
-                value="{{ old('consumption_to') }}"
+                value="{{ old('consumption_to', $tariff->consumption_to) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             @if ($errors->any())

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->decimal('network_charge_reduced', 5, 2);
             $table->decimal('ancilary_services_normal', 5, 2);
             $table->decimal('ancilary_services_reduced', 5, 2);
-            $table->integer('consumption_from');
+            $table->integer('');
             $table->integer('consumption_to');
             $table->timestamps();
         });
