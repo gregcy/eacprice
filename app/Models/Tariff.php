@@ -23,8 +23,12 @@ class Tariff extends Model
         'network_charge_reduced',
         'ancilary_services_normal',
         'ancilary_services_reduced',
-        'consumption_from',
-        'consumption_to',
+        'energy_charge_subsidy_first',
+        'energy_charge_subsidy_second',
+        'energy_charge_subsidy_third',
+        'supply_subsidy_first',
+        'supply_subsidy_second',
+        'supply_subsidy_third',
     ];
 
     public function user(): BelongsTo

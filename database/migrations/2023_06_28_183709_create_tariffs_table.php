@@ -26,8 +26,12 @@ return new class extends Migration
             $table->decimal('network_charge_reduced', 5, 2);
             $table->decimal('ancilary_services_normal', 5, 2);
             $table->decimal('ancilary_services_reduced', 5, 2);
-            $table->integer('');
-            $table->integer('consumption_to');
+            $table->decimal('energy_charge_subsidy_first', 5, 2);
+            $table->decimal('energy_charge_subsidy_second', 5, 2);
+            $table->decimal('energy_charge_subsidy_third', 5, 2);
+            $table->decimal('supply_subsidy_first', 5, 2);
+            $table->decimal('supply_subsidy_second', 5, 2);
+            $table->decimal('supply_subsidy_third', 5, 2);
             $table->timestamps();
         });
     }
