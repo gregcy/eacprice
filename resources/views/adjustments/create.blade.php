@@ -45,8 +45,7 @@
                 <option value="Medium" {{ old('voltage_type') == __('Medium') ? 'selected' : '' }}>{{ __('Medium') }}</option>
                 <option value="High" {{ old('voltage_type') == __('High') ? 'selected' : '' }}>{{ __('High') }}</option>
             </select>
-            <fieldset class="inline-block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        >
+            <fieldset class="inline-block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                 <legend>{{ __('Fuel Adjustment') }}</legend>
                 <div class="flex w-full pb-1">
                     <label for="total" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('Total:') }}</label>

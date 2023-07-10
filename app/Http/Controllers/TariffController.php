@@ -41,7 +41,7 @@ class TariffController extends Controller
         $validated = $request->validate(
             [
                 'start_date' => 'required|date',
-                'end_date' => 'required|date|after:start-date',
+                'end_date' => 'nullable|date|after:start-date',
                 'code' => 'required',
                 'public_service_obligation' => 'nullable|numeric',
                 'recurring_supply_charge' => 'nullable|numeric',
@@ -92,7 +92,7 @@ class TariffController extends Controller
         $validated = $request->validate(
             [
                 'start_date' => 'required|date',
-                'end_date' => 'required|date|after:start-date',
+                'end_date' => 'nullable|date|after:start-date',
                 'code' => 'required',
                 'public_service_obligation' => 'nullable|numeric',
                 'recurring_supply_charge' => 'nullable|numeric',

@@ -102,22 +102,58 @@
                 value="{{ old('ancilary_services_reduced', $tariff->ancilary_services_reduced) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-            <label for="consumption_from">{{ __('Subsidised') }}</label>
+            <label for="energy_charge_subsidy_first">{{ __('Subsidised Energy Charge First Bracket') }}</label>
             <input type="number"
-                name="consumption_from"
+                name="energy_charge_subsidy_first"
                 step = "1"
                 min="0"
                 placeholder="0"
-                value="{{ old('consumption_from', $tariff->consumption_from) }}"
+                value="{{ old('energy_charge_subsidy_first', $tariff->energy_charge_subsidy_first) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-            <label for="consumption_to">{{ __('Consumption To') }}</label>
+            <label for="energy_charge_subsidy_second">{{ __('Subsidised Energy Charge Second Bracket') }}</label>
             <input type="number"
-                name="consumption_to"
+                name="energy_charge_subsidy_second"
                 step = "1"
                 min="0"
                 placeholder="0"
-                value="{{ old('consumption_to', $tariff->consumption_to) }}"
+                value="{{ old('energy_charge_subsidy_second', $tariff->energy_charge_subsidy_second) }}"
+                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                >
+            <label for="energy_charge_subsidy_third">{{ __('Subsidised Energy Charge Third Bracket') }}</label>
+            <input type="number"
+                name="energy_charge_subsidy_third"
+                step = "1"
+                min="0"
+                placeholder="0"
+                value="{{ old('energy_charge_subsidy_third', $tariff->energy_charge_subsidy_third) }}"
+                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                >
+            <label for="energy_charge_subsidy_first">{{ __('Supply Charge First Bracket') }}</label>
+            <input type="number"
+                name="energy_charge_subsidy_first"
+                step = "1"
+                min="0"
+                placeholder="0"
+                value="{{ old('energy_charge_subsidy_first', $tariff->energy_charge_subsidy_first) }}"
+                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                >
+            <label for="energy_charge_subsidy_second">{{ __('Supply Charge Second Bracket') }}</label>
+            <input type="number"
+                name="energy_charge_subsidy_second"
+                step = "1"
+                min="0"
+                placeholder="0"
+                value="{{ old('energy_charge_subsidy_second', $tariff->energy_charge_subsidy_second) }}"
+                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                >
+            <label for="energy_charge_subsidy_third">{{ __('Supply Charge Third Bracket') }}</label>
+            <input type="number"
+                name="energy_charge_subsidy_third"
+                step = "1"
+                min="0"
+                placeholder="0"
+                value="{{ old('energy_charge_subsidy_third', $tariff->energy_charge_subsidy_third) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             @if ($errors->any())
