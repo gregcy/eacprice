@@ -60,6 +60,10 @@ class TariffController extends Controller
                 'supply_subsidy_third' => 'nullable|numeric',
             ]
         );
+        // Replace nulls with 0's
+        $validated = array_map(function($v){
+            return (is_null($v)) ? 0 : $v;
+        },$validated);
         $request->user()->tariffs()->create($validated);
         return redirect(route('tariffs.index'));
     }
@@ -111,7 +115,10 @@ class TariffController extends Controller
                 'supply_subsidy_third' => 'nullable|numeric',
             ]
         );
-
+        // Replace nulls with 0's
+        $validated = array_map(function($v){
+            return (is_null($v)) ? 0 : $v;
+        },$validated);
         $Tariff->update($validated);
 
         return redirect(route('tariffs.index'));
