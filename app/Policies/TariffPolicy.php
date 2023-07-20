@@ -45,7 +45,7 @@ class TariffPolicy
      */
     public function delete(User $user, Tariff $tariff): bool
     {
-        //
+        return true;
     }
 
     /**

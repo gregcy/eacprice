@@ -157,33 +157,33 @@
                 <div class="flex w-full pb-1">
                     <label class="inline w-72 align-middle pt-2.5 pr-2.5" for="energy_charge_subsidy_first">{{ __('Supply Charge 1st Bracket (€)') }}</label>
                     <input type="number"
-                        name="supply_charge_subsidy_first"
+                        name="supply_subsidy_first"
                         step = "0.01"
                         min="0"
                         placeholder="0.00"
-                        value="{{ old('supply_charge_subsidy_first') }}"
+                        value="{{ old('supply_subsidy_first') }}"
                         class="block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         >
                 </div>
                 <div class="flex w-full pb-1">
                     <label class="inline w-72 align-middle pt-2.5 pr-2.5" for="energy_charge_subsidy_second">{{ __('Supply Charge 2nd Bracket (€)') }}</label>
                     <input type="number"
-                        name="supply_charge_subsidy_second"
+                        name="supply_subsidy_second"
                         step = "0.01"
                         min="0"
                         placeholder="0.00"
-                        value="{{ old('supply_charge_subsidy_second') }}"
+                        value="{{ old('supply_subsidy_second') }}"
                         class="block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         >
                 </div>
                 <div class="flex w-full pb-1">
                     <label class="inline w-72 align-middle pt-2.5 pr-2.5" for="energy_charge_subsidy_third">{{ __('Supply Charge 3rd Bracket (€)') }}</label>
                     <input type="number"
-                        name="supply_charge_subsidy_third"
+                        name="supply_subsidy_third"
                         step = "0.01"
                         min="0"
                         placeholder="0.00"
-                        value="{{ old('supply_charge_subsidy_third') }}"
+                        value="{{ old('supply_subsidy_third') }}"
                         class="block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         >
                 </div>

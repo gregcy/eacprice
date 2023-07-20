@@ -129,31 +129,31 @@
                 value="{{ old('energy_charge_subsidy_third', $tariff->energy_charge_subsidy_third) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-            <label for="energy_charge_subsidy_first">{{ __('Supply Charge First Bracket') }}</label>
+            <label for="supply_subsidy_first">{{ __('Supply Charge First Bracket') }}</label>
             <input type="number"
-                name="energy_charge_subsidy_first"
+                name="supply_subsidy_first"
                 step = "0.01"
                 min="0"
                 placeholder="0.00"
-                value="{{ old('energy_charge_subsidy_first', $tariff->energy_charge_subsidy_first) }}"
+                value="{{ old('supply_subsidy_first', $tariff->supply_subsidy_first) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-            <label for="energy_charge_subsidy_second">{{ __('Supply Charge Second Bracket') }}</label>
+            <label for="supply_subsidy_second">{{ __('Supply Charge Second Bracket') }}</label>
             <input type="number"
-                name="energy_charge_subsidy_second"
+                name="supply_subsidy_second"
                 step = "0.01"
                 min="0"
                 placeholder="0.00"
-                value="{{ old('energy_charge_subsidy_second', $tariff->energy_charge_subsidy_second) }}"
+                value="{{ old('supply_subsidy_second', $tariff->supply_subsidy_second) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-            <label for="energy_charge_subsidy_third">{{ __('Supply Charge Third Bracket') }}</label>
+            <label for="supply_subsidy_third">{{ __('Supply Charge Third Bracket') }}</label>
             <input type="number"
-                name="energy_charge_subsidy_third"
+                name="supply_subsidy_third"
                 step = "0.01"
                 min="0"
                 placeholder="0.00"
-                value="{{ old('energy_charge_subsidy_third', $tariff->energy_charge_subsidy_third) }}"
+                value="{{ old('supply_subsidy_third', $tariff->supply_subsidy_third) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
             @if ($errors->any())

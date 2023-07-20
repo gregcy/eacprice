@@ -117,7 +117,19 @@
                                         <td class="text-gray-800"> {{__('First 1000 Units') }}</td>
                                         <td class="text-gray-800 pl-4">{{ __('0 - 1000') }}</td>
                                         <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_subsidy_first, 4) }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->supply_charge_subsidy_first, 2) }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->supply_subsidy_first, 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-gray-800"> {{__('The next 1000 units') }}</td>
+                                        <td class="text-gray-800 pl-4">{{ __('1001 - 2000') }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_subsidy_second, 4) }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->supply_subsidy_second, 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-gray-800"> {{__('Any additional units') }}</td>
+                                        <td class="text-gray-800 pl-4">{{ __('2001+') }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_subsidy_third, 4) }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->supply_subsidy_third, 2) }}</td>
                                     </tr>
                                 </table>
                             @endif
