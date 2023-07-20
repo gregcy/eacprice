@@ -13,7 +13,13 @@
                                 <svg class="inline w-[19px] h-[19px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v3m5-3v3m5-3v3M1 7h18M5 11h10M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
                                 </svg>
-                                <span class="inline text-gray-800 font-bold text-lg">{{ date('d/m/Y', strtotime($tariff->start_date)) }} - {{ date('d/m/Y', strtotime($tariff->end_date)) }}</span>
+                                <span class="inline text-gray-800 font-bold text-lg">
+                                    @if ($tariff->end_date == null || $tariff->end_date == 0 )
+                                        {{ date('d/m/Y', strtotime($tariff->start_date)) }} - {{ __('Present') }}
+                                    @else
+                                        {{ date('d/m/Y', strtotime($tariff->start_date)) }} - {{ date('d/m/Y', strtotime($tariff->end_date)) }}
+                                    @endif
+                                </span>
                             </div>
                             @if ($tariff->user->is(auth()->user()))
                                 <x-dropdown>
@@ -80,9 +86,9 @@
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Public Service Obligation') }}</td>
-                                        <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->public_service_obligation, 4) }}</td>
+                                        <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->public_service_obligation, 5) }}</td>
                                         @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->public_service_obligation, 4) }}</td>
+                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->public_service_obligation, 5) }}</td>
                                         @endif
                                     </tr>
                                 </table>
@@ -102,7 +108,16 @@
                             @elseif ($tariff->code == '08')
                                 <table>
                                     <tr>
-
+                                        <th class="text-grey-800 font-bold">{{ __('Units kWh') }}</th>
+                                        <th class="text-grey-800 font-bold pl-4">{{ __('Total Units') }}</th>
+                                        <th class="text-grey-800 font-bold pl-4">{{ __('€/kWh') }}</th>
+                                        <th class="text-grey-800 font-bold pl-4">{{ __('Fixed Charge') }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-gray-800"> {{__('First 1000 Units') }}</td>
+                                        <td class="text-gray-800 pl-4">{{ __('0 - 1000') }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_subsidy_first, 4) }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->supply_charge_subsidy_first, 2) }}</td>
                                     </tr>
                                 </table>
                             @endif

@@ -24,7 +24,7 @@
             <label for="public_service_obligation">{{ __('Public Service Obligation (€/kWh)') }}</label>
             <input type="number"
                 name="public_service_obligation"
-                step="0.0001"
+                step="0.00001"
                 value="{{ old('public_service_obligation', $tariff->public_service_obligation) }}"
                 min="0"
                 placeholder="0.0000"
