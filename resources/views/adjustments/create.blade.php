@@ -91,6 +91,17 @@
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         />
                 </div>
+                <div class="flex w-full pb-3">
+                    <label for="revised_fuel_adjustment_price" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('COSMOS:') }}</label>
+                    <input type="number"
+                        name="revised_fuel_adjustment_price"
+                        step="0.00000001"
+                        min="0"
+                        placeholder="0.00000000"
+                        value="{{ old('revised_fuel_adjustment_price') }}"
+                        class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        />
+                </div>
             </fieldset>
             @if ($errors->any())
                 <div class="block p-2 text-red-800 bg-opacity-30 bg-red-300 w-full border-red-500 focus:border-red-700 focus:ring focus:ring-red-300 focus:ring-opacity-50 rounded-md shadow-sm">

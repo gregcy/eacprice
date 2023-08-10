@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('fuel', 6, 4);
             $table->decimal('co2_emissions', 6, 4);
             $table->decimal('cosmos', 6, 4);
+            $table->decimal('revised_fuel_adjustment_price', 6, 4);
             $table->timestamps();
 
         });

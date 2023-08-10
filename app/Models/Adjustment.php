@@ -21,6 +21,8 @@ class Adjustment extends Model
         'fuel',
         'co2_emissions',
         'cosmos',
+        'revised_fuel_adjustment_price',
+
     ];
 
     public function user(): BelongsTo

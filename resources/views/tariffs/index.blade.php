@@ -65,23 +65,23 @@
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Energy Charge') }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_normal, 4) }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_normal, 5) }}</td>
                                         @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_reduced, 4) }}</td>
+                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_reduced, 5) }}</td>
                                         @endif
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Network Charge') }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->network_charge_normal, 4) }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->network_charge_normal, 5) }}</td>
                                         @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->network_charge_reduced, 4) }}</td>
+                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->network_charge_reduced, 5) }}</td>
                                         @endif
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Ancilary Service') }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->ancilary_services_normal, 4) }}</td>
+                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->ancilary_services_normal, 5) }}</td>
                                         @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->ancilary_services_reduced, 4) }}</td>
+                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->ancilary_services_reduced, 5) }}</td>
                                         @endif
                                     </tr>
                                     <tr>

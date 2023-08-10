@@ -56,19 +56,23 @@
                                 </tr>
                                 <tr>
                                     <td class="text-gray-800"> {{__('Fuel Cost') }}</td>
-                                    <td class="pl-4 inline text-gray-800">€{{ number_format($adjustment->fuel, 4) }}</td>
+                                    <td class="pl-4 inline text-gray-800">€{{ number_format($adjustment->fuel, 6) }}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-gray-800"> {{__('CO2 Emissions Cost') }}</td>
-                                    <td class="pl-4 inline text-gray-800">€{{ number_format($adjustment->co2_emissions, 4) }}</td>
+                                    <td class="pl-4 inline text-gray-800">€{{ number_format($adjustment->co2_emissions, 6) }}</td>
                                 </tr>
                                 <tr class="border-b border-black">
                                     <td class="text-gray-800"> {{__('COSMOS Cost') }}</td>
-                                    <td class="pl-4 inline text-gray-800">€{{ number_format($adjustment->cosmos, 4) }}</td>
+                                    <td class="pl-4 inline text-gray-800">€{{ number_format($adjustment->cosmos, 6) }}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-gray-800 font-bold"> {{__('Total') }}</td>
-                                    <td class="pl-4 inline text-gray-800 font-bold">€{{ number_format($adjustment->total, 4) }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-bold">€{{ number_format($adjustment->total, 6) }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-gray-800 font-bold"> {{__('Total Adjusted') }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-bold">€{{ number_format($adjustment->revised_fuel_adjustment_price, 6) }}</td>
                                 </tr>
                             </table>
                             <table>
