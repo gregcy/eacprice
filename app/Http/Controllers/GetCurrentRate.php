@@ -11,6 +11,8 @@ class GetCurrentRate extends Controller
 {
     public function index(Request $request)
     {
+        $json = '';
+
         try {
             $validated = $request->validate(
                 [
@@ -22,18 +24,77 @@ class GetCurrentRate extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json(['error' => $e->getMessage()], 422);
         }
-        $tariffCode = request('tariffCode','01');
-        $billing = request('billing','Bi-Monthly');
-        $creditUnits = request('creditUnits',false);
+        $tariffCode = request('tariffCode', '01');
+        $billing = request('billing', 'Bi-Monthly');
+        $creditUnits = request('creditUnits', false);
 
         $dateNow = date('Y-m-d', time());
         $adjustment = Adjustment::where('consumer_type', $billing)
-             ->where('start_date', '<=', $dateNow)
-             ->where('end_date', '>=', $dateNow)
+            ->where('start_date', '<=', $dateNow)
+            ->where('end_date', '>=', $dateNow)
             ->first();
         $tariff = Tariff::where('code', $tariffCode)
-            ->where('end_date', '=',0)
+            ->where('end_date', '=', 0)
             ->first();
-        return response()->json(['Tariff Code' => $tariffCode, 'Billing' => $billing, 'Credit Units' => $creditUnits],200);
+
+
+        if ($tariffCode == '01') {
+            if ($creditUnits == "0") {
+                $json = [
+                    'Measurement' => '€/kWh',
+                    'Cost Per Unit' => (float) number_format(
+                        ($adjustment->revised_fuel_adjustment_price +
+                        $tariff->energy_charge_normal +
+                        $tariff->network_charge_normal +
+                        $tariff->ancilary_services_normal +
+                        $tariff->public_service_obligation)*1.19, 6
+                    ),
+                    'Breakdown' => [
+                        'Energy Charge' => (float) number_format($tariff->energy_charge_normal, 6),
+                        'Network Charge' => (float) number_format($tariff->network_charge_normal, 6),
+                        'Ancilary Services' => (float) number_format($tariff->ancilary_services_normal, 6),
+                        'Public Service Obligation' => (float) number_format($tariff->public_service_obligation, 6),
+                        'Fuel Adjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price, 6),
+                        'VAT' => (float) number_format(
+                            0.19 * ($adjustment->revised_fuel_adjustment_price +
+                            $tariff->energy_charge_normal +
+                            $tariff->network_charge_normal +
+                            $tariff->ancilary_services_normal +
+                            $tariff->public_service_obligation), 6
+                        ),
+                    ],
+                ];
+            }
+            else {
+                $json = [
+                    'Measurement' => '€/kWh',
+                    'Cost Per Unit' => (float) number_format(
+                        ($tariff->network_charge_normal +
+                        $tariff->ancilary_services_normal +
+                        $tariff->public_service_obligation)*1.19, 6
+                    ),
+                    'Breakdown' => [
+                        'Network Charge' => (float) number_format($tariff->network_charge_normal, 6),
+                        'Ancilary Services' => (float) number_format($tariff->ancilary_services_normal, 6),
+                        'Public Service Obligation' => (float) number_format($tariff->public_service_obligation, 6),
+                        'VAT' => (float) number_format(
+                            0.19*($tariff->network_charge_normal +
+                            $tariff->ancilary_services_normal +
+                            $tariff->public_service_obligation), 6
+                        ),
+                    ]
+                ];
+            }
+        }
+        else if ($tariffCode == '02') {
+
+        }
+        else if ($tariffCode == '08') {
+
+        }
+
+        return response()->json(
+           $json, 200
+        );
     }
 }
