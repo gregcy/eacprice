@@ -87,6 +87,7 @@ class GetCurrentRate extends Controller
             }
         }
         else if ($tariffCode == '02') {
+
             $time_now = date('H');
 
             $current_energy_charge = 0;
@@ -103,6 +104,7 @@ class GetCurrentRate extends Controller
                 $current_network_charge = $tariff->network_charge_reduced;
                 $current_ancilary_services = $tariff->ancilary_services_reduced;
             }
+
             if ($creditUnits == "0") {
                 $json = [
                     'Measurement' => '€/kWh',
@@ -138,8 +140,8 @@ class GetCurrentRate extends Controller
                         $tariff->public_service_obligation)*1.19, 6
                     ),
                     'Breakdown' => [
-                        'Network Charge' => (float) number_format($tariff->network_charge_normal, 6),
-                        'Ancilary Services' => (float) number_format($tariff->ancilary_services_normal, 6),
+                        'Network Charge' => (float) number_format($current_network_charge, 6),
+                        'Ancilary Services' => (float) number_format($current_ancilary_services, 6),
                         'Public Service Obligation' => (float) number_format($tariff->public_service_obligation, 6),
                         'VAT' => (float) number_format(
                             0.19*($current_energy_charge +
