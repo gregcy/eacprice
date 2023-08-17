@@ -102,7 +102,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Meter Reading') }}</td>
-                                        <td class="pl-4 inline text-gray-800">€{{ $tariff->recurring_meter_reading }}</td>
+                                        <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->recurring_meter_reading, 2)  }}</td>
                                     </tr>
                                 </table>
                             @elseif ($tariff->code == '08')
