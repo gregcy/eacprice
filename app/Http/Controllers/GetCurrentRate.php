@@ -14,7 +14,7 @@ class GetCurrentRate extends Controller
         $json = '';
 
         try {
-            $validated = $request->validate(
+            $request->validate(
                 [
                     'tariffCode' => [Rule::in(['01', '02', '08'])],
                     'billing' => [Rule::in(['Monthly', 'Bi-Monthly'])],
@@ -147,9 +147,33 @@ class GetCurrentRate extends Controller
                     ],
                 ];
             }
-
         } elseif ($tariffCode == '08') {
 
+            $current_energy_charge = 0;
+
+            if ($unitsConsumed <= 1000) {
+                $current_energy_charge = $tariff->supply_subsidy_first;
+            } elseif ($unitsConsumed > 1000 && $unitsConsumed <= 2000) {
+                $current_energy_charge = $tariff->supply_subsidy_second;
+            } elseif ($unitsConsumed > 2000) {
+                $current_energy_charge = $tariff->supply_subsidy_third;
+            }
+
+            $json = [
+                'Measurement' => '€/kWh',
+                'Cost Per Unit' => (float) number_format(
+                    ($adjustment->revised_fuel_adjustment_price +
+                    $current_energy_charge) * 1.19, 6
+                ),
+                'Breakdown' => [
+                    'Energy Charge' => (float) number_format($current_energy_charge, 6),
+                    'Fuel Adjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price, 6),
+                    'VAT' => (float) number_format(
+                        0.19 * ($adjustment->revised_fuel_adjustment_price +
+                        $current_energy_charge), 6
+                    ),
+                ],
+            ];
         }
 
         return response()->json(
