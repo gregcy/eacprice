@@ -20,11 +20,11 @@ return new class extends Migration
             $table->decimal('weighted_average_fuel_price', 6, 2);
             $table->decimal('fuel_adjustment_coefficient', 10, 9);
             $table->string('voltage_type');
-            $table->decimal('total', 6, 4);
-            $table->decimal('fuel', 6, 4);
-            $table->decimal('co2_emissions', 6, 4);
-            $table->decimal('cosmos', 6, 4);
-            $table->decimal('revised_fuel_adjustment_price', 6, 4);
+            $table->decimal('total', 8, 6);
+            $table->decimal('fuel', 8, 6);
+            $table->decimal('co2_emissions', 8, 6);
+            $table->decimal('cosmos', 8, 6);
+            $table->decimal('revised_fuel_adjustment_price', 8, 6);
             $table->timestamps();
 
         });

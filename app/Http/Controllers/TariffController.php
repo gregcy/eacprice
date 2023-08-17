@@ -60,9 +60,9 @@ class TariffController extends Controller
             ]
         );
         // Replace nulls with 0's
-        $validated = array_map(function ($v) {
-            return (is_null($v)) ? 0 : $v;
-        }, $validated);
+        // $validated = array_map(function ($v) {
+        //     return (is_null($v)) ? 0 : $v;
+        // }, $validated);
         $request->user()->tariffs()->create($validated);
 
         return redirect(route('tariffs.index'));

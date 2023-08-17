@@ -92,7 +92,7 @@
                         />
                 </div>
                 <div class="flex w-full pb-3">
-                    <label for="revised_fuel_adjustment_price" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('COSMOS:') }}</label>
+                    <label for="revised_fuel_adjustment_price" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('Revised Fuel Adjustment Price:') }}</label>
                     <input type="number"
                         name="revised_fuel_adjustment_price"
                         step="0.00000001"
