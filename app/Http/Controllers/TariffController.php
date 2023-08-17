@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tariff;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class TariffController extends Controller
@@ -31,7 +31,6 @@ class TariffController extends Controller
 
         return view('tariffs.create');
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -61,10 +60,11 @@ class TariffController extends Controller
             ]
         );
         // Replace nulls with 0's
-        $validated = array_map(function($v){
+        $validated = array_map(function ($v) {
             return (is_null($v)) ? 0 : $v;
-        },$validated);
+        }, $validated);
         $request->user()->tariffs()->create($validated);
+
         return redirect(route('tariffs.index'));
     }
 
@@ -116,9 +116,9 @@ class TariffController extends Controller
             ]
         );
         // Replace nulls with 0's
-        $validated = array_map(function($v){
+        $validated = array_map(function ($v) {
             return (is_null($v)) ? 0 : $v;
-        },$validated);
+        }, $validated);
         $Tariff->update($validated);
 
         return redirect(route('tariffs.index'));

@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdjustmentController;
-use App\Http\Controllers\TariffController;
 use App\Http\Controllers\GetCurrentRate;
-use App\Models\Adjustment;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TariffController;
 use Illuminate\Support\Facades\Route;
 
 /*

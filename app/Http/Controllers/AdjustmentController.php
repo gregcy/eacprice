@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Adjustment;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AdjustmentController extends Controller
@@ -32,7 +32,6 @@ class AdjustmentController extends Controller
         return view('adjustments.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -54,6 +53,7 @@ class AdjustmentController extends Controller
             ]
         );
         $request->user()->adjustments()->create($validated);
+
         return redirect(route('adjustments.index'));
     }
 
