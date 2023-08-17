@@ -18,6 +18,7 @@ class GetCurrentRate extends Controller
                 [
                     'tariffCode' => [Rule::in(["01", "02", "08"])],
                     'billing' => [Rule::in(["Monthly", "Bi-Monthly"])],
+                    'unitsConsumed' => 'numeric',
                     'creditUnits' => 'boolean',
                 ]
             );
@@ -26,6 +27,7 @@ class GetCurrentRate extends Controller
         }
         $tariffCode = request('tariffCode', '01');
         $billing = request('billing', 'Bi-Monthly');
+        $unitsConsumed = request('unitsConsumed', 0);
         $creditUnits = request('creditUnits', false);
 
         $dateNow = date('Y-m-d', time());
@@ -86,10 +88,10 @@ class GetCurrentRate extends Controller
                 ];
             }
         }
+
         else if ($tariffCode == '02') {
 
             $time_now = date('H');
-
             $current_energy_charge = 0;
             $current_network_charge = 0;
             $current_ancilary_services = 0;
