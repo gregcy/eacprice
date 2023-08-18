@@ -18,7 +18,7 @@ class GetCurrentRate extends Controller
                 [
                     'tariffCode' => [Rule::in(['01', '02', '08'])],
                     'billing' => [Rule::in(['Monthly', 'Bi-Monthly'])],
-                    'unitsConsumed' => 'numeric',
+                    'unitsConsumed' => 'numeric|gte:0',
                     'creditUnits' => 'boolean',
                 ]
             );
@@ -43,13 +43,6 @@ class GetCurrentRate extends Controller
             if ($creditUnits == '0') {
                 $json = [
                     'Measurement' => '€/kWh',
-                    'Cost Per Unit' => (float) number_format(
-                        ($adjustment->revised_fuel_adjustment_price +
-                        $tariff->energy_charge_normal +
-                        $tariff->network_charge_normal +
-                        $tariff->ancilary_services_normal +
-                        $tariff->public_service_obligation) * 1.19, 6
-                    ),
                     'Breakdown' => [
                         'Energy Charge' => (float) number_format($tariff->energy_charge_normal, 6),
                         'Network Charge' => (float) number_format($tariff->network_charge_normal, 6),
@@ -64,15 +57,17 @@ class GetCurrentRate extends Controller
                             $tariff->public_service_obligation), 6
                         ),
                     ],
+                    'Cost Per Unit' => (float) number_format(
+                        ($adjustment->revised_fuel_adjustment_price +
+                        $tariff->energy_charge_normal +
+                        $tariff->network_charge_normal +
+                        $tariff->ancilary_services_normal +
+                        $tariff->public_service_obligation) * 1.19, 6
+                    ),
                 ];
             } else {
                 $json = [
                     'Measurement' => '€/kWh',
-                    'Cost Per Unit' => (float) number_format(
-                        ($tariff->network_charge_normal +
-                        $tariff->ancilary_services_normal +
-                        $tariff->public_service_obligation) * 1.19, 6
-                    ),
                     'Breakdown' => [
                         'Network Charge' => (float) number_format($tariff->network_charge_normal, 6),
                         'Ancilary Services' => (float) number_format($tariff->ancilary_services_normal, 6),
@@ -83,6 +78,11 @@ class GetCurrentRate extends Controller
                             $tariff->public_service_obligation), 6
                         ),
                     ],
+                    'Cost Per Unit' => (float) number_format(
+                        ($tariff->network_charge_normal +
+                        $tariff->ancilary_services_normal +
+                        $tariff->public_service_obligation) * 1.19, 6
+                    ),
                 ];
             }
         } elseif ($tariffCode == '02') {
@@ -105,13 +105,6 @@ class GetCurrentRate extends Controller
             if ($creditUnits == '0') {
                 $json = [
                     'Measurement' => '€/kWh',
-                    'Cost Per Unit' => (float) number_format(
-                        ($adjustment->revised_fuel_adjustment_price +
-                        $current_energy_charge +
-                        $current_network_charge +
-                        $current_ancilary_services +
-                        $tariff->public_service_obligation) * 1.19, 6
-                    ),
                     'Breakdown' => [
                         'Energy Charge' => (float) number_format($current_energy_charge, 6),
                         'Network Charge' => (float) number_format($current_network_charge, 6),
@@ -126,25 +119,32 @@ class GetCurrentRate extends Controller
                             $tariff->public_service_obligation), 6
                         ),
                     ],
+                    'Cost Per Unit' => (float) number_format(
+                        ($adjustment->revised_fuel_adjustment_price +
+                        $current_energy_charge +
+                        $current_network_charge +
+                        $current_ancilary_services +
+                        $tariff->public_service_obligation) * 1.19, 6
+                    ),
                 ];
             } else {
                 $json = [
                     'Measurement' => '€/kWh',
-                    'Cost Per Unit' => (float) number_format(
-                        ($current_energy_charge +
-                        $current_network_charge +
-                        $tariff->public_service_obligation) * 1.19, 6
-                    ),
                     'Breakdown' => [
                         'Network Charge' => (float) number_format($current_network_charge, 6),
                         'Ancilary Services' => (float) number_format($current_ancilary_services, 6),
                         'Public Service Obligation' => (float) number_format($tariff->public_service_obligation, 6),
                         'VAT' => (float) number_format(
-                            0.19 * ($current_energy_charge +
+                            0.19 * ($current_ancilary_services +
                             $current_network_charge +
                             $tariff->public_service_obligation), 6
                         ),
                     ],
+                    'Cost Per Unit' => (float) number_format(
+                        ($current_ancilary_services +
+                        $current_network_charge +
+                        $tariff->public_service_obligation) * 1.19, 6
+                    ),
                 ];
             }
         } elseif ($tariffCode == '08') {
@@ -161,10 +161,6 @@ class GetCurrentRate extends Controller
 
             $json = [
                 'Measurement' => '€/kWh',
-                'Cost Per Unit' => (float) number_format(
-                    ($adjustment->revised_fuel_adjustment_price +
-                    $current_energy_charge) * 1.19, 6
-                ),
                 'Breakdown' => [
                     'Energy Charge' => (float) number_format($current_energy_charge, 6),
                     'Fuel Adjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price, 6),
@@ -173,6 +169,10 @@ class GetCurrentRate extends Controller
                         $current_energy_charge), 6
                     ),
                 ],
+                'Cost Per Unit' => (float) number_format(
+                    ($adjustment->revised_fuel_adjustment_price +
+                    $current_energy_charge) * 1.19, 6
+                ),
             ];
         }
 
