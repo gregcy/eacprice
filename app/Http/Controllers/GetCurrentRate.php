@@ -36,7 +36,7 @@ class GetCurrentRate extends Controller
             ->where('end_date', '>=', $dateNow)
             ->first();
         $tariff = Tariff::where('code', $tariffCode)
-            ->where('end_date', '=', 0)
+            ->where('end_date', '=', null)
             ->first();
 
         if ($tariffCode == '01') {
@@ -152,11 +152,11 @@ class GetCurrentRate extends Controller
             $current_energy_charge = 0;
 
             if ($unitsConsumed <= 1000) {
-                $current_energy_charge = $tariff->supply_subsidy_first;
+                $current_energy_charge = $tariff->energy_charge_subsidy_first;
             } elseif ($unitsConsumed > 1000 && $unitsConsumed <= 2000) {
-                $current_energy_charge = $tariff->supply_subsidy_second;
+                $current_energy_charge = $tariff->energy_charge_subsidy_second;
             } elseif ($unitsConsumed > 2000) {
-                $current_energy_charge = $tariff->supply_subsidy_third;
+                $current_energy_charge = $tariff->energy_charge_subsidy_third;
             }
 
             $json = [
