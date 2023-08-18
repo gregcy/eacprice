@@ -13,7 +13,7 @@
                                 <svg class="inline w-[19px] h-[19px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v3m5-3v3m5-3v3M1 7h18M5 11h10M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
                                 </svg>
-                                <span class="inline text-gray-800 font-bold text-lg">
+                                <span class="inline text-gray-800 font-bold text-lg align-middle pl-3">
                                     @if ($tariff->end_date == null || $tariff->end_date == 0 )
                                         {{ date('d/m/Y', strtotime($tariff->start_date)) }} - {{ __('Present') }}
                                     @else
@@ -56,80 +56,82 @@
                                 <table>
                                     <tr>
                                         @if ($tariff->code == '01')
-                                            <th colspan="2" class="text-grey-800 font-bold">{{ __('Cost per kWh') }}</td>
+                                            <th colspan="2" class="text-grey-800 font-bold text-left">{{ __('Cost per kWh') }}</td>
                                         @elseif ($tariff->code == '02')
-                                            <th class="text-grey-800 font-bold">{{ __('Cost per kWh') }}</th>
+                                            <th class="text-grey-800 font-bold text-left">{{ __('Cost per kWh') }}</th>
                                             <th class="text-grey-800 font-bold pl-4">{{ __('09:00-23:00') }}</th>
                                             <th class="text-grey-800 font-bold pl-4">{{ __('23:00-09:00') }}</th>
                                         @endif
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Energy Charge') }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_normal, 5) }}</td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->energy_charge_normal, 5) }}</td>
                                         @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_reduced, 5) }}</td>
+                                            <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->energy_charge_reduced, 5) }}</td>
                                         @endif
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Network Charge') }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->network_charge_normal, 5) }}</td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->network_charge_normal, 5) }}</td>
                                         @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->network_charge_reduced, 5) }}</td>
+                                            <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->network_charge_reduced, 5) }}</td>
                                         @endif
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Ancilary Service') }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->ancilary_services_normal, 5) }}</td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->ancilary_services_normal, 5) }}</td>
                                         @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->ancilary_services_reduced, 5) }}</td>
+                                            <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->ancilary_services_reduced, 5) }}</td>
                                         @endif
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Public Service Obligation') }}</td>
-                                        <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->public_service_obligation, 5) }}</td>
+                                        <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($tariff->public_service_obligation, 5) }}</td>
                                         @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4">€{{ number_format($tariff->public_service_obligation, 5) }}</td>
+                                            <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->public_service_obligation, 5) }}</td>
                                         @endif
                                     </tr>
                                 </table>
                                 <table>
                                     <tr>
-                                        <th colspan="2" class="text-grey-800 font-bold">{{ __('Recurring Costs') }}</th>
+                                        <th colspan="2" class="text-grey-800 font-bold text-left">{{ __('Recurring Costs') }}</th>
                                     </tr>
                                     <tr>
-                                        <td class="text-gray-800 "> {{__('Supply Charge') }}</td>
-                                        <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->recurring_supply_charge, 2) }}</td>
+                                        <td class="text-gray-800"> {{__('Supply Charge') }}</td>
+                                        <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($tariff->recurring_supply_charge, 2) }}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Meter Reading') }}</td>
-                                        <td class="pl-4 inline text-gray-800">€{{ number_format($tariff->recurring_meter_reading, 2)  }}</td>
+                                        <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($tariff->recurring_meter_reading, 2)  }}</td>
                                     </tr>
                                 </table>
                             @elseif ($tariff->code == '08')
                                 <table>
                                     <tr>
-                                        <th class="text-grey-800 font-bold">{{ __('Units kWh') }}</th>
-                                        <th class="text-grey-800 font-bold pl-4">{{ __('Total Units') }}</th>
-                                        <th class="text-grey-800 font-bold pl-4">{{ __('€/kWh') }}</th>
+                                        <th class="text-grey-800 font-bold text-left" colspan="3">{{ __('Total Units') }}</th>
+                                        <th class="text-grey-800 font-bold pl-4">{{ __('Fixed Cost per kWh') }}</th>
                                         <th class="text-grey-800 font-bold pl-4">{{ __('Fixed Charge') }}</th>
                                     </tr>
                                     <tr>
-                                        <td class="text-gray-800"> {{__('First 1000 Units') }}</td>
-                                        <td class="text-gray-800 pl-4">{{ __('0 - 1000') }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_subsidy_first, 4) }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->supply_subsidy_first, 2) }}</td>
+                                        <td class="text-gray-800 font-mono text-right">0</td>
+                                        <td class="text-gray-800 font-mono">-</td>
+                                        <td class="text-gray-800 font-mono">1000</td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->energy_charge_subsidy_first, 4) }}</td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->supply_subsidy_first, 2) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="text-gray-800"> {{__('The next 1000 units') }}</td>
-                                        <td class="text-gray-800 pl-4">{{ __('1001 - 2000') }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_subsidy_second, 4) }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->supply_subsidy_second, 2) }}</td>
+                                        <td class="text-gray-800 font-mono">1001</td>
+                                        <td class="text-gray-800 font-mono">-</td>
+                                        <td class="text-gray-800 font-mono">2000</td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->energy_charge_subsidy_second, 4) }}</td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->supply_subsidy_second, 2) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="text-gray-800"> {{__('Any additional units') }}</td>
-                                        <td class="text-gray-800 pl-4">{{ __('2001+') }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->energy_charge_subsidy_third, 4) }}</td>
-                                        <td class="text-gray-800 pl-4">€{{ number_format($tariff->supply_subsidy_third, 2) }}</td>
+                                        <td class="text-gray-800 font-mono">2001</td>
+                                        <td class="text-gray-800 font-mono">+</td>
+                                        <td class="text-gray-800 font-mono"></td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->energy_charge_subsidy_third, 4) }}</td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->supply_subsidy_third, 2) }}</td>
                                     </tr>
                                 </table>
                             @endif
