@@ -13,7 +13,7 @@
                                 <svg class="inline w-[19px] h-[19px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v3m5-3v3m5-3v3M1 7h18M5 11h10M2 3h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
                                 </svg>
-                                <span class="inline text-gray-800 font-bold text-lg">{{ date('d/m/Y', strtotime($adjustment->start_date)) }} - {{ date('d/m/Y', strtotime($adjustment->end_date)) }}</span>
+                                <span class="inline text-gray-800 font-bold text-lg align-middle pl-3">{{ date('d/m/Y', strtotime($adjustment->start_date)) }} - {{ date('d/m/Y', strtotime($adjustment->end_date)) }}</span>
                             </div>
                             @if ($adjustment->user->is(auth()->user()))
                                 <x-dropdown>
@@ -41,48 +41,48 @@
                         </div>
                         <div class="flex justify-start items-center border-b pb-2 mb-2">
                             <div>
-                                <span class="text-gray-500 text-sm"> {{__('Consumer Type:') }}</span>
-                                <span class="inline text-gray-500 text-sm">{{ ucfirst(__($adjustment->consumer_type)) }}</span>
+                                <span class="text-gray-500 font-bold"> {{__('Consumer Type:') }}</span>
+                                <span class="inline text-gray-500 font-bold">{{ ucfirst(__($adjustment->consumer_type)) }}</span>
                             </div>
                             <div>
-                                <span class="pl-3 text-gray-500 text-sm"> {{__('Voltage:') }}</span>
-                                <span class="inline text-gray-500 text-sm">{{ ucfirst(__($adjustment->voltage_type)) }}</span>
+                                <span class="pl-3 text-gray-500 font-bold"> {{__('Voltage:') }}</span>
+                                <span class="inline text-gray-500 font-bold">{{ ucfirst(__($adjustment->voltage_type)) }}</span>
                             </div>
                         </div>
                         <div class="flex justify-between items-start">
                             <table>
                                 <tr>
-                                    <td class="text-grey-800 font-bold pb-1">{{ __('Fuel Adjustment Cost per kWh:') }}</td>
+                                    <td colspan="2" class="text-grey-800 font-bold pb-1">{{ __('Fuel Adjustment Cost per kWh') }}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-gray-800"> {{__('Fuel Cost') }}</td>
-                                    <td class="pl-4 inline text-gray-800">€{{ number_format($adjustment->fuel, 6) }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($adjustment->fuel, 6) }}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-gray-800"> {{__('CO2 Emissions Cost') }}</td>
-                                    <td class="pl-4 inline text-gray-800">€{{ number_format($adjustment->co2_emissions, 6) }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($adjustment->co2_emissions, 6) }}</td>
                                 </tr>
                                 <tr class="border-b border-black">
                                     <td class="text-gray-800"> {{__('COSMOS Cost') }}</td>
-                                    <td class="pl-4 inline text-gray-800">€{{ number_format($adjustment->cosmos, 6) }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($adjustment->cosmos, 6) }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-gray-800 font-bold"> {{__('Total') }}</td>
-                                    <td class="pl-4 inline text-gray-800 font-bold">€{{ number_format($adjustment->total, 6) }}</td>
+                                    <td class="text-gray-800"> {{__('Total') }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($adjustment->total, 6) }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-gray-800 font-bold"> {{__('Total Adjusted') }}</td>
-                                    <td class="pl-4 inline text-gray-800 font-bold">€{{ number_format($adjustment->revised_fuel_adjustment_price, 6) }}</td>
+                                    <td class="text-gray-800"> {{__('Total Adjusted') }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($adjustment->revised_fuel_adjustment_price, 6) }}</td>
                                 </tr>
                             </table>
                             <table>
                                 <tr>
                                     <td class="text-gray-800 font-bold"> {{__('Average Weighted Fuel Price:') }}</td>
-                                    <td class="pl-4 inline text-gray-800 font-bold">€{{ number_format($adjustment->weighted_average_fuel_price, 2) }}</span>
+                                    <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($adjustment->weighted_average_fuel_price, 2) }}</span>
                                 </tr>
                                 <tr>
                                     <td class="text-gray-800 font-bold"> {{__('Fuel Adjustment Coefficient:') }}</td>
-                                    <td class="pl-4 inline text-gray-800 font-bold">{{ $adjustment->fuel_adjustment_coefficient }}</td>
+                                    <td class="pl-4 inline text-gray-800 font-mono">{{ $adjustment->fuel_adjustment_coefficient }}</td>
                                 </tr>
                             </table>
                         </div>

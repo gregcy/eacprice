@@ -17,7 +17,7 @@ class TariffController extends Controller
         return view(
             'tariffs.index',
             [
-                'tariffs' => Tariff::with('user')->latest()->paginate(10),
+                'tariffs' => Tariff::all()->sortBy('code'),
             ]
         );
     }

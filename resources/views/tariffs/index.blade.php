@@ -47,8 +47,8 @@
                         </div>
                         <div class="flex justify-start items-center border-b pb-2 mb-2">
                             <div>
-                                <span class="text-gray-800 text-bases font-bold"> {{__('Tariff Code:') }}</span>
-                                <span class="inline text-gray-800 text-base font-bold">{{ ucfirst(__($tariff->code)) }}</span>
+                                <span class="text-gray-500 text-bases font-bold"> {{__('Tariff Code:') }}</span>
+                                <span class="inline text-gray-500 text-base font-bold">{{ ucfirst(__($tariff->code)) }}</span>
                             </div>
                         </div>
                         <div class="flex justify-between items-start">
@@ -78,7 +78,7 @@
                                         @endif
                                     </tr>
                                     <tr>
-                                        <td class="text-gray-800"> {{__('Ancilary Service') }}</td>
+                                        <td class="text-gray-800"> {{__('Ancillary Services') }}</td>
                                         <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->ancilary_services_normal, 5) }}</td>
                                         @if ($tariff->code == '02')
                                             <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->ancilary_services_reduced, 5) }}</td>
