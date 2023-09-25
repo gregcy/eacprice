@@ -21,6 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('calculator', [GetCurrentRate::class, 'calculator'])
+    ->name('rate.calculator');
+//     ->name('register');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

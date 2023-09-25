@@ -6,9 +6,15 @@ use App\Models\Adjustment;
 use App\Models\Tariff;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class GetCurrentRate extends Controller
 {
+    public function calculator(): View
+    {
+        return view('rate.calculator');
+    }
+
     public function index(Request $request)
     {
         $json = '';
