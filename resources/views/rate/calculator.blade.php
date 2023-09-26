@@ -15,8 +15,23 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="bg-blue-700 w-full h-11 flex">
-            <h1 class="text-4xl font-bold text-white">Test</h1>
+        <div class="bg-blue-700 w-full">
+            <div class="max-w-6xl m-auto">
+                <h1 class="text-4xl font-bold text-white w-full text-center  p-8">Cyprus Electricity Calculator</h1>
+                <div class="text-white text-xl w-full">
+                    The calculator uses the latest tariffs from the Electricity Authority of Cyprus to calculate the cost
+                    of your electricity consumption.
+                </div>
+                <div class="text-sm text-white w-full py-6">
+                    <p>This site is not affiliated with the Electricity Authority of Cyprus.</p>
+                </div>
+                <div class="text-sm w-full text-white pb-6 inline-grid">
+                    <p class="justify-self-start inline-flex">Click on the logo to go to the EAC website.</p>
+                    <a class="justify-self-end inline-flex" href="https://www.eac.com.cy/" target="_blank">
+                        <img src="{{asset('/images/eac-logo.jpg')}}" alt="EAC Logo" class="w-16 h-16" />
+                    </a>
+                </div>
+            </div>
         </div>
     </body>
 </html>
