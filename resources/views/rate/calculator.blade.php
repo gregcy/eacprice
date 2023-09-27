@@ -33,5 +33,43 @@
                 </div>
             </div>
         </div>
+        <div class="bg-gray-100 w-full">
+            <div class="max-w-6xl m-auto py-6">
+                <form id="eac-calculator">
+                    @csrf
+                    <fieldset id="tariff" class="py-4">
+                        <label for="tariff" class="text-lg font-medum pr-4">{{ __('Tariff:') }}</label>
+                        <select name="tariff"
+                            class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                            >
+                            <option value="01" selected>{{__('01 - Single Rate Domestic Use') }}</option>
+                            <option value="02">{{ __('02 - Two Rate Domestic Use') }}</option>
+                            <option value="08">{{ __('08 - Special Tariff for Specific Categories of Vulnerable Customers') }}</option>
+                        </select>
+                    </fieldset>
+                    <fieldset id="tariff01">
+                        <div class="w-100">
+                            <label for="consumption" class="text-lg font-medum pr-4">{{ __('Consumption (kWh):') }}</label>
+                            <input type="number" name="consumption" step="1" min="0" placeholder="0" value="0" />
+                        </div>
+                        <div class="w-100 py-4">
+                            <label for="credit_amount" class="text-lg font-medum pr-4">{{ __('Energy Returned Credits:') }}</label>
+                            <input type="number" name="credit_amount" step="1" min="0" placeholder="0" value="0" />
+                        </div>
+
+                    </fieldset>
+                    <fieldset id="tariff02">
+                        <label for="consumption_standard">{{ __('Consumption During Standard Period 09:00-23:00 (kWh)') }}</label>
+                        <input type="number" name="consumption_standard" step="1" min="0" placeholder="0" value="0" />
+                        <label for="consumption_economy">{{ __('Consumption During Economy Period 23:00-09:00 (kWh)') }}</label>
+                        <input type="number" name="consumption_economy" step="1" min="0" placeholder="0" value="0" />
+                    </fieldset>
+                    <fieldset id="tariff08">
+                        <label for="consumption_total">{{ __('Consumption During Standard Period 09:00-23:00 (kWh)') }}</label>
+                        <input type="number" name="consumption_total" step="1" min="0" placeholder="0" value="0" />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
