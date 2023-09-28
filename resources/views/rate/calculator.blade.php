@@ -58,14 +58,18 @@
                         </div>
 
                     </fieldset>
-                    <fieldset id="tariff02">
-                        <label for="consumption_standard">{{ __('Consumption During Standard Period 09:00-23:00 (kWh)') }}</label>
-                        <input type="number" name="consumption_standard" step="1" min="0" placeholder="0" value="0" />
-                        <label for="consumption_economy">{{ __('Consumption During Economy Period 23:00-09:00 (kWh)') }}</label>
-                        <input type="number" name="consumption_economy" step="1" min="0" placeholder="0" value="0" />
+                    <fieldset id="tariff02" class="hidden">
+                        <div class="w-100">
+                            <label for="consumption_standard" class="text-lg font-medum pr-4">{{ __('Consumption During Standard Period 09:00-23:00 (kWh):') }}</label>
+                            <input type="number" name="consumption_standard" step="1" min="0" placeholder="0" value="0" />
+                        </div>
+                        <div class="w-100 py-4">
+                            <label for="consumption_economy" class="text-lg font-medum pr-4">{{ __('Consumption During Economy Period 23:00-09:00 (kWh):') }}</label>
+                            <input type="number" name="consumption_economy" step="1" min="0" placeholder="0" value="0" />
+                        </div>
                     </fieldset>
-                    <fieldset id="tariff08">
-                        <label for="consumption_total">{{ __('Consumption During Standard Period 09:00-23:00 (kWh)') }}</label>
+                    <fieldset id="tariff08" class="hidden">
+                        <label for="consumption_reduced" class="text-lg font-medum pr-4">{{ __('Consumption (kWh):') }}</label>
                         <input type="number" name="consumption_total" step="1" min="0" placeholder="0" value="0" />
                     </fieldset>
                 </form>
