@@ -25,9 +25,9 @@
                 <div class="text-sm text-white w-full py-6">
                     <p>This site is not affiliated with the Electricity Authority of Cyprus.</p>
                 </div>
-                <div class="text-sm w-full text-white pb-6 inline-grid">
-                    <p class="justify-self-start inline-flex">Click on the logo to go to the EAC website.</p>
-                    <a class="justify-self-end inline-flex" href="https://www.eac.com.cy/" target="_blank">
+                <div class="text-sm w-full text-white flex justify-between items-center">
+                    <p class="align-self-center">Click on the logo to go to the EAC website.</p>
+                    <a href="https://www.eac.com.cy/" target="_blank">
                         <img src="{{asset('/images/eac-logo.jpg')}}" alt="EAC Logo" class="w-16 h-16" />
                     </a>
                 </div>
