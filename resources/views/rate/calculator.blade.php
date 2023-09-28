@@ -16,7 +16,7 @@
     </head>
     <body class="font-sans antialiased">
         <div class="bg-blue-700 w-full">
-            <div class="max-w-6xl m-auto">
+            <div class="max-w-6xl m-auto p-4">
                 <h1 class="text-4xl font-bold text-white w-full text-center  p-8">Cyprus Electricity Calculator</h1>
                 <div class="text-white text-xl w-full">
                     The calculator uses the latest tariffs from the Electricity Authority of Cyprus to calculate the cost
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="bg-gray-100 w-full">
-            <div class="max-w-6xl m-auto py-6">
+            <div class="max-w-6xl m-auto p-4">
                 <form id="eac-calculator">
                     @csrf
                     <fieldset id="tariff" class="py-4">
@@ -44,33 +44,29 @@
                             >
                             <option value="01" selected>{{__('01 - Single Rate Domestic Use') }}</option>
                             <option value="02">{{ __('02 - Two Rate Domestic Use') }}</option>
-                            <option value="08">{{ __('08 - Special Tariff for Specific Categories of Vulnerable Customers') }}</option>
+                            <option value="08">{{ __('08 - Special Tariff for Vulnerable Customers') }}</option>
                         </select>
                     </fieldset>
                     <fieldset id="tariff01">
                         <div class="w-100">
-                            <label for="consumption" class="text-lg font-medum pr-4">{{ __('Consumption (kWh):') }}</label>
+                            <label for="consumption" class="text-lg font-medum pr-20">{{ __('Consumption (kWh):') }}</label>
                             <input type="number" name="consumption" step="1" min="0" placeholder="0" value="0" />
                         </div>
                         <div class="w-100 py-4">
-                            <label for="credit_amount" class="text-lg font-medum pr-4">{{ __('Energy Returned Credits:') }}</label>
+                            <label for="credit_amount" class="text-lg font-medum pr-4">{{ __('Returned Solar Power (kWh):') }}</label>
                             <input type="number" name="credit_amount" step="1" min="0" placeholder="0" value="0" />
                         </div>
 
                     </fieldset>
-                    <fieldset id="tariff02" class="hidden">
+                    <fieldset id="tariff02">
                         <div class="w-100">
-                            <label for="consumption_standard" class="text-lg font-medum pr-4">{{ __('Consumption During Standard Period 09:00-23:00 (kWh):') }}</label>
+                            <label for="consumption_standard" class="text-lg font-medum pr-5">{{ __('Consumption During Standard Period 09:00-23:00 (kWh):') }}</label>
                             <input type="number" name="consumption_standard" step="1" min="0" placeholder="0" value="0" />
                         </div>
                         <div class="w-100 py-4">
                             <label for="consumption_economy" class="text-lg font-medum pr-4">{{ __('Consumption During Economy Period 23:00-09:00 (kWh):') }}</label>
                             <input type="number" name="consumption_economy" step="1" min="0" placeholder="0" value="0" />
                         </div>
-                    </fieldset>
-                    <fieldset id="tariff08" class="hidden">
-                        <label for="consumption_reduced" class="text-lg font-medum pr-4">{{ __('Consumption (kWh):') }}</label>
-                        <input type="number" name="consumption_total" step="1" min="0" placeholder="0" value="0" />
                     </fieldset>
                 </form>
             </div>
