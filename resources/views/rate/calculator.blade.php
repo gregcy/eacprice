@@ -39,7 +39,7 @@
                     @csrf
                     <fieldset id="tariff" class="py-4">
                         <label for="tariff" class="text-lg font-medum pr-4">{{ __('Tariff:') }}</label>
-                        <select name="tariff"
+                        <select id="tariff-select" name="tariff"
                             class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                             >
                             <option value="01" selected>{{__('01 - Single Rate Domestic Use') }}</option>
@@ -58,7 +58,7 @@
                         </div>
 
                     </fieldset>
-                    <fieldset id="tariff02">
+                    <fieldset id="tariff02" class="hidden">
                         <div class="w-100">
                             <label for="consumption_standard" class="text-lg font-medum pr-5">{{ __('Consumption During Standard Period 09:00-23:00 (kWh):') }}</label>
                             <input type="number" name="consumption_standard" step="1" min="0" placeholder="0" value="0" />
@@ -71,5 +71,32 @@
                 </form>
             </div>
         </div>
+        <script>
+            const selectElement = document.getElementById('tariff-select');
+            const tariff01 = document.getElementById('tariff01');
+            const tariff02 = document.getElementById('tariff02');
+            selectElement.addEventListener('change', function() {
+                let selectedValue = selectElement.value;
+                if (selectedValue == '01') {
+                    tariff01.classList.remove('hidden');
+                    tariff01.classList.add('block');
+                    tariff02.classList.add('hidden');
+                    tariff02.classList.remove('block');
+                }
+                else if (selectedValue == '02') {
+                    tariff01.classList.add('hidden');
+                    tariff01.classList.remove('block');
+                    tariff02.classList.remove('hidden');
+                    tariff02.classList.add('block');
+                }
+                else if (selectedValue == '08') {
+                    tariff01.classList.remove('hidden');
+                    tariff01.classList.add('block');
+                    tariff02.classList.add('hidden');
+                    tariff02.classList.remove('block');
+                }
+            });
+
+        </script>
     </body>
 </html>
