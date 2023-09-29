@@ -9,7 +9,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -28,7 +28,7 @@
                 <div class="text-sm w-full text-white flex justify-between items-center">
                     <p class="align-self-center">Click on the logo to go to the EAC website.</p>
                     <a href="https://www.eac.com.cy/" target="_blank">
-                        <img src="{{asset('/images/eac-logo.jpg')}}" alt="EAC Logo" class="w-16 h-16" />
+                        <img src="{{asset('/images/eac-logo.jpg')}}" alt="EAC Logo" class="w-16 h-16">
                     </a>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <form id="eac-calculator">
                     @csrf
                     <fieldset id="tariff" class="py-4">
-                        <label for="tariff" class="text-lg font-medum pr-4">{{ __('Tariff:') }}</label>
+                        <label for="tariff-select" class="text-lg font-medum pr-4">{{ __('Tariff:') }}</label>
                         <select id="tariff-select" name="tariff"
                             class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                             >
@@ -47,27 +47,28 @@
                             <option value="08">{{ __('08 - Special Tariff for Vulnerable Customers') }}</option>
                         </select>
                     </fieldset>
-                    <fieldset id="tariff01">
+                    <fieldset id="tariff01" class="block">
                         <div class="w-100">
                             <label for="consumption" class="text-lg font-medum pr-20">{{ __('Consumption (kWh):') }}</label>
-                            <input type="number" name="consumption" step="1" min="0" placeholder="0" value="0" />
+                            <input id="consumption" type="number" name="consumption" step="1" min="0" placeholder="0" value="0">
                         </div>
                         <div class="w-100 py-4">
-                            <label for="credit_amount" class="text-lg font-medum pr-4">{{ __('Returned Solar Power (kWh):') }}</label>
-                            <input type="number" name="credit_amount" step="1" min="0" placeholder="0" value="0" />
+                            <label for="credit-amount" class="text-lg font-medum pr-4">{{ __('Returned Solar Power (kWh):') }}</label>
+                            <input id="credit-amount" type="number" name="credit-amount" step="1" min="0" placeholder="0" value="0">
                         </div>
 
                     </fieldset>
                     <fieldset id="tariff02" class="hidden">
                         <div class="w-100">
-                            <label for="consumption_standard" class="text-lg font-medum pr-5">{{ __('Consumption During Standard Period 09:00-23:00 (kWh):') }}</label>
-                            <input type="number" name="consumption_standard" step="1" min="0" placeholder="0" value="0" />
+                            <label for="consumption-standard" class="text-lg font-medum pr-5">{{ __('Consumption During Standard Period 09:00-23:00 (kWh):') }}</label>
+                            <input id="consumption-standard" type="number" name="consumption-standard" step="1" min="0" placeholder="0" value="0">
                         </div>
                         <div class="w-100 py-4">
-                            <label for="consumption_economy" class="text-lg font-medum pr-4">{{ __('Consumption During Economy Period 23:00-09:00 (kWh):') }}</label>
-                            <input type="number" name="consumption_economy" step="1" min="0" placeholder="0" value="0" />
+                            <label for="consumption-economy" class="text-lg font-medum pr-4">{{ __('Consumption During Economy Period 23:00-09:00 (kWh):') }}</label>
+                            <input id="consumption-economy" type="number" name="consumption_economy" step="1" min="0" placeholder="0" value="0">
                         </div>
                     </fieldset>
+                    <x-primary-button class="mt-4">{{ __('Calculate') }}</x-primary-button>
                 </form>
             </div>
         </div>
@@ -78,25 +79,18 @@
             selectElement.addEventListener('change', function() {
                 let selectedValue = selectElement.value;
                 if (selectedValue == '01') {
-                    tariff01.classList.remove('hidden');
-                    tariff01.classList.add('block');
-                    tariff02.classList.add('hidden');
-                    tariff02.classList.remove('block');
+                    tariff01.classList.replace('hidden', 'block');
+                    tariff02.classList.replace('block', 'hidden');
                 }
                 else if (selectedValue == '02') {
-                    tariff01.classList.add('hidden');
-                    tariff01.classList.remove('block');
-                    tariff02.classList.remove('hidden');
-                    tariff02.classList.add('block');
+                    tariff01.classList.replace('block', 'hidden');
+                    tariff02.classList.replace('hidden', 'block');
                 }
                 else if (selectedValue == '08') {
-                    tariff01.classList.remove('hidden');
-                    tariff01.classList.add('block');
-                    tariff02.classList.add('hidden');
-                    tariff02.classList.remove('block');
+                    tariff01.classList.replace('hidden', 'block');
+                    tariff02.classList.replace('block','hidden');
                 }
             });
-
         </script>
     </body>
 </html>
