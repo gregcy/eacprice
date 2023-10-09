@@ -128,16 +128,16 @@
                 }]
                 },
                 options: {
-                scales: {
-                    y: {
-                    display: false
+                    scales: {
+                        y: {
+                        display: false
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                        display: false
+                        }
                     }
-                },
-                plugins: {
-                    legend: {
-                    display: false
-                    }
-                }
                 }
             });
         </script>
