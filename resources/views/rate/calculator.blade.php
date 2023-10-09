@@ -78,7 +78,7 @@
                         <table>
                             <tr>
                                 <th class="py-2 px-4 text-left">Item</th>
-                                <th class="py-2 px-4 text-left">Cost / kWh</th>
+                                <th class="py-2 px-4 text-left">Cost</th>
                             </tr>
                             <tr>
                                 <td class="px-4">Energy Charge</td>
