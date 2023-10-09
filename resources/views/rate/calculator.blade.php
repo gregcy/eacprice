@@ -115,31 +115,47 @@
         </div>
 
         <script type="module">
-            const ctx = document.getElementById('myChart');
-
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
+            const data = {
                 labels: ['Energy Charge', 'Network Charge', 'Ancillary Services', 'Public Service Obligation', 'Fuel Adjustement', 'VAT'],
                 datasets: [{
-                    label: '€/kWh',
+                    label: '€',
                     data: [10.35, 3.02, 0.65, 0.058, 6.3378, 7.0248],
                     borderWidth: 1
                 }]
-                },
+            };
+            const doughnutLabel = {
+                id: 'doughnutLabel',
+                beforeDatasetsDraw(chart, args, pluginOptions) {
+                    const { ctx, data} = chart;
+
+                    ctx.save();
+                    const xCoor = chart.getDatasetMeta(0).data[0].x;
+                    const yCoor = chart.getDatasetMeta(0).data[0].y;
+                    ctx.font = 'bold 25px sans-serif';
+                    ctx.fillStyle = 'rgba(54,162,235,1)';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('€10,002.33', xCoor, yCoor);
+                }
+            }
+            const config = {
+                type: 'doughnut',
+                data,
                 options: {
-                    scales: {
-                        y: {
-                        display: false
-                        }
-                    },
                     plugins: {
                         legend: {
-                        display: false
-                        }
+                            display: false
+                        },
                     }
-                }
-            });
+                },
+                plugins: [doughnutLabel]
+            };
+
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+
         </script>
         <script>
             const selectElement = document.getElementById('tariff-select');
