@@ -21,8 +21,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('calculator', [GetCurrentRate::class, 'calculator'])
-    ->name('rate.calculator');
+Route::get('calculator', [GetCurrentRate::class, 'calculator'])->name('rate.calculator');
+Route::push('calculator', [GetCurrentRate::class, 'calculate'])->name('rate.calculate');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

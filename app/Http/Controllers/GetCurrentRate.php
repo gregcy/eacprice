@@ -15,6 +15,24 @@ class GetCurrentRate extends Controller
         return view('rate.calculator');
     }
 
+    public function calculate(Request $request): View
+    {
+        $validated = $request->validate(
+            [
+                'consumption' => 'nullable|numeric|gte:0',
+                'credit-amount' => 'nullable|numeric|gte:0',
+                'consumption-standard' => 'nullable|numeric|gte:0',
+                'consumption-economy' => 'nullable|numeric|gte:0',
+            ]
+        );
+
+        return view(
+            'rate.calculate',
+            [
+
+            ]
+        );
+    }
     public function index(Request $request)
     {
         $json = '';
