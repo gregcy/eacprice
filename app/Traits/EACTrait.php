@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Trasts;
+namespace App\Traits;
 use App\Models\Tariff;
 use App\Models\Adjustment;
 
