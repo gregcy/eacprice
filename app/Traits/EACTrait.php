@@ -6,14 +6,14 @@ use App\Models\Adjustment;
 
 trait EACTrait {
 
-    public function calculateEACCost01($tariffCode, $billing, $consmption, $creditUnits) {
+    public function calculateEACCost01($billing, $consmption, $creditUnits) {
         $dateNow = date('Y-m-d', time());
         $adjustment = Adjustment::where('consumer_type', $billing)
             ->where('start_date', '<=', $dateNow)
             ->where('end_date', '>=', $dateNow)
             ->first();
 
-        $tariff = Tariff::where('code', $tariffCode)
+        $tariff = Tariff::where('code', '01')
             ->where('end_date', '=', null)
             ->first();
 

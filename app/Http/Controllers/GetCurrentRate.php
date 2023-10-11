@@ -58,7 +58,7 @@ class GetCurrentRate extends Controller
         $creditUnits = request('creditUnits', 0);
 
         if ($tariffCode == '01') {
-            $consumption = $this->calculateEACCost01('01', $billing, $unitsConsumed, $creditUnits);
+            $consumption = $this->calculateEACCost01($billing, $unitsConsumed, $creditUnits);
             dd($consumption);
         }
         // $tariffCode = request('tariffCode', '01');
