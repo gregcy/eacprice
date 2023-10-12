@@ -17,55 +17,59 @@ trait EACTrait {
             ->where('end_date', '=', null)
             ->first();
 
-        $fullPricedConsumption = $consumption - $creditUnits;
-        $lowPricedConsumption = 0;
-        if ($creditUnits > 0) {
-            if ($consumption > $creditUnits) {
-                $lowPricedConsumption = $creditUnits;
-            } else {
-                $lowPricedConsumption = $consumption;
-            }
+        $lowCostConsumption = 0;
+        $highCostConsumption = 0;
+
+        if ($consumption >= $creditUnits) {
+            $lowCostConsumption = $creditUnits;
+            $highCostConsumption = $consumption - $creditUnits;
+        }
+        else if  ($consumption < $creditUnits) {
+            $lowCostConsumption = $consumption;
+            $highCostConsumption = 0;
         }
 
-        if ( ($lowPricedConsumption < $fullPricedConsumption) && ($lowPricedConsumption > 0)) {
+        if ($highCostConsumption > 0) {
             $cost = [
-                'energyCharge' => (float) number_format($tariff->energy_charge_normal * $fullPricedConsumption, 6),
-                'networkCharge' => (float) number_format($tariff->network_charge_normal * $lowPricedConsumption , 6),
-                'ancilaryServices' => (float) number_format($tariff->ancilary_services_normal * $lowPricedConsumption, 6),
-                'publicServiceObligation' => (float) number_format($tariff->public_service_obligation  * $lowPricedConsumption, 6),
-                'fuelAdjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price * $fullPricedConsumption, 6),
+                'energyCharge' => (float) number_format($tariff->energy_charge_normal * $highCostConsumption, 6),
+                'networkCharge' => (float) number_format($tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption), 6),
+                'ancilaryServices' => (float) number_format($tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption), 6),
+                'publicServiceObligation' => (float) number_format($tariff->public_service_obligation  * ($lowCostConsumption + $highCostConsumption), 6),
+                'fuelAdjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6),
                 'VAT' => (float) number_format(
-                    0.19 * ($adjustment->revised_fuel_adjustment_price * $fullPricedConsumption +
-                    $tariff->energy_charge_normal * $fullPricedConsumption +
-                    $tariff->network_charge_normal * $lowPricedConsumption +
-                    $tariff->ancilary_services_normal  * $lowPricedConsumption+
-                    $tariff->public_service_obligation * $lowPricedConsumption), 6
+                    ($adjustment->revised_fuel_adjustment_price * $highCostConsumption +
+                    $tariff->energy_charge_normal * $highCostConsumption +
+                    $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption) +
+                    $tariff->ancilary_services_normal  * ($lowCostConsumption + $highCostConsumption) +
+                    $tariff->public_service_obligation * ($lowCostConsumption + $highCostConsumption)) * 0.19, 6
                 ),
                 'Total' => (float) number_format(
-                    ($adjustment->revised_fuel_adjustment_price +
-                    $tariff->energy_charge_normal +
-                    $tariff->network_charge_normal +
-                    $tariff->ancilary_services_normal +
-                    $tariff->public_service_obligation) * 1.19, 6
-                ),
-            ];
-        } else {
-            $cost = [
-                'networkCharge' => (float) number_format($tariff->network_charge_normal, 6),
-                'ancilaryServices' => (float) number_format($tariff->ancilary_services_normal, 6),
-                'publicServiceObligation' => (float) number_format($tariff->public_service_obligation, 6),
-                'VAT' => (float) number_format(
-                    0.19 * ($tariff->network_charge_normal +
-                    $tariff->ancilary_services_normal +
-                    $tariff->public_service_obligation), 6
-                ),
-                'Total' => (float) number_format(
-                    ($tariff->network_charge_normal +
-                    $tariff->ancilary_services_normal +
-                    $tariff->public_service_obligation) * 1.19, 6
+                    ($adjustment->revised_fuel_adjustment_price * $highCostConsumption +
+                    $tariff->energy_charge_normal * $highCostConsumption +
+                    $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption) +
+                    $tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption) +
+                    $tariff->public_service_obligation *($lowCostConsumption + $highCostConsumption)) * 1.19, 6
                 ),
             ];
         }
+        else {
+            $cost = [
+                'networkCharge' => (float) number_format($tariff->network_charge_normal * $lowCostConsumption, 6),
+                'ancilaryServices' => (float) number_format($tariff->ancilary_services_normal * $lowCostConsumption, 6),
+                'publicServiceObligation' => (float) number_format($tariff->public_service_obligation * $lowCostConsumption, 6),
+                'VAT' => (float) number_format(
+                    0.19 * ($tariff->network_charge_normal * $lowCostConsumption +
+                    $tariff->ancilary_services_normal * $lowCostConsumption +
+                    $tariff->public_service_obligation* $lowCostConsumption), 6
+                ),
+                'Total' => (float) number_format(
+                    ($tariff->network_charge_normal * $lowCostConsumption +
+                    $tariff->ancilary_services_normal * $lowCostConsumption +
+                    $tariff->public_service_obligation *$lowCostConsumption) * 1.19, 6
+                ),
+            ];
+        }
+
         return $cost;
     }
 }
