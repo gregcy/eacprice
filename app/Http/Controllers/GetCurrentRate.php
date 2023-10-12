@@ -59,9 +59,8 @@ class GetCurrentRate extends Controller
 
         if ($tariffCode == '01') {
             $consumption = $this->calculateEACCost01($billing, $unitsConsumed, $creditUnits);
-            //dd($consumption);
         }
-        $json = json_encode($consumption, JSON_UNESCAPED_SLASHES);
+        $json = ['Measurement' => '€/kWh', 'Cost' => $consumption];
         // $tariffCode = request('tariffCode', '01');
         // $billing = request('billing', 'Bi-Monthly');
         // $unitsConsumed = request('unitsConsumed', 0);

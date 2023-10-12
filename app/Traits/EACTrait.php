@@ -6,7 +6,7 @@ use App\Models\Adjustment;
 
 trait EACTrait {
 
-    public function calculateEACCost01($billing, $consmption, $creditUnits) {
+    public function calculateEACCost01($billing, $consumption, $creditUnits) {
         $dateNow = date('Y-m-d', time());
         $adjustment = Adjustment::where('consumer_type', $billing)
             ->where('start_date', '<=', $dateNow)
@@ -17,19 +17,29 @@ trait EACTrait {
             ->where('end_date', '=', null)
             ->first();
 
-        if ($creditUnits == 0) {
+        $fullPricedConsumption = $consumption - $creditUnits;
+        $lowPricedConsumption = 0;
+        if ($creditUnits > 0) {
+            if ($consumption > $creditUnits) {
+                $lowPricedConsumption = $creditUnits;
+            } else {
+                $lowPricedConsumption = $consumption;
+            }
+        }
+
+        if ( ($lowPricedConsumption < $fullPricedConsumption) && ($lowPricedConsumption > 0)) {
             $cost = [
-                'Energy Charge' => (float) number_format($tariff->energy_charge_normal, 6),
-                'Network Charge' => (float) number_format($tariff->network_charge_normal, 6),
-                'Ancilary Services' => (float) number_format($tariff->ancilary_services_normal, 6),
-                'Public Service Obligation' => (float) number_format($tariff->public_service_obligation, 6),
-                'Fuel Adjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price, 6),
+                'energyCharge' => (float) number_format($tariff->energy_charge_normal * $fullPricedConsumption, 6),
+                'networkCharge' => (float) number_format($tariff->network_charge_normal * $lowPricedConsumption , 6),
+                'ancilaryServices' => (float) number_format($tariff->ancilary_services_normal * $lowPricedConsumption, 6),
+                'publicServiceObligation' => (float) number_format($tariff->public_service_obligation  * $lowPricedConsumption, 6),
+                'fuelAdjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price * $fullPricedConsumption, 6),
                 'VAT' => (float) number_format(
-                    0.19 * ($adjustment->revised_fuel_adjustment_price +
-                    $tariff->energy_charge_normal +
-                    $tariff->network_charge_normal +
-                    $tariff->ancilary_services_normal +
-                    $tariff->public_service_obligation), 6
+                    0.19 * ($adjustment->revised_fuel_adjustment_price * $fullPricedConsumption +
+                    $tariff->energy_charge_normal * $fullPricedConsumption +
+                    $tariff->network_charge_normal * $lowPricedConsumption +
+                    $tariff->ancilary_services_normal  * $lowPricedConsumption+
+                    $tariff->public_service_obligation * $lowPricedConsumption), 6
                 ),
                 'Total' => (float) number_format(
                     ($adjustment->revised_fuel_adjustment_price +
@@ -41,9 +51,9 @@ trait EACTrait {
             ];
         } else {
             $cost = [
-                'Network Charge' => (float) number_format($tariff->network_charge_normal, 6),
-                'Ancilary Services' => (float) number_format($tariff->ancilary_services_normal, 6),
-                'Public Service Obligation' => (float) number_format($tariff->public_service_obligation, 6),
+                'networkCharge' => (float) number_format($tariff->network_charge_normal, 6),
+                'ancilaryServices' => (float) number_format($tariff->ancilary_services_normal, 6),
+                'publicServiceObligation' => (float) number_format($tariff->public_service_obligation, 6),
                 'VAT' => (float) number_format(
                     0.19 * ($tariff->network_charge_normal +
                     $tariff->ancilary_services_normal +
