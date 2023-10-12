@@ -6,9 +6,9 @@ use App\Models\Adjustment;
 
 trait EACTrait {
 
-    public function calculateEACCost01($billing, $consumption, $creditUnits) {
+    public function calculateEACCost01($consumption, $creditUnits) {
         $dateNow = date('Y-m-d', time());
-        $adjustment = Adjustment::where('consumer_type', $billing)
+        $adjustment = Adjustment::where('consumer_type', "Bi-Monthly")
             ->where('start_date', '<=', $dateNow)
             ->where('end_date', '>=', $dateNow)
             ->first();
@@ -69,7 +69,57 @@ trait EACTrait {
                 ),
             ];
         }
-
         return $cost;
+    }
+    public function calculateEACCost02($consumptionNormal, $consumptionReduced) {
+
+        $adjustment = Adjustment::where('consumer_type', "Bi-Monthly")
+            ->where('start_date', '<=', $dateNow)
+            ->where('end_date', '>=', $dateNow)
+            ->first();
+
+        $tariff = Tariff::where('code', '02')
+            ->where('end_date', '=', null)
+            ->first();
+
+        $time_now = date('H');
+        $current_energy_charge = 0;
+        $current_network_charge = 0;
+        $current_ancilary_services = 0;
+
+        if ($time_now >= 9 && $time_now <= 23) {
+            $current_energy_charge = $tariff->energy_charge_normal;
+            $current_network_charge = $tariff->network_charge_normal;
+            $current_ancilary_services = $tariff->ancilary_services_normal;
+        } else {
+            $current_energy_charge = $tariff->energy_charge_reduced;
+            $current_network_charge = $tariff->network_charge_reduced;
+            $current_ancilary_services = $tariff->ancilary_services_reduced;
+        }
+        $json = [
+            'Measurement' => '€/kWh',
+            'Breakdown' => [
+                'Energy Charge' => (float) number_format($current_energy_charge, 6),
+                'Network Charge' => (float) number_format($current_network_charge, 6),
+                'Ancilary Services' => (float) number_format($current_ancilary_services, 6),
+                'Public Service Obligation' => (float) number_format($tariff->public_service_obligation, 6),
+                'Fuel Adjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price, 6),
+                'VAT' => (float) number_format(
+                    0.19 * ($adjustment->revised_fuel_adjustment_price +
+                    $current_energy_charge +
+                    $current_network_charge +
+                    $current_ancilary_services +
+                    $tariff->public_service_obligation), 6
+                ),
+            ],
+            'Cost Per Unit' => (float) number_format(
+                ($adjustment->revised_fuel_adjustment_price +
+                $current_energy_charge +
+                $current_network_charge +
+                $current_ancilary_services +
+                $tariff->public_service_obligation) * 1.19, 6
+            ),
+        ];
+        return $json;
     }
 }
