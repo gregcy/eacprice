@@ -72,7 +72,7 @@ class GetCurrentRate extends Controller
             }
 
         }
-        $json = ['Measurement' => '€/kWh', 'Cost' => $cost];
+        $json = ['measurement' => '€/kWh', 'cost' => $cost];
 
 
 
