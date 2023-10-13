@@ -58,21 +58,25 @@ class GetCurrentRate extends Controller
 
         if ($tariffCode == '01') {
             if (!$creditUnits) {
-                $consumption = $this->calculateEACCost01(1, 0);
+                $cost = $this->calculateEACCost01(1, 0, date_create('now'), date_create('now'));
 
+            } else {
+                $cost = $this->calculateEACCost01(1, 1, date_create('now'), date_create('now'));
             }
-            else {
-                $consumption = $this->calculateEACCost01(1, 2);
+        } else if ($tariffCode == '02') {
+            $time_now = date('H') +3 ;
+            if ($time_now >= 9 && $time_now < 23) {
+                $cost = $this->calculateEACCost02(1, 0, date_create('now'), date_create('now'));
+            } else {
+                $cost = $this->calculateEACCost02(0, 1, date_create('now'), date_create('now'));
             }
-        }
-        if ($tariffCode == '02') {
 
         }
-        $json = ['Measurement' => '€/kWh', 'Cost' => $consumption];
+        $json = ['Measurement' => '€/kWh', 'Cost' => $cost];
 
-        // } elseif ($tariffCode == '02') {
 
-        //
+
+
         // } elseif ($tariffCode == '08') {
 
         //     $current_energy_charge = 0;

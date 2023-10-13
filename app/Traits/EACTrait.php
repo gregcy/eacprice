@@ -1,16 +1,26 @@
 <?php
 
+/**
+ * Path: app/Traits/EACTrait.php
+ * Compare this snippet from app/Http/Controllers/GetCurrentRate.php:
+ *
+ * @author  Greg Andreou <greg.andreou@gmail.com>
+ * @license  MIT
+ *
+ */
+
 namespace App\Traits;
 use App\Models\Tariff;
 use App\Models\Adjustment;
+use DateTime;
 
 trait EACTrait {
 
-    public function calculateEACCost01($consumption, $creditUnits) {
-        $dateNow = date('Y-m-d', time());
+    public function calculateEACCost01(int $consumption, int $creditUnits, DateTime $periodStart, DateTime $periodEnd): array
+    {
         $adjustment = Adjustment::where('consumer_type', "Bi-Monthly")
-            ->where('start_date', '<=', $dateNow)
-            ->where('end_date', '>=', $dateNow)
+            ->where('start_date', '<=', $periodStart)
+            ->where('end_date', '>=', $periodEnd)
             ->first();
 
         $tariff = Tariff::where('code', '01')
@@ -23,103 +33,88 @@ trait EACTrait {
         if ($consumption >= $creditUnits) {
             $lowCostConsumption = $creditUnits;
             $highCostConsumption = $consumption - $creditUnits;
-        }
-        else if  ($consumption < $creditUnits) {
+        } else if ($consumption < $creditUnits) {
             $lowCostConsumption = $consumption;
             $highCostConsumption = 0;
         }
 
+        $energyCharge = (float) number_format(
+            $tariff->energy_charge_normal * $highCostConsumption, 6
+        );
+        $networkCharge = (float) number_format($tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption), 6);
+        $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption), 6);
+        $publicServiceObligation = (float) number_format($tariff->public_service_obligation  * ($lowCostConsumption + $highCostConsumption), 6);
+        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6);
+        $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment,  6);
+        $vat = (float) number_format(0.19 * $total, 6);
+        $total =(float) number_format($total+ $vat, 6);
+
         if ($highCostConsumption > 0) {
             $cost = [
-                'energyCharge' => (float) number_format($tariff->energy_charge_normal * $highCostConsumption, 6),
-                'networkCharge' => (float) number_format($tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption), 6),
-                'ancilaryServices' => (float) number_format($tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption), 6),
-                'publicServiceObligation' => (float) number_format($tariff->public_service_obligation  * ($lowCostConsumption + $highCostConsumption), 6),
-                'fuelAdjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6),
-                'VAT' => (float) number_format(
-                    ($adjustment->revised_fuel_adjustment_price * $highCostConsumption +
-                    $tariff->energy_charge_normal * $highCostConsumption +
-                    $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption) +
-                    $tariff->ancilary_services_normal  * ($lowCostConsumption + $highCostConsumption) +
-                    $tariff->public_service_obligation * ($lowCostConsumption + $highCostConsumption)) * 0.19, 6
-                ),
-                'Total' => (float) number_format(
-                    ($adjustment->revised_fuel_adjustment_price * $highCostConsumption +
-                    $tariff->energy_charge_normal * $highCostConsumption +
-                    $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption) +
-                    $tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption) +
-                    $tariff->public_service_obligation *($lowCostConsumption + $highCostConsumption)) * 1.19, 6
-                ),
+                'energyCharge' => $energyCharge,
+                'networkCharge' => $networkCharge,
+                'ancilaryServices' => $ancilaryServices,
+                'publicServiceObligation' => $publicServiceObligation,
+                'fuelAdjustment' => $fuelAdjustment,
+                'VAT' => $vat,
+                'Total' => $total
             ];
-        }
-        else {
+        } else {
             $cost = [
-                'networkCharge' => (float) number_format($tariff->network_charge_normal * $lowCostConsumption, 6),
-                'ancilaryServices' => (float) number_format($tariff->ancilary_services_normal * $lowCostConsumption, 6),
-                'publicServiceObligation' => (float) number_format($tariff->public_service_obligation * $lowCostConsumption, 6),
-                'VAT' => (float) number_format(
-                    0.19 * ($tariff->network_charge_normal * $lowCostConsumption +
-                    $tariff->ancilary_services_normal * $lowCostConsumption +
-                    $tariff->public_service_obligation* $lowCostConsumption), 6
-                ),
-                'Total' => (float) number_format(
-                    ($tariff->network_charge_normal * $lowCostConsumption +
-                    $tariff->ancilary_services_normal * $lowCostConsumption +
-                    $tariff->public_service_obligation *$lowCostConsumption) * 1.19, 6
-                ),
+                'networkCharge' => $networkCharge,
+                'ancilaryServices' => $ancilaryServices,
+                'publicServiceObligation' => $publicServiceObligation,
+                'VAT' => $vat,
+                'Total' => $total
             ];
         }
         return $cost;
     }
-    public function calculateEACCost02($consumptionNormal, $consumptionReduced) {
+    public function calculateEACCost02(int $consumptionNormal, int $consumptionReduced, DateTime $periodStart, DateTime $periodEnd) :array
+    {
 
         $adjustment = Adjustment::where('consumer_type', "Bi-Monthly")
-            ->where('start_date', '<=', $dateNow)
-            ->where('end_date', '>=', $dateNow)
+            ->where('start_date', '<=', $periodStart)
+            ->where('end_date', '>=', $periodEnd)
             ->first();
 
         $tariff = Tariff::where('code', '02')
             ->where('end_date', '=', null)
             ->first();
 
-        $time_now = date('H');
-        $current_energy_charge = 0;
-        $current_network_charge = 0;
-        $current_ancilary_services = 0;
+        $energyCharge = 0;
+        $networkCharge = 0;
+        $ancilaryServices = 0;
+        $publicServiceObligation = 0;
+        $fuelAdjustment = 0;
 
-        if ($time_now >= 9 && $time_now <= 23) {
-            $current_energy_charge = $tariff->energy_charge_normal;
-            $current_network_charge = $tariff->network_charge_normal;
-            $current_ancilary_services = $tariff->ancilary_services_normal;
-        } else {
-            $current_energy_charge = $tariff->energy_charge_reduced;
-            $current_network_charge = $tariff->network_charge_reduced;
-            $current_ancilary_services = $tariff->ancilary_services_reduced;
+
+        if ($consumptionNormal > 0 ) {
+            $energyCharge = (float) number_format($tariff->energy_charge_normal * $consumptionNormal, 6);
+            $networkCharge = (float) number_format($tariff->network_charge_normal * $consumptionNormal, 6);
+            $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * $consumptionNormal, 6);
         }
-        $json = [
-            'Measurement' => '€/kWh',
-            'Breakdown' => [
-                'Energy Charge' => (float) number_format($current_energy_charge, 6),
-                'Network Charge' => (float) number_format($current_network_charge, 6),
-                'Ancilary Services' => (float) number_format($current_ancilary_services, 6),
-                'Public Service Obligation' => (float) number_format($tariff->public_service_obligation, 6),
-                'Fuel Adjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price, 6),
-                'VAT' => (float) number_format(
-                    0.19 * ($adjustment->revised_fuel_adjustment_price +
-                    $current_energy_charge +
-                    $current_network_charge +
-                    $current_ancilary_services +
-                    $tariff->public_service_obligation), 6
-                ),
-            ],
-            'Cost Per Unit' => (float) number_format(
-                ($adjustment->revised_fuel_adjustment_price +
-                $current_energy_charge +
-                $current_network_charge +
-                $current_ancilary_services +
-                $tariff->public_service_obligation) * 1.19, 6
-            ),
+        if ($consumptionReduced > 0 ) {
+            $energyCharge += (float) number_format($tariff->energy_charge_reduced * $consumptionReduced, 6);
+            $networkCharge += (float) number_format($tariff->network_charge_reduced * $consumptionReduced, 6);
+            $ancilaryServices += (float) number_format($tariff->ancilary_services_reduced * $consumptionReduced, 6);
+        }
+        $publicServiceObligation = (float) number_format($tariff->public_service_obligation * ($consumptionNormal + $consumptionReduced), 6);
+        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced), 6);
+        $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment,  6);
+        $vat = (float) number_format(0.19 * $total, 6);
+        $total =(float) number_format($total+ $vat, 6);
+
+        $cost = [
+            'energyCharge' => $energyCharge,
+            'networkCharge' => $networkCharge,
+            'ancilaryServices' => $ancilaryServices,
+            'publicServiceObligation' => $publicServiceObligation,
+            'fuelAdjustment' => $fuelAdjustment,
+            'VAT' => $vat,
+            'Total' => $total
         ];
-        return $json;
+
+        return $cost;
     }
 }
