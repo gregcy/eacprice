@@ -35,7 +35,7 @@
         </div>
         <div class="bg-gray-100 w-full">
             <div class="max-w-6xl m-auto p-4">
-                <form id="eac-calculator" class="mb-12">
+                <form id="eac-calculator" class="mb-12" method="POST" action="{{ route('calculator.calculate') }}">
                     @csrf
                     <fieldset id="tariff" class="py-4">
                         <label for="tariff-select" class="text-lg font-medum pr-4">{{ __('Tariff:') }}</label>
@@ -65,7 +65,7 @@
                         </div>
                         <div class="w-100 py-4">
                             <label for="consumption-economy" class="text-lg font-medum pr-4">{{ __('Consumption During Economy Period 23:00-09:00 (kWh):') }}</label>
-                            <input id="consumption-economy" type="number" name="consumption_economy" step="1" min="0" placeholder="0" value="0">
+                            <input id="consumption-economy" type="number" name="consumption-economy" step="1" min="0" placeholder="0" value="0">
                         </div>
                     </fieldset>
                     <x-primary-button class="mt-4">{{ __('Calculate') }}</x-primary-button>

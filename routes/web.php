@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdjustmentController;
-use App\Http\Controllers\GetCurrentRate;
+use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TariffController;
 use Illuminate\Support\Facades\Route;
@@ -17,22 +17,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get(
+    '/', function () {
+        return view('welcome');
+    }
+);
 
-Route::get('calculator', [GetCurrentRate::class, 'calculator'])->name('rate.calculator');
-Route::push('calculator', [GetCurrentRate::class, 'calculate'])->name('rate.calculate');
+Route::get('calculator', [CalculatorController::class, 'index'])->name('calculator.index');
+Route::post('calculator', [CalculatorController::class, 'calculate'])->name('calculator.calculate');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get(
+    '/dashboard', function () {
+        return view('dashboard');
+    }
+)->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::middleware('auth')->group(
+    function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    }
+);
 
 Route::resource('adjustments', AdjustmentController::class)
     ->only(['index', 'store', 'edit', 'update', 'create', 'destroy'])
@@ -41,8 +47,5 @@ Route::resource('adjustments', AdjustmentController::class)
 Route::resource('tariffs', TariffController::class)
     ->only(['index', 'store', 'edit', 'update', 'create', 'destroy'])
     ->middleware(['auth', 'verified']);
-
-Route::resource('rate', GetCurrentRate::class)
-    ->only(['index']);
 
 require __DIR__.'/auth.php';

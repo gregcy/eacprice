@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Adjustment;
-use App\Models\Tariff;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -13,29 +11,6 @@ class GetCurrentRate extends Controller
 {
     use EACTrait;
 
-    public function calculator(): View
-    {
-        return view('rate.calculator');
-    }
-
-    public function calculate(Request $request): View
-    {
-        $validated = $request->validate(
-            [
-                'consumption' => 'nullable|numeric|gte:0',
-                'credit-amount' => 'nullable|numeric|gte:0',
-                'consumption-standard' => 'nullable|numeric|gte:0',
-                'consumption-economy' => 'nullable|numeric|gte:0',
-            ]
-        );
-
-        return view(
-            'rate.calculate',
-            [
-
-            ]
-        );
-    }
     public function index(Request $request)
     {
         $json = '';
@@ -71,17 +46,15 @@ class GetCurrentRate extends Controller
                 $cost = $this->calculateEACCost02(0, 1, date_create('now'), date_create('now'));
             }
 
+        } else if ($tariffCode == '08') {
+            if (!$creditUnits) {
+                $cost = $this->calculateEACCost08(1, 0,  date_create('now'), date_create('now'));
+            } else {
+                $cost = $this->calculateEACCost08(1, 1,  date_create('now'), date_create('now'));
+            }
         }
+
         $json = ['measurement' => '€/kWh', 'cost' => $cost];
-
-
-
-
-        // } elseif ($tariffCode == '08') {
-
-        //     $current_energy_charge = 0;
-
-
 
         return response()->json(
             $json, 200

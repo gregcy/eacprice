@@ -131,29 +131,31 @@ trait EACTrait {
             ->where('end_date', '=', null)
             ->first();
 
-        if ( ($consumption - $creditUnits) <= 1000 ) {
-            $current_energy_charge = $tariff->energy_charge_subsidy_first;
-        } elseif ( ($consumption - $creditUnits) > 1000 && ($consumption - $creditUnits) <= 2000 ) {
-            $current_energy_charge = $tariff->energy_charge_subsidy_second;
-        } elseif ( ($consumption - $creditUnits) > 2000 ) {
-            $current_energy_charge = $tariff->energy_charge_subsidy_third;
-        }
+            $energyCharge = 0;
+            $fuelAdjustment = 0;
 
-        //     $json = [
-        //         'Measurement' => '€/kWh',
-        //         'Breakdown' => [
-        //             'Energy Charge' => (float) number_format($current_energy_charge, 6),
-        //             'Fuel Adjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price, 6),
-        //             'VAT' => (float) number_format(
-        //                 0.19 * ($adjustment->revised_fuel_adjustment_price +
-        //                 $current_energy_charge), 6
-        //             ),
-        //         ],
-        //         'Cost Per Unit' => (float) number_format(
-        //             ($adjustment->revised_fuel_adjustment_price +
-        //             $current_energy_charge) * 1.19, 6
-        //         ),
-        //     ];
-        // }
+        if (($consumption - $creditUnits) <= 1000) {
+            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_first * ($consumption - $creditUnits), 6);
+
+        } elseif (($consumption - $creditUnits) > 1000 && ($consumption - $creditUnits) <= 2000) {
+            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_second * ($consumption - $creditUnits), 6);
+
+        } elseif (($consumption - $creditUnits) > 2000) {
+            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_third * ($consumption - $creditUnits), 6);
+        }
+        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits), 6);
+        $total = (float) number_format($energyCharge + $fuelAdjustment,  6);
+        $vat = (float) number_format(0.19 * $total, 6);
+        $total = (float) number_format($total + $vat, 6);
+
+        $cost = [
+            'energyCharge' => $energyCharge,
+            'fuelAdjustment' => $fuelAdjustment,
+            'VAT' => $vat,
+            'Total' => $total
+        ];
+
+        return $cost;
+
     }
 }
