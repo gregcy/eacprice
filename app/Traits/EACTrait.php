@@ -47,7 +47,7 @@ trait EACTrait {
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6);
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment,  6);
         $vat = (float) number_format(0.19 * $total, 6);
-        $total =(float) number_format($total+ $vat, 6);
+        $total =(float) number_format($total + $vat, 6);
 
         if ($highCostConsumption > 0) {
             $cost = [
@@ -68,6 +68,7 @@ trait EACTrait {
                 'Total' => $total
             ];
         }
+
         return $cost;
     }
     public function calculateEACCost02(int $consumptionNormal, int $consumptionReduced, DateTime $periodStart, DateTime $periodEnd) :array
@@ -103,7 +104,7 @@ trait EACTrait {
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced), 6);
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment,  6);
         $vat = (float) number_format(0.19 * $total, 6);
-        $total =(float) number_format($total+ $vat, 6);
+        $total =(float) number_format($total + $vat, 6);
 
         $cost = [
             'energyCharge' => $energyCharge,
@@ -116,5 +117,43 @@ trait EACTrait {
         ];
 
         return $cost;
+    }
+
+    public function calculateEACCost08(int $consumption, int $creditUnits, DateTime $periodStart, DateTime $periodEnd): array
+    {
+
+        $adjustment = Adjustment::where('consumer_type', "Bi-Monthly")
+            ->where('start_date', '<=', $periodStart)
+            ->where('end_date', '>=', $periodEnd)
+            ->first();
+
+        $tariff = Tariff::where('code', '08')
+            ->where('end_date', '=', null)
+            ->first();
+
+        if ( ($consumption - $creditUnits) <= 1000 ) {
+            $current_energy_charge = $tariff->energy_charge_subsidy_first;
+        } elseif ( ($consumption - $creditUnits) > 1000 && ($consumption - $creditUnits) <= 2000 ) {
+            $current_energy_charge = $tariff->energy_charge_subsidy_second;
+        } elseif ( ($consumption - $creditUnits) > 2000 ) {
+            $current_energy_charge = $tariff->energy_charge_subsidy_third;
+        }
+
+        //     $json = [
+        //         'Measurement' => '€/kWh',
+        //         'Breakdown' => [
+        //             'Energy Charge' => (float) number_format($current_energy_charge, 6),
+        //             'Fuel Adjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price, 6),
+        //             'VAT' => (float) number_format(
+        //                 0.19 * ($adjustment->revised_fuel_adjustment_price +
+        //                 $current_energy_charge), 6
+        //             ),
+        //         ],
+        //         'Cost Per Unit' => (float) number_format(
+        //             ($adjustment->revised_fuel_adjustment_price +
+        //             $current_energy_charge) * 1.19, 6
+        //         ),
+        //     ];
+        // }
     }
 }

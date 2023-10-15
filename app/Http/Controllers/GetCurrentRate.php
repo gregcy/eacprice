@@ -81,30 +81,7 @@ class GetCurrentRate extends Controller
 
         //     $current_energy_charge = 0;
 
-        //     if ($unitsConsumed <= 1000) {
-        //         $current_energy_charge = $tariff->energy_charge_subsidy_first;
-        //     } elseif ($unitsConsumed > 1000 && $unitsConsumed <= 2000) {
-        //         $current_energy_charge = $tariff->energy_charge_subsidy_second;
-        //     } elseif ($unitsConsumed > 2000) {
-        //         $current_energy_charge = $tariff->energy_charge_subsidy_third;
-        //     }
 
-        //     $json = [
-        //         'Measurement' => '€/kWh',
-        //         'Breakdown' => [
-        //             'Energy Charge' => (float) number_format($current_energy_charge, 6),
-        //             'Fuel Adjustment' => (float) number_format($adjustment->revised_fuel_adjustment_price, 6),
-        //             'VAT' => (float) number_format(
-        //                 0.19 * ($adjustment->revised_fuel_adjustment_price +
-        //                 $current_energy_charge), 6
-        //             ),
-        //         ],
-        //         'Cost Per Unit' => (float) number_format(
-        //             ($adjustment->revised_fuel_adjustment_price +
-        //             $current_energy_charge) * 1.19, 6
-        //         ),
-        //     ];
-        // }
 
         return response()->json(
             $json, 200
