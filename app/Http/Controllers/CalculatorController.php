@@ -8,6 +8,8 @@ use App\Traits\EACTrait;
 
 class CalculatorController extends Controller
 {
+    use EACTrait;
+
     public function index(): View
     {
         return view('rate.calculator');
@@ -15,7 +17,6 @@ class CalculatorController extends Controller
 
     public function calculate(Request $request): View
     {
-        dd($request);
         $validated = $request->validate(
             [
                 // '01' => 'Single Rate Domestic Use', '02' => 'Two Rate Domestic Use', '08' => 'Special Tariff for Vulnerable Customers
@@ -27,11 +28,35 @@ class CalculatorController extends Controller
             ]
         );
 
+        $cost = [];
+
+        if ($validated['tariff'] == "01") {
+            $cost = $this->calculateEACCost01(
+                $validated['consumption'],
+                $validated['credit-amount'],
+                date_create('now'),
+                date_create('now')
+            );
+        } else if ($validated['tariff'] == "02") {
+            $cost = $this->calculateEACCost02(
+                $validated['consumption-standard'],
+                $validated['consumption-economy'],
+                date_create('now'),
+                date_create('now')
+            );
+        } else if ($validated['tariff'] == "08") {
+            $cost = $this->calculateEACCost08(
+                $validated['consumption'],
+                $validated['credit-amount'],
+                date_create('now'),
+                date_create('now')
+            );
+        }
 
         return view(
             'rate.calculate',
             [
-
+                'cost' => $cost,
             ]
         );
     }
