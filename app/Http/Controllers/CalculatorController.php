@@ -12,7 +12,7 @@ class CalculatorController extends Controller
 
     public function index(): View
     {
-        return view('rate.calculator');
+        return view('rate.page');
     }
 
     public function calculate(Request $request): View
@@ -54,7 +54,7 @@ class CalculatorController extends Controller
         }
 
         return view(
-            'rate.calculate',
+            'rate.page',
             [
                 'cost' => $cost,
             ]

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>@yield('title')</title>
+        <title>EAC Calculator</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -35,7 +35,7 @@
         </div>
         <div class="bg-gray-100 w-full">
             <div class="max-w-6xl m-auto p-4">
-                @include('rate.calculator')
+                @include('rate.calculator', ['cost' => $cost])
             </div>
         </div>
     </body>
