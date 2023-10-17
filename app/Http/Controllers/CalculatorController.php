@@ -29,7 +29,8 @@ class CalculatorController extends Controller
         );
 
         $cost = [];
-        $values = array('consumption' => $validated['consumption'],
+        $values = array('tariff' => $validated['tariff'],
+                        'consumption' => $validated['consumption'],
                         'credit-amount' => $validated['credit-amount'],
                         'consumption-standard' => $validated['consumption-standard'],
                         'consumption-economy' => $validated['consumption-economy']);

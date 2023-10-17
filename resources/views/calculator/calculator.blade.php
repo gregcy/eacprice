@@ -4,14 +4,23 @@
     <fieldset id="tariff" class="py-4">
         <label for="tariff-select" class="text-lg font-medum pr-4">{{ __('Tariff:') }}</label>
         <select id="tariff-select" name="tariff"
-            class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-            >
-            <option value="01" @if($values['tariff'] == '01') selected @endif>{{__('01 - Single Rate Domestic Use') }}</option>
-            <option value="02">{{ __('02 - Two Rate Domestic Use') }}</option>
-            <option value="08">{{ __('08 - Special Tariff for Vulnerable Customers') }}</option>
+            class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+            @php
+                $options = [
+                    '01' => __('01 - Single Rate Domestic Use'),
+                    '02' => __('02 - Two Rate Domestic Use'),
+                    '08' => __('08 - Special Tariff for Vulnerable Customers'),
+                ];
+                $selectedValue = old('tariff', $values['tariff'] ?? '01');
+            @endphp
+
+            @foreach($options as $value => $label)
+                <option value="{{ $value }}" @if($selectedValue == $value) selected @endif>{{ $label }}</option>
+            @endforeach
         </select>
     </fieldset>
-    <fieldset id="tariff01" class="block">
+    @isset($values)
+    <fieldset id="tariff01" class="{{ $values['tariff'] === '01' ? 'block' : 'hidden' }}">
         <div class="w-100">
             <label for="consumption" class="text-lg font-medum pr-20">{{ __('Consumption (kWh):') }}</label>
                 <input id="consumption" type="number" name="consumption" step="1" min="0" placeholder="0" value="{{ old('consumption', $values['consumption'] ?? 0) }}">
@@ -20,9 +29,9 @@
             <label for="credit-amount" class="text-lg font-medum pr-4">{{ __('Returned Solar Power (kWh):') }}</label>
             <input id="credit-amount" type="number" name="credit-amount" step="1" min="0" placeholder="0" value="{{ old('credit-amount', $values['credit-amount'] ?? 0) }}">
         </div>
-
     </fieldset>
-    <fieldset id="tariff02" class="hidden">
+    @endisset
+    <fieldset id="tariff01" class="{{ $values['tariff'] === '02' ? 'block' : 'hidden' }}">
         <div class="w-100">
             <label for="consumption-standard" class="text-lg font-medum pr-5">{{ __('Consumption During Standard Period 09:00-23:00 (kWh):') }}</label>
             <input id="consumption-standard" type="number" name="consumption-standard" step="1" min="0" placeholder="0" value="{{ old('consumption-standard', $values['consumption-standard'] ?? 0) }}">
