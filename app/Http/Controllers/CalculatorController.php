@@ -12,7 +12,7 @@ class CalculatorController extends Controller
 
     public function index(): View
     {
-        return view('rate.page');
+        return view('calculator.page');
     }
 
     public function calculate(Request $request): View
@@ -29,6 +29,10 @@ class CalculatorController extends Controller
         );
 
         $cost = [];
+        $values = array('consumption' => $validated['consumption'],
+                        'credit-amount' => $validated['credit-amount'],
+                        'consumption-standard' => $validated['consumption-standard'],
+                        'consumption-economy' => $validated['consumption-economy']);
 
         if ($validated['tariff'] == "01") {
             $cost = $this->calculateEACCost01(
@@ -54,9 +58,10 @@ class CalculatorController extends Controller
         }
 
         return view(
-            'rate.page',
+            'calculator.page',
             [
                 'cost' => $cost,
+                'values' => $values,
             ]
         );
     }

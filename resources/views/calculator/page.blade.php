@@ -17,7 +17,7 @@
     <body class="font-sans antialiased">
         <div class="bg-blue-700 w-full">
             <div class="max-w-6xl m-auto p-4">
-                <h1 class="text-4xl font-bold text-white w-full text-center  p-8">Cyprus Electricity Calculator</h1>
+                <h1 class="text-4xl font-bold text-white w-full text-center p-8">Cyprus Electricity Calculator</h1>
                 <div class="text-white text-xl w-full">
                     The calculator uses the latest tariffs from the Electricity Authority of Cyprus to calculate the cost
                     of your electricity consumption.
@@ -35,7 +35,12 @@
         </div>
         <div class="bg-gray-100 w-full">
             <div class="max-w-6xl m-auto p-4">
-                @include('rate.calculator', ['cost' => $cost])
+                @isset($cost)
+                    @include('calculator.calculator', ['cost' => $cost])
+                    @include('calculator.cost', ['cost' => $cost])
+                @else
+                    @include('calculator.calculator')
+                @endisset
             </div>
         </div>
     </body>
