@@ -19,28 +19,28 @@
             @endforeach
         </select>
     </fieldset>
-    @isset($values)
-    <fieldset id="tariff01" class="{{ $values['tariff'] === '01' ? 'block' : 'hidden' }}">
+    <fieldset id="tariff01" class="{{ (isset($values) && in_array($values['tariff'], ['01', '08'])) || !isset($values) ? 'block' : 'hidden' }}">
         <div class="w-100">
-            <label for="consumption" class="text-lg font-medum pr-20">{{ __('Consumption (kWh):') }}</label>
-                <input id="consumption" type="number" name="consumption" step="1" min="0" placeholder="0" value="{{ old('consumption', $values['consumption'] ?? 0) }}">
+            <label for="consumption" class="text-lg font-medium pr-20">{{ __('Consumption (kWh):') }}</label>
+            <input id="consumption" type="number" name="consumption" step="1" min="0" placeholder="0" value="{{ old('consumption', $values['consumption'] ?? 0) }}">
         </div>
         <div class="w-100 py-4">
-            <label for="credit-amount" class="text-lg font-medum pr-4">{{ __('Returned Solar Power (kWh):') }}</label>
+            <label for="credit-amount" class="text-lg font-medium pr-4">{{ __('Returned Solar Power (kWh):') }}</label>
             <input id="credit-amount" type="number" name="credit-amount" step="1" min="0" placeholder="0" value="{{ old('credit-amount', $values['credit-amount'] ?? 0) }}">
         </div>
     </fieldset>
-    @endisset
-    <fieldset id="tariff01" class="{{ $values['tariff'] === '02' ? 'block' : 'hidden' }}">
+
+    <fieldset id="tariff02" class="{{ (isset($values) && $values['tariff'] === '02') ? 'block' : 'hidden' }}">
         <div class="w-100">
-            <label for="consumption-standard" class="text-lg font-medum pr-5">{{ __('Consumption During Standard Period 09:00-23:00 (kWh):') }}</label>
+            <label for="consumption-standard" class="text-lg font-medium pr-5">{{ __('Consumption During Standard Period 09:00-23:00 (kWh):') }}</label>
             <input id="consumption-standard" type="number" name="consumption-standard" step="1" min="0" placeholder="0" value="{{ old('consumption-standard', $values['consumption-standard'] ?? 0) }}">
         </div>
         <div class="w-100 py-4">
-            <label for="consumption-economy" class="text-lg font-medum pr-4">{{ __('Consumption During Economy Period 23:00-09:00 (kWh):') }}</label>
+            <label for "consumption-economy" class="text-lg font-medium pr-4">{{ __('Consumption During Economy Period 23:00-09:00 (kWh):') }}</label>
             <input id="consumption-economy" type="number" name="consumption-economy" step="1" min="0" placeholder="0" value="{{ old('consumption-economy', $values['consumption-economy'] ?? 0) }}">
         </div>
     </fieldset>
+
     <x-primary-button class="mt-4">{{ __('Calculate') }}</x-primary-button>
 </form>
 <script>
