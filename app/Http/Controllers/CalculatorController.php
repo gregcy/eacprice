@@ -57,7 +57,9 @@ class CalculatorController extends Controller
                 date_create('now')
             );
         }
-
+        foreach ($cost as $key => $value) {
+            $cost[$key] = $this->min_precision($value, 2);
+        }
         return view(
             'calculator.page',
             [
@@ -65,5 +67,11 @@ class CalculatorController extends Controller
                 'values' => $values,
             ]
         );
+    }
+
+    private function min_precision($x, $p)
+    {
+        $e = pow(10,$p);
+        return floor($x*$e)==$x*$e?sprintf("%.${p}f",$x):$x;
     }
 }

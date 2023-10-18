@@ -56,16 +56,16 @@ trait EACTrait {
                 'ancilaryServices' => $ancilaryServices,
                 'publicServiceObligation' => $publicServiceObligation,
                 'fuelAdjustment' => $fuelAdjustment,
-                'VAT' => $vat,
-                'Total' => $total
+                'vat' => $vat,
+                'total' => $total
             ];
         } else {
             $cost = [
                 'networkCharge' => $networkCharge,
                 'ancilaryServices' => $ancilaryServices,
                 'publicServiceObligation' => $publicServiceObligation,
-                'VAT' => $vat,
-                'Total' => $total
+                'vat' => $vat,
+                'total' => $total
             ];
         }
 
@@ -112,8 +112,8 @@ trait EACTrait {
             'ancilaryServices' => $ancilaryServices,
             'publicServiceObligation' => $publicServiceObligation,
             'fuelAdjustment' => $fuelAdjustment,
-            'VAT' => $vat,
-            'Total' => $total
+            'vat' => $vat,
+            'total' => $total
         ];
 
         return $cost;
@@ -151,8 +151,8 @@ trait EACTrait {
         $cost = [
             'energyCharge' => $energyCharge,
             'fuelAdjustment' => $fuelAdjustment,
-            'VAT' => $vat,
-            'Total' => $total
+            'vat' => $vat,
+            'total' => $total
         ];
 
         return $cost;

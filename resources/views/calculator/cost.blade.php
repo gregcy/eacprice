@@ -21,43 +21,75 @@
                 <th class="py-2 px-4 text-left">Item</th>
                 <th class="py-2 px-4 text-left">Cost</th>
             </tr>
-            <tr>
-                <td class="px-4">Energy Charge</td>
-                <td class="px-4">€10.35</td>
-            </tr>
-            <tr>
-                <td class="px-4">Network Charge</td>
-                <td class="px-4">€3.02</td>
-            </tr>
-            <tr>
-                <td class="px-4">Ancillary Services</td>
-                <td class="px-4">€0.65</td>
-            </tr>
-            <tr>
-                <td class="px-4">Public Service Obligation</td>
-                <td class="px-4">€0.058</td>
-            </tr>
-            <tr>
-                <td class="px-4">Fuel Adjustement</td>
-                <td class="px-4">€6.3378</td>
-            </tr>
+            @isset($cost['energyCharge'])
+                <tr>
+                    <td class="px-4">Energy Charge</td>
+                    <td class="px-4">€{{ $cost['energyCharge'] }}</td>
+                </tr>
+            @endisset
+            @isset($cost['networkCharge'])
+                <tr>
+                    <td class="px-4">Network Charge</td>
+                    <td class="px-4">€{{ $cost['networkCharge'] }}</td>
+                </tr>
+            @endisset
+            @isset($cost['ancilaryServices'])
+                <tr>
+                    <td class="px-4">Ancillary Services</td>
+                    <td class="px-4">€{{ $cost['ancilaryServices'] }}</td>
+                </tr>
+            @endisset
+            @isset($cost['publicServiceObligation'])
+                <tr>
+                    <td class="px-4">Public Service Obligation</td>
+                    <td class="px-4">€{{ $cost['publicServiceObligation'] }}</td>
+                </tr>
+            @endisset
+            @isset($cost['fuelAdjustment'])
+                <tr>
+                    <td class="px-4">Fuel Adjustement</td>
+                    <td class="px-4">€{{ $cost['fuelAdjustment'] }}</td>
+                </tr>
+            @endisset
             <tr>
                 <td class="px-4">VAT</td>
-                <td class="px-4">€7.0248</td>
+                <td class="px-4">€{{ $cost['vat'] }}</td>
             </tr>
             <tr>
                 <td class="py-2 px-4 font-bold">Total:</td>
-                <td class="py-2 px-4 font-bold">€102.33</td>
+                <td class="py-2 px-4 font-bold">€{{ $cost['total']}}</td>
             </tr>
         </table>
     </div>
 </div>
 <script type="module">
+    const total = {{ number_format($cost['total'],2,'.','') }};
     const data = {
-        labels: ['Energy Charge', 'Network Charge', 'Ancillary Services', 'Public Service Obligation', 'Fuel Adjustement', 'VAT'],
+        labels: [
+            @isset($cost['energyCharge'])
+                'Energy Charge',
+            @endisset
+            @isset($cost['networkCharge'])
+                'Network Charge',
+            @endisset
+            @isset($cost['ancilaryServices'])
+                'Ancillary Services',
+            @endisset
+            @isset($cost['publicServiceObligation'])
+                'Public Service Obligation',
+            @endisset
+            @isset($cost['fuelAdjustment'])
+                'Fuel Adjustement',
+            @endisset
+            'VAT'],
         datasets: [{
-            label: '€',
-            data: [10.35, 3.02, 0.65, 0.058, 6.3378, 7.0248],
+            label: 'Cost',
+            data: [
+                @php
+                    array_pop($cost);
+                    echo implode(',', $cost);
+                @endphp
+            ],
             borderWidth: 1
         }]
     };
@@ -73,7 +105,7 @@
             ctx.fillStyle = 'rgba(54,162,235,1)';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText('€10,002.33', xCoor, yCoor);
+            ctx.fillText('€'+total.toFixed(2), xCoor, yCoor);
         }
     }
     const config = {
@@ -84,7 +116,23 @@
                 legend: {
                     display: false
                 },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed !== null) {
+                                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(context.parsed);
+                            }
+                            return label;
+                        }
+                    }
+                }
             }
+
         },
         plugins: [doughnutLabel]
     };
