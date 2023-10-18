@@ -2,8 +2,13 @@
         <h2 class="text-xl font-bold py-4">Your Electricity Cost</h2>
         <div class="flex pb-6">
             <div class="font-bold">Tariff:</div><div class="font-normal pl-1">{{ $values['tariff'] }}</div>
-            <div class="font-bold pl-4">Consumption:</div><div class="font-normal pl-1">{{ $values['consumption'] }} kWh</div>
-            <div class="font-bold pl-4">Returned Solar Power:</div><div class="font-normal pl-1">{{ $values['credit-amount'] }} kWh</div>
+            @if($values['tariff'] === '01' || $values['tariff'] === '08')
+                <div class="font-bold pl-4">Consumption:</div><div class="font-normal pl-1">{{ $values['consumption'] }} kWh</div>
+                <div class="font-bold pl-4">Returned Solar Power:</div><div class="font-normal pl-1">{{ $values['credit-amount'] }} kWh</div>
+            @elseif($values['tariff'] === '02')
+                <div class="font-bold pl-4">Consumption During Standard Period:</div><div class="font-normal pl-1">{{ $values['consumption-standard'] }} kWh</div>
+                <div class="font-bold pl-4">Consumption During Economy Period:</div><div class="font-normal pl-1">{{ $values['consumption-economy'] }} kWh</div>
+            @endif
         </div>
     </div>
 <div class="flex">
