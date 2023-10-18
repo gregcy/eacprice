@@ -1,8 +1,16 @@
+<div class="w-full">
+        <h2 class="text-xl font-bold py-4">Your Electricity Cost</h2>
+        <div class="flex pb-6">
+            <div class="font-bold">Tariff:</div><div class="font-normal pl-1">{{ $values['tariff'] }}</div>
+            <div class="font-bold pl-4">Consumption:</div><div class="font-normal pl-1">{{ $values['consumption'] }} kWh</div>
+            <div class="font-bold pl-4">Returned Solar Power:</div><div class="font-normal pl-1">{{ $values['credit-amount'] }} kWh</div>
+        </div>
+    </div>
 <div class="flex">
-    <div class="w-96">
+    <div class="w-96 mr-12">
         <canvas id="myChart"></canvas>
     </div>
-    <div class="w-96 ml-16 mt-8">
+    <div class="w-1/3 ml-16 mt-8">
         <table>
             <tr>
                 <th class="py-2 px-4 text-left">Item</th>

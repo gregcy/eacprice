@@ -1,4 +1,3 @@
-
 <form id="eac-calculator" class="mb-12" method="POST" action="{{ route('calculator.calculate') }}">
     @csrf
     <fieldset id="tariff" class="py-4">
@@ -36,7 +35,7 @@
             <input id="consumption-standard" type="number" name="consumption-standard" step="1" min="0" placeholder="0" value="{{ old('consumption-standard', $values['consumption-standard'] ?? 0) }}">
         </div>
         <div class="w-100 py-4">
-            <label for "consumption-economy" class="text-lg font-medium pr-4">{{ __('Consumption During Economy Period 23:00-09:00 (kWh):') }}</label>
+            <label for="consumption-economy" class="text-lg font-medium pr-4">{{ __('Consumption During Economy Period 23:00-09:00 (kWh):') }}</label>
             <input id="consumption-economy" type="number" name="consumption-economy" step="1" min="0" placeholder="0" value="{{ old('consumption-economy', $values['consumption-economy'] ?? 0) }}">
         </div>
     </fieldset>
@@ -47,6 +46,7 @@
     const selectElement = document.getElementById('tariff-select');
     const tariff01 = document.getElementById('tariff01');
     const tariff02 = document.getElementById('tariff02');
+    const inputs = document.getElementsByTagName('input');
     selectElement.addEventListener('change', function() {
         let selectedValue = selectElement.value;
         if (selectedValue == '01') {
@@ -60,6 +60,11 @@
         else if (selectedValue == '08') {
             tariff01.classList.replace('hidden', 'block');
             tariff02.classList.replace('block','hidden');
+        }
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].type === 'number') {
+                inputs[i].value = '';
+            }
         }
     });
 </script>

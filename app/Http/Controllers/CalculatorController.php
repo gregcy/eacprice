@@ -30,29 +30,29 @@ class CalculatorController extends Controller
 
         $cost = [];
         $values = array('tariff' => $validated['tariff'],
-                        'consumption' => $validated['consumption'],
-                        'credit-amount' => $validated['credit-amount'],
-                        'consumption-standard' => $validated['consumption-standard'],
-                        'consumption-economy' => $validated['consumption-economy']);
+                        'consumption' => $validated['consumption'] ?? 0,
+                        'credit-amount' => $validated['credit-amount'] ?? 0,
+                        'consumption-standard' => $validated['consumption-standard'] ?? 0,
+                        'consumption-economy' => $validated['consumption-economy'] ?? 0);
 
         if ($validated['tariff'] == "01") {
             $cost = $this->calculateEACCost01(
-                $validated['consumption'],
-                $validated['credit-amount'],
+                $values['consumption'],
+                $values['credit-amount'],
                 date_create('now'),
                 date_create('now')
             );
         } else if ($validated['tariff'] == "02") {
             $cost = $this->calculateEACCost02(
-                $validated['consumption-standard'],
-                $validated['consumption-economy'],
+                $values['consumption-standard'],
+                $values['consumption-economy'],
                 date_create('now'),
                 date_create('now')
             );
         } else if ($validated['tariff'] == "08") {
             $cost = $this->calculateEACCost08(
-                $validated['consumption'],
-                $validated['credit-amount'],
+                $values['consumption'],
+                $values['credit-amount'],
                 date_create('now'),
                 date_create('now')
             );
