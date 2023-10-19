@@ -45,7 +45,9 @@ trait EACTrait {
         $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
         $publicServiceObligation = (float) number_format($tariff->public_service_obligation  * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6, '.', '');
-        $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment, 6, '.', '');
+        $supplyCharge = (float) number_format( $tariff->supply_charge ,6, '.', '' );
+        $meterReaading = (float) number_format( $tariff->meter_reading ,6, '.', '' );
+        $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment + $supplyCharge + $meterReaading, 6, '.', '');
         $vat = (float) number_format(0.19 * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
 
@@ -56,6 +58,8 @@ trait EACTrait {
                 'ancilaryServices' => $ancilaryServices,
                 'publicServiceObligation' => $publicServiceObligation,
                 'fuelAdjustment' => $fuelAdjustment,
+                'supplyCharge' => $supplyCharge,
+                'meterReaading' => $meterReaading,
                 'vat' => $vat,
                 'total' => $total
             ];
@@ -64,6 +68,8 @@ trait EACTrait {
                 'networkCharge' => $networkCharge,
                 'ancilaryServices' => $ancilaryServices,
                 'publicServiceObligation' => $publicServiceObligation,
+                'supplyCharge' => $supplyCharge,
+                'meterReaading' => $meterReaading,
                 'vat' => $vat,
                 'total' => $total
             ];
@@ -101,6 +107,8 @@ trait EACTrait {
         }
         $publicServiceObligation = (float) number_format($tariff->public_service_obligation * ($consumptionNormal + $consumptionReduced), 6, '.', '');
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced), 6, '.', '');
+        $supplyCharge = (float) number_format( $tariff->supply_charge ,6, '.', '' );
+        $meterReaading = (float) number_format( $tariff->meter_reading ,6, '.', '' );
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment, 6, '.', '');
         $vat = (float) number_format(0.19 * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
@@ -111,6 +119,8 @@ trait EACTrait {
             'ancilaryServices' => $ancilaryServices,
             'publicServiceObligation' => $publicServiceObligation,
             'fuelAdjustment' => $fuelAdjustment,
+            'supplyCharge' => $supplyCharge,
+            'meterReaading' => $meterReaading,
             'vat' => $vat,
             'total' => $total
         ];

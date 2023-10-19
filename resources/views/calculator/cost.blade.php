@@ -53,7 +53,7 @@
             @isset($cost['fuelAdjustment'])
                 <tr>
                     <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
-                    <td class="px-4">Fuel Adjustement</td>
+                    <td class="px-4">Fuel Adjustment</td>
                     <td class="px-4">€{{ $cost['fuelAdjustment'] }}</td>
                 </tr>
             @endisset
@@ -87,7 +87,7 @@
                 'Public Service Obligation',
             @endisset
             @isset($cost['fuelAdjustment'])
-                'Fuel Adjustement',
+                'Fuel Adjustment',
             @endisset
             'VAT'],
         datasets: [{
