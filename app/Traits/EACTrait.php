@@ -41,13 +41,13 @@ trait EACTrait {
         $energyCharge = (float) number_format(
             $tariff->energy_charge_normal * $highCostConsumption, 6
         );
-        $networkCharge = (float) number_format($tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption), 6);
-        $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption), 6);
-        $publicServiceObligation = (float) number_format($tariff->public_service_obligation  * ($lowCostConsumption + $highCostConsumption), 6);
-        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6);
-        $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment,  6);
-        $vat = (float) number_format(0.19 * $total, 6);
-        $total =(float) number_format($total + $vat, 6);
+        $networkCharge = (float) number_format($tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
+        $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
+        $publicServiceObligation = (float) number_format($tariff->public_service_obligation  * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
+        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6, '.', '');
+        $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment, 6, '.', '');
+        $vat = (float) number_format(0.19 * $total, 6, '.', '');
+        $total =(float) number_format($total + $vat, 6, '.', '');
 
         if ($highCostConsumption > 0) {
             $cost = [
@@ -68,7 +68,6 @@ trait EACTrait {
                 'total' => $total
             ];
         }
-
         return $cost;
     }
     public function calculateEACCost02(int $consumptionNormal, int $consumptionReduced, DateTime $periodStart, DateTime $periodEnd) :array
@@ -91,20 +90,20 @@ trait EACTrait {
 
 
         if ($consumptionNormal > 0 ) {
-            $energyCharge = (float) number_format($tariff->energy_charge_normal * $consumptionNormal, 6);
-            $networkCharge = (float) number_format($tariff->network_charge_normal * $consumptionNormal, 6);
-            $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * $consumptionNormal, 6);
+            $energyCharge = (float) number_format($tariff->energy_charge_normal * $consumptionNormal, 6, '.', '');
+            $networkCharge = (float) number_format($tariff->network_charge_normal * $consumptionNormal, 6, '.', '');
+            $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * $consumptionNormal, 6, '.', '');
         }
         if ($consumptionReduced > 0 ) {
-            $energyCharge += (float) number_format($tariff->energy_charge_reduced * $consumptionReduced, 6);
-            $networkCharge += (float) number_format($tariff->network_charge_reduced * $consumptionReduced, 6);
-            $ancilaryServices += (float) number_format($tariff->ancilary_services_reduced * $consumptionReduced, 6);
+            $energyCharge += (float) number_format($tariff->energy_charge_reduced * $consumptionReduced, 6, '.', '');
+            $networkCharge += (float) number_format($tariff->network_charge_reduced * $consumptionReduced, 6, '.', '');
+            $ancilaryServices += (float) number_format($tariff->ancilary_services_reduced * $consumptionReduced, 6, '.', '');
         }
-        $publicServiceObligation = (float) number_format($tariff->public_service_obligation * ($consumptionNormal + $consumptionReduced), 6);
-        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced), 6);
-        $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment,  6);
-        $vat = (float) number_format(0.19 * $total, 6);
-        $total =(float) number_format($total + $vat, 6);
+        $publicServiceObligation = (float) number_format($tariff->public_service_obligation * ($consumptionNormal + $consumptionReduced), 6, '.', '');
+        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced), 6, '.', '');
+        $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment, 6, '.', '');
+        $vat = (float) number_format(0.19 * $total, 6, '.', '');
+        $total =(float) number_format($total + $vat, 6, '.', '');
 
         $cost = [
             'energyCharge' => $energyCharge,
@@ -135,18 +134,18 @@ trait EACTrait {
             $fuelAdjustment = 0;
 
         if (($consumption - $creditUnits) <= 1000) {
-            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_first * ($consumption - $creditUnits), 6);
+            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_first * ($consumption - $creditUnits), 6, '.', '');
 
         } elseif (($consumption - $creditUnits) > 1000 && ($consumption - $creditUnits) <= 2000) {
-            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_second * ($consumption - $creditUnits), 6);
+            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_second * ($consumption - $creditUnits), 6, '.', '');
 
         } elseif (($consumption - $creditUnits) > 2000) {
-            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_third * ($consumption - $creditUnits), 6);
+            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_third * ($consumption - $creditUnits), 6, '.', '');
         }
-        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits), 6);
-        $total = (float) number_format($energyCharge + $fuelAdjustment,  6);
-        $vat = (float) number_format(0.19 * $total, 6);
-        $total = (float) number_format($total + $vat, 6);
+        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits), 6, '.', '');
+        $total = (float) number_format($energyCharge + $fuelAdjustment, 6, '.', '');
+        $vat = (float) number_format(0.19 * $total, 6, '.', '');
+        $total = (float) number_format($total + $vat, 6, '.', '');
 
         $cost = [
             'energyCharge' => $energyCharge,

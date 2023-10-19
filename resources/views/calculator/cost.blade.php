@@ -15,47 +15,55 @@
     <div class="w-96 mr-12">
         <canvas id="myChart"></canvas>
     </div>
-    <div class="w-1/3 ml-16 mt-8">
-        <table>
+    <div class="w-1/2 ml-16 mt-8">
+        <table id="costBreakdown">
             <tr>
+                <th class="py-2 px-4 text-left border-grey"></th>
                 <th class="py-2 px-4 text-left">Item</th>
                 <th class="py-2 px-4 text-left">Cost</th>
             </tr>
             @isset($cost['energyCharge'])
-                <tr>
+                <tr class="mx-2">
+                    <td class="px-4 border-grey border-b-8"></td>
                     <td class="px-4">Energy Charge</td>
                     <td class="px-4">€{{ $cost['energyCharge'] }}</td>
                 </tr>
             @endisset
             @isset($cost['networkCharge'])
                 <tr>
+                    <td class="px-4 border-grey border-b-8"></td>
                     <td class="px-4">Network Charge</td>
                     <td class="px-4">€{{ $cost['networkCharge'] }}</td>
                 </tr>
             @endisset
             @isset($cost['ancilaryServices'])
                 <tr>
+                    <td class="px-4 border-grey border-b-8"></td>
                     <td class="px-4">Ancillary Services</td>
                     <td class="px-4">€{{ $cost['ancilaryServices'] }}</td>
                 </tr>
             @endisset
             @isset($cost['publicServiceObligation'])
                 <tr>
+                    <td class="px-4 border-grey border-b-8"></td>
                     <td class="px-4">Public Service Obligation</td>
                     <td class="px-4">€{{ $cost['publicServiceObligation'] }}</td>
                 </tr>
             @endisset
             @isset($cost['fuelAdjustment'])
                 <tr>
+                    <td class="px-4 border-grey border-b-8"></td>
                     <td class="px-4">Fuel Adjustement</td>
                     <td class="px-4">€{{ $cost['fuelAdjustment'] }}</td>
                 </tr>
             @endisset
             <tr>
+                <td class="px-4 border-grey border-b-8"></td>
                 <td class="px-4">VAT</td>
                 <td class="px-4">€{{ $cost['vat'] }}</td>
             </tr>
             <tr>
+                <td class="px-4 bg-grey"></td>
                 <td class="py-2 px-4 font-bold">Total:</td>
                 <td class="py-2 px-4 font-bold">€{{ $cost['total']}}</td>
             </tr>
