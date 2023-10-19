@@ -45,8 +45,8 @@ trait EACTrait {
         $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
         $publicServiceObligation = (float) number_format($tariff->public_service_obligation  * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6, '.', '');
-        $supplyCharge = (float) number_format( $tariff->supply_charge ,6, '.', '' );
-        $meterReaading = (float) number_format( $tariff->meter_reading ,6, '.', '' );
+        $supplyCharge = (float) number_format($tariff->recurring_supply_charge, 6, '.', '');
+        $meterReaading = (float) number_format($tariff->recurring_meter_reading, 6, '.', '');
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment + $supplyCharge + $meterReaading, 6, '.', '');
         $vat = (float) number_format(0.19 * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
@@ -107,8 +107,8 @@ trait EACTrait {
         }
         $publicServiceObligation = (float) number_format($tariff->public_service_obligation * ($consumptionNormal + $consumptionReduced), 6, '.', '');
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced), 6, '.', '');
-        $supplyCharge = (float) number_format( $tariff->supply_charge ,6, '.', '' );
-        $meterReaading = (float) number_format( $tariff->meter_reading ,6, '.', '' );
+        $supplyCharge = (float) number_format($tariff->recurring_supply_charge, 6, '.', '');
+        $meterReaading = (float) number_format($tariff->recurring_meter_reading, 6, '.', '');
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment, 6, '.', '');
         $vat = (float) number_format(0.19 * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
@@ -142,24 +142,32 @@ trait EACTrait {
 
             $energyCharge = 0;
             $fuelAdjustment = 0;
+            $supplyCharge = 0;
 
         if (($consumption - $creditUnits) <= 1000) {
             $energyCharge = (float) number_format($tariff->energy_charge_subsidy_first * ($consumption - $creditUnits), 6, '.', '');
-
+            if ($energyCharge < 0) {
+                $energyCharge = 0;
+            }
+            $supplyCharge = (float) number_format($tariff->supply_subsidy_first);
         } elseif (($consumption - $creditUnits) > 1000 && ($consumption - $creditUnits) <= 2000) {
             $energyCharge = (float) number_format($tariff->energy_charge_subsidy_second * ($consumption - $creditUnits), 6, '.', '');
+            $supplyCharge = (float) number_format($tariff->supply_subsidy_second);
 
         } elseif (($consumption - $creditUnits) > 2000) {
             $energyCharge = (float) number_format($tariff->energy_charge_subsidy_third * ($consumption - $creditUnits), 6, '.', '');
+            $supplyCharge = (float) number_format($tariff->supply_subsidy_third);
         }
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits), 6, '.', '');
-        $total = (float) number_format($energyCharge + $fuelAdjustment, 6, '.', '');
+        $supplyCharge = (float) number_format($supplyCharge, 6, '.', '');
+        $total = (float) number_format($energyCharge + $fuelAdjustment + $supplyCharge, 6, '.', '');
         $vat = (float) number_format(0.19 * $total, 6, '.', '');
-        $total = (float) number_format($total + $vat, 6, '.', '');
+        $total = (float) number_format($total + $vat + $supplyCharge, 6, '.', '');
 
         $cost = [
             'energyCharge' => $energyCharge,
             'fuelAdjustment' => $fuelAdjustment,
+            'supplyCharge' => $supplyCharge,
             'vat' => $vat,
             'total' => $total
         ];

@@ -25,3 +25,7 @@
 #costBreakdown tr:nth-child(7) td:first-child.border-b-8 {
     background-color: #9966ff;
 }
+
+#costBreakdown tr:nth-child(8) td:first-child.border-b-8 {
+    background-color: #c8cace;
+}

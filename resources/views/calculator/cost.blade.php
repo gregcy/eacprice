@@ -57,6 +57,20 @@
                     <td class="px-4">€{{ $cost['fuelAdjustment'] }}</td>
                 </tr>
             @endisset
+            @isset($cost['supplyCharge'])
+                <tr>
+                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                    <td class="px-4">Supply Charge</td>
+                    <td class="px-4">€{{ $cost['supplyCharge'] }}</td>
+                </tr>
+            @endisset
+            @isset($cost['meterReaading'])
+                <tr>
+                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                    <td class="px-4">Meter Reading</td>
+                    <td class="px-4">€{{ $cost['meterReaading'] }}</td>
+                </tr>
+            @endisset
             <tr>
                 <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
                 <td class="px-4">VAT</td>
@@ -88,6 +102,12 @@
             @endisset
             @isset($cost['fuelAdjustment'])
                 'Fuel Adjustment',
+            @endisset
+            @isset($cost['supplyCharge'])
+                'Supply Charge',
+            @endisset
+            @isset($cost['meterReaading'])
+                'Meter Reading',
             @endisset
             'VAT'],
         datasets: [{
