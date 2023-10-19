@@ -31,34 +31,34 @@
             @endisset
             @isset($cost['networkCharge'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8"></td>
+                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
                     <td class="px-4">Network Charge</td>
                     <td class="px-4">€{{ $cost['networkCharge'] }}</td>
                 </tr>
             @endisset
             @isset($cost['ancilaryServices'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8"></td>
+                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
                     <td class="px-4">Ancillary Services</td>
                     <td class="px-4">€{{ $cost['ancilaryServices'] }}</td>
                 </tr>
             @endisset
             @isset($cost['publicServiceObligation'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8"></td>
+                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
                     <td class="px-4">Public Service Obligation</td>
                     <td class="px-4">€{{ $cost['publicServiceObligation'] }}</td>
                 </tr>
             @endisset
             @isset($cost['fuelAdjustment'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8"></td>
+                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
                     <td class="px-4">Fuel Adjustement</td>
                     <td class="px-4">€{{ $cost['fuelAdjustment'] }}</td>
                 </tr>
             @endisset
             <tr>
-                <td class="px-4 border-gray-100 border-b-8"></td>
+                <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
                 <td class="px-4">VAT</td>
                 <td class="px-4">€{{ $cost['vat'] }}</td>
             </tr>
