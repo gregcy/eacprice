@@ -119,7 +119,17 @@
                 @endphp
             ],
             borderWidth: 1
-        }]
+        }],
+        backgroundColor: [
+            '#36a2eb',
+            '#ff6384',
+            '#ff9f40',
+            '#ffe29d',
+            '#4bc0c0',
+            '#9966ff',
+            '#c8cace',
+            '#63FFDE'
+        ]
     };
     const doughnutLabel = {
         id: 'doughnutLabel',
