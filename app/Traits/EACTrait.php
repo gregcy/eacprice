@@ -151,11 +151,13 @@ trait EACTrait {
             }
             $supplyCharge = (float) number_format($tariff->supply_subsidy_first);
         } elseif (($consumption - $creditUnits) > 1000 && ($consumption - $creditUnits) <= 2000) {
-            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_second * ($consumption - $creditUnits), 6, '.', '');
+            $energyCharge = 1000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 1000) * $tariff->energy_charge_subsidy_second;
+            $energyCharge = (float) number_format($energyCharge, 6, '.', '');
             $supplyCharge = (float) number_format($tariff->supply_subsidy_second);
 
         } elseif (($consumption - $creditUnits) > 2000) {
-            $energyCharge = (float) number_format($tariff->energy_charge_subsidy_third * ($consumption - $creditUnits), 6, '.', '');
+            $energyCharge = 2000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 2000) * $tariff->energy_charge_subsidy_third;
+            $energyCharge = (float) number_format($energyCharge, 6, '.', '');
             $supplyCharge = (float) number_format($tariff->supply_subsidy_third);
         }
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits), 6, '.', '');

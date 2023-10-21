@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="bg-gray-100 w-full">
-            <div class="max-w-6xl m-auto p-4">
+            <div class="max-w-6xl m-auto">
                 @isset($cost)
                     @include('calculator.calculator', ['cost' => $cost])
                     @include('calculator.cost', ['cost' => $cost])

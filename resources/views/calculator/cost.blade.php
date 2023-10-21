@@ -1,21 +1,21 @@
-<div class="w-full">
+<div class="w-full bg-white p-6">
         <h2 class="text-xl font-bold py-4">Your Electricity Cost</h2>
-        <div class="flex pb-6">
-            <div class="font-bold">Tariff:</div><div class="font-normal pl-1">{{ $values['tariff'] }}</div>
+        <div class="flex flex-wrap pb-6">
+            <div><span class="font-bold">Tariff:</span><span class="font-normal pl-1">{{ $values['tariff'] }}</span></div>
             @if($values['tariff'] === '01' || $values['tariff'] === '08')
-                <div class="font-bold pl-4">Consumption:</div><div class="font-normal pl-1">{{ $values['consumption'] }} kWh</div>
-                <div class="font-bold pl-4">Returned Solar Power:</div><div class="font-normal pl-1">{{ $values['credit-amount'] }} kWh</div>
+            <div><span class="font-bold pl-4">Consumption:</span><span class="font-normal pl-1">{{ $values['consumption'] }} kWh</span></span></div>
+            <div><span class="font-bold pl-4">Returned Solar Power:</span><span class="font-normal pl-1">{{ $values['credit-amount'] }} kWh</span></div>
             @elseif($values['tariff'] === '02')
-                <div class="font-bold pl-4">Consumption During Standard Period:</div><div class="font-normal pl-1">{{ $values['consumption-standard'] }} kWh</div>
-                <div class="font-bold pl-4">Consumption During Economy Period:</div><div class="font-normal pl-1">{{ $values['consumption-economy'] }} kWh</div>
+            <div><span class="font-bold pl-4">Consumption During Standard Period:</span><span class="font-normal pl-1">{{ $values['consumption-standard'] }} kWh</span></div>
+            <div><span class="font-bold pl-4">Consumption During Economy Period:</span><span class="font-normal pl-1">{{ $values['consumption-economy'] }} kWh</span></div>
             @endif
         </div>
     </div>
-<div class="flex">
-    <div class="w-96 mr-12">
+<div class="flex flex-wrap bg-white p-6">
+    <div class="w-full lg:w-96 mr-0 lg:mr-12 inline-flex">
         <canvas id="myChart"></canvas>
     </div>
-    <div class="w-1/2 ml-16 mt-8">
+    <div class="w-full lg:w-96 ml-0 lg:ml-16 mt-8 inline-flex">
         <table id="costBreakdown">
             <tr>
                 <th class="py-2 px-4 text-left border-transparent"></th>
@@ -24,55 +24,55 @@
             </tr>
             @isset($cost['energyCharge'])
                 <tr class="mx-2">
-                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                    <td class="px-4 border-white border-b-8 border-t-8"></td>
                     <td class="px-4">Energy Charge</td>
                     <td class="px-4">€{{ $cost['energyCharge'] }}</td>
                 </tr>
             @endisset
             @isset($cost['networkCharge'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                    <td class="px-4 border-white border-b-8 border-t-8"></td>
                     <td class="px-4">Network Charge</td>
                     <td class="px-4">€{{ $cost['networkCharge'] }}</td>
                 </tr>
             @endisset
             @isset($cost['ancilaryServices'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                    <td class="px-4 border-white border-b-8 border-t-8"></td>
                     <td class="px-4">Ancillary Services</td>
                     <td class="px-4">€{{ $cost['ancilaryServices'] }}</td>
                 </tr>
             @endisset
             @isset($cost['publicServiceObligation'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                    <td class="px-4 border-white border-b-8 border-t-8"></td>
                     <td class="px-4">Public Service Obligation</td>
                     <td class="px-4">€{{ $cost['publicServiceObligation'] }}</td>
                 </tr>
             @endisset
             @isset($cost['fuelAdjustment'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                    <td class="px-4 border-white border-b-8 border-t-8"></td>
                     <td class="px-4">Fuel Adjustment</td>
                     <td class="px-4">€{{ $cost['fuelAdjustment'] }}</td>
                 </tr>
             @endisset
             @isset($cost['supplyCharge'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                    <td class="px-4 border-white border-b-8 border-t-8"></td>
                     <td class="px-4">Supply Charge</td>
                     <td class="px-4">€{{ $cost['supplyCharge'] }}</td>
                 </tr>
             @endisset
             @isset($cost['meterReaading'])
                 <tr>
-                    <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                    <td class="px-4 border-white border-b-8 border-t-8"></td>
                     <td class="px-4">Meter Reading</td>
                     <td class="px-4">€{{ $cost['meterReaading'] }}</td>
                 </tr>
             @endisset
             <tr>
-                <td class="px-4 border-gray-100 border-b-8 border-t-8"></td>
+                <td class="px-4 border-white border-b-8 border-t-8"></td>
                 <td class="px-4">VAT</td>
                 <td class="px-4">€{{ $cost['vat'] }}</td>
             </tr>
@@ -118,9 +118,7 @@
                     echo implode(',', $cost);
                 @endphp
             ],
-            borderWidth: 1
-        }],
-        backgroundColor: [
+            backgroundColor: [
             '#36a2eb',
             '#ff6384',
             '#ff9f40',
@@ -128,8 +126,10 @@
             '#4bc0c0',
             '#9966ff',
             '#c8cace',
-            '#63FFDE'
-        ]
+            '#4FF0CE'
+            ],
+            borderWidth: 1
+        }],
     };
     const doughnutLabel = {
         id: 'doughnutLabel',
