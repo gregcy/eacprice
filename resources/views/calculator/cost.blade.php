@@ -1,21 +1,21 @@
 <div class="w-full bg-white p-6">
-        <h2 class="text-xl font-bold py-4">Your Electricity Cost</h2>
-        <div class="flex flex-wrap pb-6">
-            <div><span class="font-bold">Tariff:</span><span class="font-normal pl-1">{{ $values['tariff'] }}</span></div>
-            @if($values['tariff'] === '01' || $values['tariff'] === '08')
-            <div><span class="font-bold pl-4">Consumption:</span><span class="font-normal pl-1">{{ $values['consumption'] }} kWh</span></span></div>
-            <div><span class="font-bold pl-4">Returned Solar Power:</span><span class="font-normal pl-1">{{ $values['credit-amount'] }} kWh</span></div>
-            @elseif($values['tariff'] === '02')
-            <div><span class="font-bold pl-4">Consumption During Standard Period:</span><span class="font-normal pl-1">{{ $values['consumption-standard'] }} kWh</span></div>
-            <div><span class="font-bold pl-4">Consumption During Economy Period:</span><span class="font-normal pl-1">{{ $values['consumption-economy'] }} kWh</span></div>
-            @endif
-        </div>
+    <h2 class="text-xl font-bold py-4">Your Electricity Cost</h2>
+    <div class="flex flex-wrap pb-6">
+        <div class="w-full md:w-auto pr-4"><span class="font-bold">Tariff:</span><span class="font-normal pl-1">{{ $values['tariff'] }}</span></div>
+        @if($values['tariff'] === '01' || $values['tariff'] === '08')
+        <div class="w-full md:w-auto pr-4"><span class="font-bold">Consumption:</span><span class="font-normal pl-1">{{ $values['consumption'] }} kWh</span></span></div>
+        <div class="w-full md:w-auto pr-4"><span class="font-bold">Returned Solar Power:</span><span class="font-normal pl-1">{{ $values['credit-amount'] }} kWh</span></div>
+        @elseif($values['tariff'] === '02')
+        <div class="w-full md:w-auto pr-4"><span class="font-bold pl-4">Consumption During Standard Period:</span><span class="font-normal pl-1">{{ $values['consumption-standard'] }} kWh</span></div>
+        <div class="w-full md:w-auto pr-4"><span class="font-bold pl-4">Consumption During Economy Period:</span><span class="font-normal pl-1">{{ $values['consumption-economy'] }} kWh</span></div>
+        @endif
     </div>
+</div>
 <div class="flex flex-wrap bg-white p-6">
-    <div class="w-full lg:w-96 mr-0 lg:mr-12 inline-flex">
+    <div class="w-full lg:w-96 mr-0 lg:mr-12 inline-flex items-center justify-center">
         <canvas id="myChart"></canvas>
     </div>
-    <div class="w-full lg:w-96 ml-0 lg:ml-16 mt-8 inline-flex">
+    <div class="w-full lg:w-96 ml-0 lg:ml-16 mt-8 inline-flex items-center justify-center">
         <table id="costBreakdown">
             <tr>
                 <th class="py-2 px-4 text-left border-transparent"></th>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="bg-gray-100 h-screen" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
     </head>
     <body class="font-sans antialiased">
         <div class="bg-blue-700 w-full">
-            <div class="max-w-6xl m-auto p-4">
+            <div class="max-w-6xl m-auto p-5">
                 <h1 class="text-4xl font-bold text-white w-full text-center p-8">Cyprus Electricity Calculator</h1>
                 <div class="text-white text-xl w-full">
                     The calculator uses the latest tariffs from the Electricity Authority of Cyprus to calculate the cost

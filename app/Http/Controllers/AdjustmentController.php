@@ -50,6 +50,7 @@ class AdjustmentController extends Controller
                 'co2_emissions' => 'required|numeric',
                 'cosmos' => 'required|numeric',
                 'revised_fuel_adjustment_price' => 'required|numeric',
+                'source' => 'nullable|url'
             ]
         );
         $request->user()->adjustments()->create($validated);
@@ -94,6 +95,7 @@ class AdjustmentController extends Controller
                 'fuel' => 'required|numeric',
                 'co2_emissions' => 'required|numeric',
                 'cosmos' => 'required|numeric',
+                'source' => 'nullable|url'
             ]
         );
 

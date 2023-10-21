@@ -189,6 +189,14 @@
                         >
                 </div>
             </fieldset>
+            <div class="flex w-full pb-1 pt-4">
+                <label for="source" class="inline w-32 align-middle pt-2.5 pr-2.5">{{ __('Source:') }}</label>
+                <input type="text"
+                    name="source"
+                    value="{{ old('source', $tariff->source) }}"
+                    class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    />
+            </div>
             @if ($errors->any())
                 <div class="block p-2 text-red-800 bg-opacity-30 bg-red-300 w-full border-red-500 focus:border-red-700 focus:ring focus:ring-red-300 focus:ring-opacity-50 rounded-md shadow-sm">
                     <ul>

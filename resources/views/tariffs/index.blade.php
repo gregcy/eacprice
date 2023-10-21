@@ -136,6 +136,9 @@
                                 </table>
                             @endif
                         </div>
+                        <div>
+                            <a href="{{ $tariff->source }}" target="_blank" class="text-blue-800 font-bold text-lg">{{ __('Source') }}</a>
+                        </div>
                     </div>
                 </div>
             @endforeach

@@ -57,12 +57,16 @@ class TariffController extends Controller
                 'supply_subsidy_first' => 'nullable|numeric',
                 'supply_subsidy_second' => 'nullable|numeric',
                 'supply_subsidy_third' => 'nullable|numeric',
+                'source' => 'nullable|url',
             ]
         );
         // Replace nulls with 0's
         // $validated = array_map(function ($v) {
         //     return (is_null($v)) ? 0 : $v;
         // }, $validated);
+        if ($validated['end_date'] == 0) {
+            $validated['end_date'] = null;
+        }
         $request->user()->tariffs()->create($validated);
 
         return redirect(route('tariffs.index'));
@@ -113,12 +117,19 @@ class TariffController extends Controller
                 'supply_subsidy_first' => 'nullable|numeric',
                 'supply_subsidy_second' => 'nullable|numeric',
                 'supply_subsidy_third' => 'nullable|numeric',
+                'source' => 'nullable|url',
             ]
         );
         // Replace nulls with 0's
-        $validated = array_map(function ($v) {
-            return (is_null($v)) ? 0 : $v;
-        }, $validated);
+        $validated = array_map(
+            function ($v) {
+                return (is_null($v)) ? 0 : $v;
+            },
+            $validated
+        );
+        if ($validated['end_date'] == 0) {
+            $validated['end_date'] = null;
+        }
         $Tariff->update($validated);
 
         return redirect(route('tariffs.index'));
