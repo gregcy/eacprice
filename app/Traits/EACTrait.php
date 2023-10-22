@@ -50,6 +50,7 @@ trait EACTrait {
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment + $supplyCharge + $meterReaading, 6, '.', '');
         $vat = (float) number_format(0.19 * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
+        $source = $tariff->source;
 
         if ($highCostConsumption > 0) {
             $cost = [
@@ -61,7 +62,8 @@ trait EACTrait {
                 'supplyCharge' => $supplyCharge,
                 'meterReaading' => $meterReaading,
                 'vat' => $vat,
-                'total' => $total
+                'total' => $total,
+                'source' => $source
             ];
         } else {
             $cost = [
@@ -71,7 +73,8 @@ trait EACTrait {
                 'supplyCharge' => $supplyCharge,
                 'meterReaading' => $meterReaading,
                 'vat' => $vat,
-                'total' => $total
+                'total' => $total,
+                'source' => $source
             ];
         }
         return $cost;
@@ -112,6 +115,7 @@ trait EACTrait {
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment, 6, '.', '');
         $vat = (float) number_format(0.19 * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
+        $source =
 
         $cost = [
             'energyCharge' => $energyCharge,
