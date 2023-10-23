@@ -58,7 +58,9 @@ class CalculatorController extends Controller
             );
         }
         foreach ($cost as $key => $value) {
-            $cost[$key] = $this->min_precision($value, 2);
+            if ($key != 'source') {
+                $cost[$key] = $this->min_precision($value, 2);
+            }
         }
         return view(
             'calculator.page',

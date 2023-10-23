@@ -21,77 +21,66 @@
                 <th class="py-2 px-4 text-left border-transparent"></th>
                 <th class="py-2 px-2 text-left">Item</th>
                 <th class="py-2 px-2 text-left">Cost</th>
-                <th class="py-2 px-2 text-left border-transparent"></th>
             </tr>
             @isset($cost['energyCharge'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">Energy Charge</td>
+                    <td class="px-2">Energy Charge<sup class="pl-2">1</sup></td>
                     <td class="px-2">€{{ $cost['energyCharge'] }}</td>
-                    <td><span class="my-2 bg-blue-500 px-2 text-white font-black text-center rounded-full text-2xl">?</span></td>
                 </tr>
                 <dialog><p>Source: <a href="{{ $cost['source']}}">EAC Tariff</a></p></dialog>
             @endisset
             @isset($cost['networkCharge'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">Network Charge</td>
+                    <td class="px-2">Network Charge<sup class="pl-2">1</sup></td>
                     <td class="px-2">€{{ $cost['networkCharge'] }}</td>
-                    <td><span class="my-2 bg-blue-500 px-2 text-white font-black text-center rounded-full text-2xl">?</span></td>
                 </tr>
             @endisset
             @isset($cost['ancilaryServices'])
                 <tr>
                     <td class="px-41 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">Ancillary Services</td>
+                    <td class="px-2">Ancillary Services<sup class="pl-2">1</sup></td>
                     <td class="px-2">€{{ $cost['ancilaryServices'] }}</td>
-                    <td><span class="my-2 bg-blue-500 px-2 text-white font-black text-center rounded-full text-2xl">?</span></td>
                 </tr>
             @endisset
             @isset($cost['publicServiceObligation'])
                 <tr>
                     <td class="px-41 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">Public Service Obligation</td>
+                    <td class="px-2">Public Service Obligation<sup class="pl-2">2</sup></td>
                     <td class="px-2">€{{ $cost['publicServiceObligation'] }}</td>
-                    <td><span class="my-2 bg-blue-500 px-2 text-white font-black text-center rounded-full text-2xl">?</span></td>
                 </tr>
             @endisset
             @isset($cost['fuelAdjustment'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">Fuel Adjustment</td>
+                    <td class="px-2">Fuel Adjustment<sup class="pl-2">3</sup></td>
                     <td class="px-2">€{{ $cost['fuelAdjustment'] }}</td>
-                    <td><span class="my-2 bg-blue-500 px-2 text-white font-black text-center rounded-full text-2xl">?</span></td>
                 </tr>
             @endisset
             @isset($cost['supplyCharge'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">Supply Charge</td>
+                    <td class="px-2">Supply Charge<sup class="pl-2">1</sup></td>
                     <td class="px-2">€{{ $cost['supplyCharge'] }}</td>
-                    <td><span class="my-2 bg-blue-500 px-2 text-white font-black text-center rounded-full text-2xl">?</span></td>
                 </tr>
             @endisset
             @isset($cost['meterReaading'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">Meter Reading</td>
+                    <td class="px-2">Meter Reading<sup class="pl-2">1</sup></td>
                     <td class="px-2">€{{ $cost['meterReaading'] }}</td>
-                    <td><span class="my-2 bg-blue-500 px-2 text-white font-black text-center rounded-full text-2xl">?</span></td>
                 </tr>
             @endisset
             <tr>
                 <td class="px-4 border-white border-b-8 border-t-8"></td>
                 <td class="px-2">VAT</td>
                 <td class="px-2">€{{ $cost['vat'] }}</td>
-                <td></td>
             </tr>
             <tr>
                 <td class="px-4 border-transparent"></td>
                 <td class="py-2 px-2 font-bold">Total:</td>
                 <td class="py-2 px-2 font-bold">€{{ $cost['total']}}</td>
-                <td></td>
-
             </tr>
         </table>
     </div>
