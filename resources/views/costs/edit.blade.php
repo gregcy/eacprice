@@ -2,6 +2,7 @@
     <div class="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('costs.update', $cost) }}">
             @csrf
+            @method('patch')
             <label for="name">{{ __('Name') }}</label>
             <input type="text"
                 name="name"
