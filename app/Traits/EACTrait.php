@@ -12,6 +12,7 @@
 namespace App\Traits;
 use App\Models\Tariff;
 use App\Models\Adjustment;
+use App\Models\Cost;
 use DateTime;
 
 trait EACTrait {
@@ -24,6 +25,10 @@ trait EACTrait {
             ->first();
 
         $tariff = Tariff::where('code', '01')
+            ->where('end_date', '=', null)
+            ->first();
+
+        $vat_rate = Cost::where('name', 'vat')
             ->where('end_date', '=', null)
             ->first();
 
@@ -48,7 +53,7 @@ trait EACTrait {
         $supplyCharge = (float) number_format($tariff->recurring_supply_charge, 6, '.', '');
         $meterReaading = (float) number_format($tariff->recurring_meter_reading, 6, '.', '');
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment + $supplyCharge + $meterReaading, 6, '.', '');
-        $vat = (float) number_format(0.19 * $total, 6, '.', '');
+        $vat = (float) number_format($vat_rate->value * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
         $source = $tariff->source;
 
@@ -115,7 +120,7 @@ trait EACTrait {
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment, 6, '.', '');
         $vat = (float) number_format(0.19 * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
-        $source =
+        //$source =
 
         $cost = [
             'energyCharge' => $energyCharge,
