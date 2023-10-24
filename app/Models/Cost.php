@@ -13,6 +13,7 @@ class Cost extends Model
     protected $fillable = [
         'start_date',
         'end_date',
+        'name',
         'prefix',
         'suffix',
         'value',

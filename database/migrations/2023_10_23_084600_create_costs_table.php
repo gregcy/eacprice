@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->date('start_date');
             $table->date('end_date')->nullable()->default(null);
-            $table->string('prefix');
-            $table->string('suffix');
+            $table->string('prefix')->nullable()->default(null);
+            $table->string('suffix')->nullable()->default(null);
             $table->decimal('public_service_obligation', 7, 5);
             $table->decimal('value', 7, 5);
             $table->timestamps();

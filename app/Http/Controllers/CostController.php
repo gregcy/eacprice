@@ -41,6 +41,7 @@ class CostController extends Controller
             [
                 'start_date' => 'required|date',
                 'end_date' => 'required|date|after:start-date',
+                'name' => 'string',
                 'prefix' => 'nullable|string',
                 'suffix' => 'nullable|string',
                 'value' => 'required|numeric',
@@ -81,6 +82,7 @@ class CostController extends Controller
             [
                 'start_date' => 'required|date',
                 'end_date' => 'required|date|after:start-date',
+                'name' => 'string',
                 'prefix' => 'nullable|string',
                 'suffix' => 'nullable|string',
                 'value' => 'required|numeric',

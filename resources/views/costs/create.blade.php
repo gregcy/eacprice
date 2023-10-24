@@ -2,6 +2,12 @@
     <div class="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8">
         <form method="POST" action="{{ route('costs.store') }}">
             @csrf
+            <label for="name">{{ __('Name') }}</label>
+            <input type="text"
+                name="name"
+                value = "{{ old('name') }}"
+                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                >
             <label for="start_date">{{ __('Start Date') }}</label>
             <input type="date"
                 name="start_date"

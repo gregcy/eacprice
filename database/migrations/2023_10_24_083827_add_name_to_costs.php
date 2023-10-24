@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tariffs', function (Blueprint $table) {
-            //
-        });
+        Schema::table(
+            'costs', function (Blueprint $table) {
+                $table->string('name');
+            }
+        );
     }
 
     /**
@@ -21,8 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tariffs', function (Blueprint $table) {
-            //
-        });
+        Schema::table(
+            'costs', function (Blueprint $table) {
+                $table->dropColumn('name');
+            }
+        );
     }
 };
