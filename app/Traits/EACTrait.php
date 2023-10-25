@@ -5,7 +5,7 @@
  * Compare this snippet from app/Http/Controllers/GetCurrentRate.php:
  *
  * @author  Greg Andreou <greg.andreou@gmail.com>
- * @license  MIT
+ * @license MIT
  *
  */
 
@@ -32,6 +32,10 @@ trait EACTrait {
             ->where('end_date', '=', null)
             ->first();
 
+        $public_service_obligation = Cost::where('name', 'Public Service Obligation')
+            ->where('end_date', '=', null)
+            ->first();
+
         $lowCostConsumption = 0;
         $highCostConsumption = 0;
 
@@ -48,7 +52,7 @@ trait EACTrait {
         );
         $networkCharge = (float) number_format($tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
         $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
-        $publicServiceObligation = (float) number_format($tariff->public_service_obligation  * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
+        $publicServiceObligation = (float) number_format($public_service_obligation->value * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6, '.', '');
         $supplyCharge = (float) number_format($tariff->recurring_supply_charge, 6, '.', '');
         $meterReaading = (float) number_format($tariff->recurring_meter_reading, 6, '.', '');

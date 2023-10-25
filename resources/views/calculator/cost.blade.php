@@ -74,7 +74,7 @@
             @endisset
             <tr>
                 <td class="px-4 border-white border-b-8 border-t-8"></td>
-                <td class="px-2">VAT</td>
+                <td class="px-2">VAT {{ $vat_rate }}%</td>
                 <td class="px-2">€{{ $cost['vat'] }}</td>
             </tr>
             <tr>

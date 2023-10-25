@@ -81,7 +81,7 @@ class CostController extends Controller
         $validated = $request->validate(
             [
                 'start_date' => 'required|date',
-                'end_date' => 'required|date|after:start-date',
+                'end_date' => 'nullable|date|after:start-date',
                 'name' => 'string',
                 'prefix' => 'nullable|string',
                 'suffix' => 'nullable|string',

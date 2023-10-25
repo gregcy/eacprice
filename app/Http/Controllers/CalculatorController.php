@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Traits\EACTrait;
+use App\Models\Cost;
 
 class CalculatorController extends Controller
 {
@@ -62,11 +63,17 @@ class CalculatorController extends Controller
                 $cost[$key] = $this->min_precision($value, 2);
             }
         }
+
+        $vat_rate = Cost::where('name', 'vat')
+            ->where('end_date', '=', null)
+            ->first();
+
         return view(
             'calculator.page',
             [
                 'cost' => $cost,
                 'values' => $values,
+                'vat_rate' => number_format($vat_rate->value, 2, '.', '')
             ]
         );
     }
