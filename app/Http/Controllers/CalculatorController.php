@@ -73,7 +73,7 @@ class CalculatorController extends Controller
             [
                 'cost' => $cost,
                 'values' => $values,
-                'vat_rate' => number_format($vat_rate->value, 2, '.', '')
+                'vat_rate' => number_format($vat_rate->value*100, 0, '.', '')
             ]
         );
     }

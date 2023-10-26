@@ -83,8 +83,7 @@
                 <td class="py-2 px-2 font-bold">€{{ $cost['total']}}</td>
             </tr>
         </table>
-    </div>
-</div>
+aaaaa</div>
 <script type="module">
     const total = {{ number_format($cost['total'],2,'.','') }};
     const data = {
@@ -115,6 +114,7 @@
             label: 'Cost',
             data: [
                 @php
+                    array_pop($cost);
                     array_pop($cost);
                     echo implode(',', $cost);
                 @endphp
