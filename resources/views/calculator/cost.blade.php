@@ -28,7 +28,6 @@
                     <td class="px-2">Energy Charge<sup class="pl-2">1</sup></td>
                     <td class="px-2">€{{ $cost['energyCharge'] }}</td>
                 </tr>
-                <dialog><p>Source: <a href="{{ $cost['source']}}">EAC Tariff</a></p></dialog>
             @endisset
             @isset($cost['networkCharge'])
                 <tr>
@@ -83,7 +82,7 @@
                 <td class="py-2 px-2 font-bold">€{{ $cost['total']}}</td>
             </tr>
         </table>
-aaaaa</div>
+</div>
 <script type="module">
     const total = {{ number_format($cost['total'],2,'.','') }};
     const data = {
@@ -114,7 +113,6 @@ aaaaa</div>
             label: 'Cost',
             data: [
                 @php
-                    array_pop($cost);
                     array_pop($cost);
                     echo implode(',', $cost);
                 @endphp

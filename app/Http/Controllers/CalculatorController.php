@@ -68,12 +68,14 @@ class CalculatorController extends Controller
             ->where('end_date', '=', null)
             ->first();
 
+        $sources = array_pop($cost);
         return view(
             'calculator.page',
             [
                 'cost' => $cost,
                 'values' => $values,
-                'vat_rate' => number_format($vat_rate->value*100, 0, '.', '')
+                'vat_rate' => number_format($vat_rate->value*100, 0, '.', ''),
+                'sources' => $sources
             ]
         );
     }

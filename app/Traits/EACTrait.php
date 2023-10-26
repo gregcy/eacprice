@@ -59,7 +59,15 @@ trait EACTrait {
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment + $supplyCharge + $meterReaading, 6, '.', '');
         $vat = (float) number_format($vat_rate->value * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
-        $source = $tariff->source;
+
+        if ($highCostConsumption > 0) {
+            $source[] = $tariff->source;
+            $source[] = $public_service_obligation->source;
+            $source[] = $adjustment->source;
+        } else {
+            $source[] = $tariff->source;
+            $source[] = $public_service_obligation->source;
+        }
 
         if ($highCostConsumption > 0) {
             $cost = [
@@ -100,6 +108,14 @@ trait EACTrait {
             ->where('end_date', '=', null)
             ->first();
 
+        $public_service_obligation = Cost::where('name', 'Public Service Obligation')
+            ->where('end_date', '=', null)
+            ->first();
+
+        $vat_rate = Cost::where('name', 'vat')
+            ->where('end_date', '=', null)
+            ->first();
+
         $energyCharge = 0;
         $networkCharge = 0;
         $ancilaryServices = 0;
@@ -117,14 +133,16 @@ trait EACTrait {
             $networkCharge += (float) number_format($tariff->network_charge_reduced * $consumptionReduced, 6, '.', '');
             $ancilaryServices += (float) number_format($tariff->ancilary_services_reduced * $consumptionReduced, 6, '.', '');
         }
-        $publicServiceObligation = (float) number_format($tariff->public_service_obligation * ($consumptionNormal + $consumptionReduced), 6, '.', '');
+        $publicServiceObligation = (float) number_format($public_service_obligation->value * ($consumptionNormal + $consumptionReduced), 6, '.', '');
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced), 6, '.', '');
         $supplyCharge = (float) number_format($tariff->recurring_supply_charge, 6, '.', '');
         $meterReaading = (float) number_format($tariff->recurring_meter_reading, 6, '.', '');
         $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment, 6, '.', '');
-        $vat = (float) number_format(0.19 * $total, 6, '.', '');
+        $vat = (float) number_format($vat_rate->value * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
-        //$source =
+        $source[] = $tariff->source;
+        $source[] = $public_service_obligation->source;
+        $source[] = $adjustment->source;
 
         $cost = [
             'energyCharge' => $energyCharge,
@@ -135,7 +153,8 @@ trait EACTrait {
             'supplyCharge' => $supplyCharge,
             'meterReaading' => $meterReaading,
             'vat' => $vat,
-            'total' => $total
+            'total' => $total,
+            'source' => $source
         ];
 
         return $cost;
@@ -153,9 +172,13 @@ trait EACTrait {
             ->where('end_date', '=', null)
             ->first();
 
-            $energyCharge = 0;
-            $fuelAdjustment = 0;
-            $supplyCharge = 0;
+        $vat_rate = Cost::where('name', 'vat')
+            ->where('end_date', '=', null)
+            ->first();
+
+        $energyCharge = 0;
+        $fuelAdjustment = 0;
+        $supplyCharge = 0;
 
         if (($consumption - $creditUnits) <= 1000) {
             $energyCharge = (float) number_format($tariff->energy_charge_subsidy_first * ($consumption - $creditUnits), 6, '.', '');
@@ -176,15 +199,18 @@ trait EACTrait {
         $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits), 6, '.', '');
         $supplyCharge = (float) number_format($supplyCharge, 6, '.', '');
         $total = (float) number_format($energyCharge + $fuelAdjustment + $supplyCharge, 6, '.', '');
-        $vat = (float) number_format(0.19 * $total, 6, '.', '');
+        $vat = (float) number_format($vat_rate->value * $total, 6, '.', '');
         $total = (float) number_format($total + $vat + $supplyCharge, 6, '.', '');
+        $source[] = $tariff->source;
+        $source[] = $adjustment->source;
 
         $cost = [
             'energyCharge' => $energyCharge,
             'fuelAdjustment' => $fuelAdjustment,
             'supplyCharge' => $supplyCharge,
             'vat' => $vat,
-            'total' => $total
+            'total' => $total,
+            'source' => $source
         ];
 
         return $cost;
