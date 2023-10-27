@@ -58,6 +58,7 @@ class TariffController extends Controller
                 'supply_subsidy_second' => 'nullable|numeric',
                 'supply_subsidy_third' => 'nullable|numeric',
                 'source' => 'nullable|url',
+                'source_name' => 'nullable|string',
             ]
         );
         // Replace nulls with 0's
@@ -118,6 +119,7 @@ class TariffController extends Controller
                 'supply_subsidy_second' => 'nullable|numeric',
                 'supply_subsidy_third' => 'nullable|numeric',
                 'source' => 'nullable|url',
+                'source_name' => 'nullable|string',
             ]
         );
         // Replace nulls with 0's

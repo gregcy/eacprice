@@ -22,7 +22,8 @@ class Adjustment extends Model
         'co2_emissions',
         'cosmos',
         'revised_fuel_adjustment_price',
-        'source'
+        'source',
+        'source_name'
 
     ];
 

@@ -53,8 +53,13 @@
             @isset($cost['fuelAdjustment'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">Fuel Adjustment<sup class="pl-2">3</sup></td>
+                    @if($values['tariff'] === '08')
+                        <td class="px-2">Fuel Adjustment<sup class="pl-2">2</sup></td>
+                    @else
+                        <td class="px-2">Fuel Adjustment<sup class="pl-2">3</sup></td>
+                    @endif
                     <td class="px-2">€{{ $cost['fuelAdjustment'] }}</td>
+
                 </tr>
             @endisset
             @isset($cost['supplyCharge'])
@@ -81,8 +86,23 @@
                 <td class="py-2 px-2 font-bold">Total:</td>
                 <td class="py-2 px-2 font-bold">€{{ $cost['total']}}</td>
             </tr>
+            @if (count($sources) == 1)
+                <tr>
+                    <td colspan="3" class="text-xs"><a href="{{$sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
+                </tr>
+            @elseif (count($sources) == 2)
+                <tr>
+                    <td colspan="3" class="text-xs"><a href="{{ $sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-xs"><a href="{{ $sources[1] }}" target="_blank">2. Fuel Ajustment Clause</a></td>
+                </tr>
+            @endif
         </table>
+    </div>
+
 </div>
+
 <script type="module">
     const total = {{ number_format($cost['total'],2,'.','') }};
     const data = {

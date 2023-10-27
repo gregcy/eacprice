@@ -45,7 +45,8 @@ class CostController extends Controller
                 'prefix' => 'nullable|string',
                 'suffix' => 'nullable|string',
                 'value' => 'required|numeric',
-                'source' => 'nullable|url'
+                'source' => 'nullable|url',
+                'source_name' => 'nullable|string'
             ]
         );
         $request->user()->costs()->create($validated);
@@ -86,7 +87,8 @@ class CostController extends Controller
                 'prefix' => 'nullable|string',
                 'suffix' => 'nullable|string',
                 'value' => 'required|numeric',
-                'source' => 'nullable|url'
+                'source' => 'nullable|url',
+                'source_name' => 'nullable|string'
             ]
         );
 

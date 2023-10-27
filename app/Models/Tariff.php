@@ -29,7 +29,8 @@ class Tariff extends Model
         'supply_subsidy_first',
         'supply_subsidy_second',
         'supply_subsidy_third',
-        'source'
+        'source',
+        'source_name'
     ];
 
     public function user(): BelongsTo
