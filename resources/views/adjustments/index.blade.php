@@ -87,7 +87,7 @@
                             </table>
                         </div>
                         <div>
-                            <a href="{{ $adjustment->source }}" target="_blank" class="text-blue-800 font-bold text-lg">{{ __('Source') }}</a>
+                            <a href="{{ $adjustment->source }}" target="_blank" class="text-blue-800 font-bold text-lg">{{ __($adjustment->source_name) }}</a>
                         </div>
                     </div>
                 </div>
