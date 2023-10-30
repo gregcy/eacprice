@@ -137,7 +137,7 @@
                             @endif
                         </div>
                         <div>
-                            <a href="{{ $tariff->source }}" target="_blank" class="text-blue-800 font-bold text-lg">{{ __('Source') }}</a>
+                            <a href="{{ $tariff->source }}" target="_blank" class="text-blue-800 font-bold text-lg">{{ __($tariff->source_name) }}</a>
                         </div>
                     </div>
                 </div>

@@ -53,7 +53,7 @@
                             </table>
                         </div>
                         <div>
-                            <a href="{{ $cost->source }}" target="_blank" class="text-blue-800 font-bold text-lg">{{ __('Source') }}</a>
+                            <a href="{{ $cost->source }}" target="_blank" class="text-blue-800 font-bold text-lg">{{ __($cost->source_name ) }}</a>
                         </div>
                     </div>
                 </div>
