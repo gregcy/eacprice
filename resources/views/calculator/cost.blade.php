@@ -86,17 +86,26 @@
                 <td class="py-2 px-2 font-bold">Total:</td>
                 <td class="py-2 px-2 font-bold">€{{ $cost['total']}}</td>
             </tr>
-            @if (count($sources) == 1)
-                <tr>
-                    <td colspan="3" class="text-xs"><a href="{{$sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
-                </tr>
-            @elseif (count($sources) == 2)
-                <tr>
-                    <td colspan="3" class="text-xs"><a href="{{ $sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
-                </tr>
-                <tr>
-                    <td colspan="3" class="text-xs"><a href="{{ $sources[1] }}" target="_blank">2. Fuel Ajustment Clause</a></td>
-                </tr>
+            @if ($values['tariff'] == '01')
+                @if (count($sources) == 2)
+                    <tr>
+                        <td colspan="3" class="text-xs"><a href="{{ $sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-xs"><a href="{{ $sources[1] }}" target="_blank">2. Fuel Ajustment Clause</a></td>
+                    </tr>
+                @endif
+                @if (count($sources) == 3)
+                    <tr>
+                        <td colspan="3" class="text-xs"><a href="{{ $sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-xs"><a href="{{ $sources[1] }}" target="_blank">2. Public Service Obligation</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-xs"><a href="{{ $sources[2] }}" target="_blank">3. Fuel Ajustment Clause</a></td>
+                    </tr>
+                @endif
             @endif
         </table>
     </div>
