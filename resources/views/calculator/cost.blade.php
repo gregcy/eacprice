@@ -43,23 +43,18 @@
                     <td class="px-2">€{{ $cost['ancilaryServices'] }}</td>
                 </tr>
             @endisset
-            @isset($cost['publicServiceObligation'])
-                <tr>
-                    <td class="px-41 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">Public Service Obligation<sup class="pl-2">2</sup></td>
-                    <td class="px-2">€{{ $cost['publicServiceObligation'] }}</td>
-                </tr>
-            @endisset
             @isset($cost['fuelAdjustment'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    @if($values['tariff'] === '08')
-                        <td class="px-2">Fuel Adjustment<sup class="pl-2">2</sup></td>
-                    @else
-                        <td class="px-2">Fuel Adjustment<sup class="pl-2">3</sup></td>
-                    @endif
+                    <td class="px-2">Fuel Adjustment<sup class="pl-2">2</sup></td>
                     <td class="px-2">€{{ $cost['fuelAdjustment'] }}</td>
-
+                </tr>
+            @endisset
+            @isset($cost['publicServiceObligation'])
+                <tr>
+                    <td class="px-41 border-white border-b-8 border-t-8"></td>
+                    <td class="px-2">Public Service Obligation<sup class="pl-2">{{ count($sources) }}</sup></td>
+                    <td class="px-2">€{{ $cost['publicServiceObligation'] }}</td>
                 </tr>
             @endisset
             @isset($cost['supplyCharge'])
@@ -86,8 +81,19 @@
                 <td class="py-2 px-2 font-bold">Total:</td>
                 <td class="py-2 px-2 font-bold">€{{ $cost['total']}}</td>
             </tr>
-            @if ($values['tariff'] == '01')
-                @if (count($sources) == 2)
+             @if (count($sources) == 1)
+                <tr>
+                    <td colspan="3" class="text-xs"><a href="{{ $sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
+                </tr>
+            @elseif (count($sources) == 2)
+                @if ($values['tariff'] === '01')
+                    <tr>
+                        <td colspan="3" class="text-xs"><a href="{{ $sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-xs"><a href="{{ $sources[1] }}" target="_blank">2. Public Service Obligation</a></td>
+                    </tr>
+                @elseif ($values['tariff'] === '08')
                     <tr>
                         <td colspan="3" class="text-xs"><a href="{{ $sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
                     </tr>
@@ -95,17 +101,16 @@
                         <td colspan="3" class="text-xs"><a href="{{ $sources[1] }}" target="_blank">2. Fuel Ajustment Clause</a></td>
                     </tr>
                 @endif
-                @if (count($sources) == 3)
-                    <tr>
-                        <td colspan="3" class="text-xs"><a href="{{ $sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="text-xs"><a href="{{ $sources[1] }}" target="_blank">2. Public Service Obligation</a></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="text-xs"><a href="{{ $sources[2] }}" target="_blank">3. Fuel Ajustment Clause</a></td>
-                    </tr>
-                @endif
+            @else
+                <tr>
+                    <td colspan="3" class="text-xs"><a href="{{ $sources[0] }}" target="_blank">1. Domestic Use Tariffs</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-xs"><a href="{{ $sources[1] }}" target="_blank">2. Fuel Ajustment Clause</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-xs"><a href="{{ $sources[2] }}" target="_blank">3. Public Service Obligation</a></td>
+                </tr>
             @endif
         </table>
     </div>

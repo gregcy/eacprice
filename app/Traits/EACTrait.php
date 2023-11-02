@@ -61,8 +61,8 @@ trait EACTrait {
 
         if ($highCostConsumption > 0) {
             $source[] = $tariff->source;
-            $source[] = $public_service_obligation->source;
             $source[] = $adjustment->source;
+            $source[] = $public_service_obligation->source;
         } else {
             $source[] = $tariff->source;
             $source[] = $public_service_obligation->source;
@@ -140,8 +140,9 @@ trait EACTrait {
         $vat = (float) number_format($vat_rate->value * $total, 6, '.', '');
         $total =(float) number_format($total + $vat, 6, '.', '');
         $source[] = $tariff->source;
-        $source[] = $public_service_obligation->source;
         $source[] = $adjustment->source;
+        $source[] = $public_service_obligation->source;
+
 
         $cost = [
             'energyCharge' => $energyCharge,
