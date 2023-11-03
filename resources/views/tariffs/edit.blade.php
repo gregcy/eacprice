@@ -39,15 +39,6 @@
                 value="{{ old('recurring_meter_reading', $tariff->recurring_meter_reading ) }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
-            <label for="public_service_obligation">{{ __('Public Service Obligation (€/kWh)') }}</label>
-            <input type="number"
-                name="public_service_obligation"
-                step="0.00001"
-                value="{{ old('public_service_obligation', $tariff->public_service_obligation) }}"
-                min="0"
-                placeholder="0.0000"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                >
             <fieldset class="border-b mt-4 pb-2 mb-2 inline-block w-full border-gray-300">
                 <legend class="text-base font-medium text-gray-900">{{ __('Tariffs 01 & 02') }}</legend>
                 <div class="flex w-full pb-1">

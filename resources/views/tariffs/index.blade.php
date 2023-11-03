@@ -84,13 +84,6 @@
                                             <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->ancilary_services_reduced, 5) }}</td>
                                         @endif
                                     </tr>
-                                    <tr>
-                                        <td class="text-gray-800"> {{__('Public Service Obligation') }}</td>
-                                        <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($tariff->public_service_obligation, 5) }}</td>
-                                        @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->public_service_obligation, 5) }}</td>
-                                        @endif
-                                    </tr>
                                 </table>
                                 <table>
                                     <tr>

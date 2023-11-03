@@ -17,7 +17,7 @@ use DateTime;
 
 trait EACTrait {
 
-    public function calculateEACCost01(int $consumption, int $creditUnits, DateTime $periodStart, DateTime $periodEnd): array
+    public function calculateEACCost01(int $consumption, int $creditUnits, DateTime $periodStart , DateTime $periodEnd): array
     {
         $adjustment = Adjustment::where('consumer_type', "Bi-Monthly")
             ->where('start_date', '<=', date_format($periodStart, 'Y-m-d'))
@@ -215,5 +215,21 @@ trait EACTrait {
 
         return $cost;
 
+    }
+
+    /**
+     * Returns the tariffs for a given tariff code and period
+     *
+     * @param string $tariff
+     * @param DateTime $periodStart
+     * @param DateTime $periodEnd
+     *
+     * @return Tariff
+     */
+    private function _getTariff(string $tariff, DateTime $periodStart , DateTime $periodEnd) :Tariff
+    {
+        return Tariff::where('code', $tariff)
+            ->where('end_date', '=', null)
+            ->first();
     }
 }

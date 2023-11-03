@@ -14,7 +14,6 @@ class Tariff extends Model
         'start_date',
         'end_date',
         'code',
-        'public_service_obligation',
         'recurring_supply_charge',
         'recurring_meter_reading',
         'energy_charge_normal',
