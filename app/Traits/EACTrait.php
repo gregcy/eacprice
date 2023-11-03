@@ -19,6 +19,8 @@ trait EACTrait {
 
     public function calculateEACCost01(int $consumption, int $creditUnits, DateTime $periodStart , DateTime $periodEnd): array
     {
+        $tariff = $this->_getTariff('01',  $periodStart, $periodEnd);
+
         $adjustment = Adjustment::where('consumer_type', "Bi-Monthly")
             ->where('start_date', '<=', date_format($periodStart, 'Y-m-d'))
             ->where('end_date', '<=', date_format($periodEnd->modify('+1 day'),'Y-m-d'))
@@ -226,10 +228,13 @@ trait EACTrait {
      *
      * @return Tariff
      */
-    private function _getTariff(string $tariff, DateTime $periodStart , DateTime $periodEnd) :Tariff
-    {
+    private function _getTariff(
+        string $tariff, DateTime $periodStart , DateTime $periodEnd
+    ):Tariff {
+
         return Tariff::where('code', $tariff)
-            ->where('end_date', '=', null)
+            ->where('start_date', '<=', $periodStart)
+            ->where('end_date', '>=', $periodEnd)->orWhereNull('end_date')
             ->first();
     }
 }
