@@ -19,23 +19,6 @@ trait EACTrait {
 
     public function calculateEACCost01(int $consumption, int $creditUnits, DateTime $periodStart , DateTime $periodEnd): array
     {
-        $tariff = $this->_getTariff('01',  $periodStart, $periodEnd);
-
-        $adjustment = Adjustment::where('consumer_type', "Bi-Monthly")
-            ->where('start_date', '<=', date_format($periodStart, 'Y-m-d'))
-            ->where('end_date', '<=', date_format($periodEnd->modify('+1 day'),'Y-m-d'))
-            ->first();
-        $tariff = Tariff::where('code', '01')
-            ->where('end_date', '=', null)
-            ->first();
-
-        $vat_rate = Cost::where('name', 'vat')
-            ->where('end_date', '=', null)
-            ->first();
-
-        $public_service_obligation = Cost::where('name', 'Public Service Obligation')
-            ->where('end_date', '=', null)
-            ->first();
 
         $lowCostConsumption = 0;
         $highCostConsumption = 0;
@@ -48,55 +31,41 @@ trait EACTrait {
             $highCostConsumption = 0;
         }
 
-        $energyCharge = (float) number_format(
-            $tariff->energy_charge_normal * $highCostConsumption, 6
-        );
-        $networkCharge = (float) number_format($tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
-        $ancilaryServices = (float) number_format($tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
-        $publicServiceObligation = (float) number_format($public_service_obligation->value * ($lowCostConsumption + $highCostConsumption), 6, '.', '');
-        $fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * $highCostConsumption, 6, '.', '');
-        $supplyCharge = (float) number_format($tariff->recurring_supply_charge, 6, '.', '');
-        $meterReaading = (float) number_format($tariff->recurring_meter_reading, 6, '.', '');
-        $total = (float) number_format($energyCharge + $networkCharge + $ancilaryServices + $publicServiceObligation + $fuelAdjustment + $supplyCharge + $meterReaading, 6, '.', '');
-        $vat = (float) number_format($vat_rate->value * $total, 6, '.', '');
-        $total =(float) number_format($total + $vat, 6, '.', '');
-
+        $tariff = $this->_getTariff('01',  $periodStart, $periodEnd);
+        $vatRate = $this->_getVatRate($periodStart, $periodEnd);
+        $publicServiceObligation = $this->_getPublicServiceObligation($periodStart, $periodEnd)->value;
+        $sources = [
+            $tariff->source,
+            $publicServiceObligation->source
+        ];
         if ($highCostConsumption > 0) {
-            $source[] = $tariff->source;
-            $source[] = $adjustment->source;
-            $source[] = $public_service_obligation->source;
-        } else {
-            $source[] = $tariff->source;
-            $source[] = $public_service_obligation->source;
+            $adjustment = $this->_getAdjustment($periodStart, $periodEnd);
+            $sources[] = $adjustment->source;
         }
 
-        if ($highCostConsumption > 0) {
-            $cost = [
-                'energyCharge' => $energyCharge,
-                'networkCharge' => $networkCharge,
-                'ancilaryServices' => $ancilaryServices,
-                'publicServiceObligation' => $publicServiceObligation,
-                'fuelAdjustment' => $fuelAdjustment,
-                'supplyCharge' => $supplyCharge,
-                'meterReaading' => $meterReaading,
-                'vat' => $vat,
-                'total' => $total,
-                'source' => $source
-            ];
-        } else {
-            $cost = [
-                'networkCharge' => $networkCharge,
-                'ancilaryServices' => $ancilaryServices,
-                'publicServiceObligation' => $publicServiceObligation,
-                'supplyCharge' => $supplyCharge,
-                'meterReaading' => $meterReaading,
-                'vat' => $vat,
-                'total' => $total,
-                'source' => $source
-            ];
-        }
-        return $cost;
+
+        $costs = New \stdClass();
+
+        $costs->energyChargeNormal = (float) $tariff->energy_charge_normal * $highCostConsumption;
+        $costs->networkChargeNormal = (float) $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption);
+        $costs->ancilaryServicesChargeNormal = (float) $tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption);
+        $costs->publicServiceObligation = (float) $publicServiceObligation * ($lowCostConsumption + $highCostConsumption);
+        $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * $highCostConsumption;
+        $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
+        $costs->meterReaading = (float) $tariff->recurring_meter_reading;
+        $costs->vatRate = (float) $vatRate;
+        $costs->sources = $sources;
+
+        $formattedCosts = $this->_formatCosts($costs);
+
+        return $formattedCosts;
     }
+
+
+
+
+
+
     public function calculateEACCost02(int $consumptionNormal, int $consumptionReduced, DateTime $periodStart, DateTime $periodEnd) :array
     {
 
@@ -231,10 +200,101 @@ trait EACTrait {
     private function _getTariff(
         string $tariff, DateTime $periodStart , DateTime $periodEnd
     ):Tariff {
-
         return Tariff::where('code', $tariff)
             ->where('start_date', '<=', $periodStart)
             ->where('end_date', '>=', $periodEnd)->orWhereNull('end_date')
             ->first();
+    }
+
+    /**
+     * Returns the fuel adjustment for a given period
+     *
+     * @param DateTime $periodStart
+     * @param DateTime $periodEnd
+     *
+     * @return Adjustment
+     */
+    private function _getAdjustment(DateTime $periodStart , DateTime $periodEnd):Adjustment
+    {
+        return Adjustment::where('start_date', '<=', $periodStart)
+            ->where('end_date', '>=', $periodEnd)
+            ->first();
+    }
+
+     /**
+     * Returns the vat rate for a given period
+     *
+     * @param DateTime $periodStart
+     * @param DateTime $periodEnd
+     *
+     * @return Cost
+     */
+    private function _getVatRate(DateTime $periodStart , DateTime $periodEnd):Cost
+    {
+        return Cost::where('name', 'vat')
+            ->where('start_date', '<=', $periodStart)
+            ->where('end_date', '>=', $periodEnd)->orWhereNull('end_date')
+            ->first();
+    }
+
+    /**
+     * Returns the Public Service Obligation for a given period
+     *
+     * @param DateTime $periodStart
+     * @param DateTime $periodEnd
+     *
+     * @return Cost
+     */
+    private function _getPublicServiceObligation(DateTime $periodStart , DateTime $periodEnd):Cost
+    {
+        return Cost::where('name', 'Public Service Obligation')
+            ->where('start_date', '<=', $periodStart)
+            ->where('end_date', '>=', $periodEnd)->orWhereNull('end_date')
+            ->first();
+    }
+
+    /**
+     * Returns Electricity cost in an array
+     *
+     * @param stdClass $costs
+     *
+     *@return array
+     */
+    private function _formatCosts(\stdClass $costs):array {
+        $formattedCosts = [];
+
+        $energyCharge = $costs->energyChargeNormal + $costs->energyChargeReduced;
+        $networkCharge = $costs->networkChargeNormal + $costs->networkChargeReduced;
+        $ancilaryServices = $costs->ancilaryServicesChargeNormal + $costs->ancilaryServicesChargeReduced;
+        $total = 0;
+
+        $formattedCosts['energyCharge'] = (float) number_format(
+            $energyCharge, 6, '.', '');
+        $total += $energyCharge;
+        $formattedCosts['networkCharge'] = (float) number_format(
+            $networkCharge, 6, '.', '');
+        $total += $networkCharge;
+        $formattedCosts['ancilaryServices'] = (float) number_format(
+            $ancilaryServices, 6, '.', '');
+        $total += $ancilaryServices;
+        $formattedCosts['publicServiceObligation'] = (float) number_format(
+            $costs->publicServiceObligation, 6, '.', '');
+        $total += $costs->publicServiceObligation;
+        $formattedCosts['fuelAdjustment'] = (float) number_format(
+            $costs->fuelAdjustment, 6, '.', '');
+        $total += $costs->fuelAdjustment;
+        $formattedCosts['supplyCharge'] = (float) number_format(
+            $costs->supplyCharge, 6, '.', '');
+        $total += $costs->supplyCharge;
+        $formattedCosts['meterReaading'] = (float) number_format(
+            $costs->meterReaading, 6, '.', '');
+        $total += $costs->meterReaading;
+        $formattedCosts['vat'] = (float) number_format(
+            $costs->vatRate * $total, 6, '.', '');
+        $formattedCosts['total'] = (float) number_format(
+            $total*(1 +  $costs->vatRate), 6, '.', '');
+        $formattedCosts['sources'] = $costs->sources;
+
+        return $formattedCosts;
     }
 }
