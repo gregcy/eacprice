@@ -58,8 +58,10 @@ class CalculatorController extends Controller
                 date_create('now')
             );
         }
+
+
         foreach ($cost as $key => $value) {
-            if ($key != 'source') {
+            if ($key != 'sources') {
                 $cost[$key] = $this->min_precision($value, 2);
             }
         }

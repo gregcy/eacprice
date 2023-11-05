@@ -96,6 +96,7 @@ class AdjustmentController extends Controller
                 'fuel' => 'required|numeric',
                 'co2_emissions' => 'required|numeric',
                 'cosmos' => 'required|numeric',
+                'revised_fuel_adjustment_price' => 'required|numeric',
                 'source' => 'nullable|url',
                 'source_name' => 'nullable|string'
             ]

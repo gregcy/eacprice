@@ -64,11 +64,11 @@
                     <td class="px-2">€{{ $cost['supplyCharge'] }}</td>
                 </tr>
             @endisset
-            @isset($cost['meterReaading'])
+            @isset($cost['meterReading'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
                     <td class="px-2">Meter Reading<sup class="pl-2">1</sup></td>
-                    <td class="px-2">€{{ $cost['meterReaading'] }}</td>
+                    <td class="px-2">€{{ $cost['meterReading'] }}</td>
                 </tr>
             @endisset
             <tr>
@@ -139,7 +139,7 @@
             @isset($cost['supplyCharge'])
                 'Supply Charge',
             @endisset
-            @isset($cost['meterReaading'])
+            @isset($cost['meterReading'])
                 'Meter Reading',
             @endisset
             'VAT'],
