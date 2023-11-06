@@ -2,11 +2,14 @@
 
 /**
  * Path: app/Traits/EACTrait.php
- * Compare this snippet from app/Http/Controllers/GetCurrentRate.php:
+ * Performs all the calculations for the Electricity Cost for EAC
+ * php version 8.1.25
  *
- * @author  Greg Andreou <greg.andreou@gmail.com>
- * @license MIT
- *
+ * @category Utilities
+ * @package  EACPrice
+ * @author   Greg Andreou <greg.andreou@gmail.com>
+ * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
+ * @link     https://github.com/gregcy/eacprice
  */
 
 namespace App\Traits;
@@ -15,7 +18,18 @@ use App\Models\Adjustment;
 use App\Models\Cost;
 use DateTime;
 
-trait EACTrait {
+
+/**
+ * Traits that provides all calculation methods for the Electricity Cost for EAC
+ *
+ * @category Utilities
+ * @package  EACPrice
+ * @author   Greg Andreou <greg.andreou@gmail.com>
+ * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
+ * @link     https://github.com/gregcy/eacprice
+ */
+trait EACTrait
+{
 
     /**
      * Returns the Electricity cost over a period for tariff code 01
@@ -55,7 +69,11 @@ trait EACTrait {
         ];
         if ($highCostConsumption > 0) {
             $adjustment = $this->_getAdjustment($periodStart, $periodEnd);
-            $sources[] = $adjustment->source;
+            $sources = [
+                $tariff->source,
+                $adjustment->source,
+                $publicServiceObligation->source
+            ];
         }
 
         $costs->energyCharge = (float) $tariff->energy_charge_normal * $highCostConsumption;
@@ -276,7 +294,8 @@ trait EACTrait {
      *
      * @return array
      */
-    private function _formatCosts(\stdClass $costs):array {
+    private function _formatCosts(\stdClass $costs):array
+    {
         $formattedCosts = [];
 
         $total = 0;
