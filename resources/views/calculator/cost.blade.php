@@ -109,7 +109,7 @@
                     <td colspan="3" class="text-xs"><a href="{{ $sources[1] }}" target="_blank">2. {{ __('Fuel Ajustment Clause') }}</a></td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="text-xs"><a href="{{ $sources[2] }}" target="_blank">3. Public Service Obligation</a></td>
+                    <td colspan="3" class="text-xs"><a href="{{ $sources[2] }}" target="_blank">3. {{ __('Public Service Obligation') }}</a></td>
                 </tr>
             @endif
         </table>
@@ -122,29 +122,29 @@
     const data = {
         labels: [
             @isset($cost['energyCharge'])
-                'Energy Charge',
+                '{{ __('Energy Charge') }}',
             @endisset
             @isset($cost['networkCharge'])
-                'Network Charge',
+                '{{ __('Network Charge') }}',
             @endisset
             @isset($cost['ancilaryServices'])
-                'Ancillary Services',
+                '{{ __('Ancillary Services') }}',
             @endisset
             @isset($cost['publicServiceObligation'])
-                'Public Service Obligation',
+                '{{ __('Public Service Obligation') }}',
             @endisset
             @isset($cost['fuelAdjustment'])
-                'Fuel Adjustment',
+                '{{ __('Fuel Adjustment') }}',
             @endisset
             @isset($cost['supplyCharge'])
-                'Supply Charge',
+                '{{ __('Supply Charge') }}',
             @endisset
             @isset($cost['meterReading'])
-                'Meter Reading',
+                '{{ __('Meter Reading') }}',
             @endisset
-            'VAT'],
+            '{{ __('VAT') }}'],
         datasets: [{
-            label: 'Cost',
+            label: '{{ __('Cost') }}',
             data: [
                 @php
                     array_pop($cost);
