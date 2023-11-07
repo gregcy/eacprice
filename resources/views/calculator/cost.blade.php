@@ -1,7 +1,7 @@
 <div class="w-full bg-white p-6">
-    <h2 class="text-xl font-bold py-4">Your Electricity Cost</h2>
+    <h2 class="text-xl font-bold py-4">{{ __(Your Electricity Cost) }}</h2>
     <div class="flex flex-wrap pb-6">
-        <div class="w-full md:w-auto pr-4"><span class="font-bold">Tariff:</span><span class="font-normal pl-1">{{ $values['tariff'] }}</span></div>
+        <div class="w-full md:w-auto pr-4"><span class="font-bold">{{ __(Tariff:) }}</span><span class="font-normal pl-1">{{ $values['tariff'] }}</span></div>
         @if($values['tariff'] === '01' || $values['tariff'] === '08')
         <div class="w-full md:w-auto pr-4"><span class="font-bold">Consumption:</span><span class="font-normal pl-1">{{ $values['consumption'] }} kWh</span></span></div>
         <div class="w-full md:w-auto pr-4"><span class="font-bold">Returned Solar Power:</span><span class="font-normal pl-1">{{ $values['credit-amount'] }} kWh</span></div>
