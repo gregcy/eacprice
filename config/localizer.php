@@ -13,7 +13,7 @@ return [
      * Note that no other detectors will run after the OmittedLocaleDetector!
      * Setting this option to `null` will disable this detector.
      */
-    'omitted_locale' => 'el',
+    'omitted_locale' => 'en',
 
     /**
      * The detectors to use to find a matching locale.

@@ -24,7 +24,8 @@ Route::get(
     }
 );
 
-Route::get('{lang?}/calculator', [CalculatorController::class, 'index'])->name('calculator.index');
+Route::get('/calculator', [CalculatorController::class, 'index']);
+Route::get('{lang?}/calculator', [CalculatorController::class, 'index']);
 Route::post('{lang?}/calculator', [CalculatorController::class, 'calculate'])->name('calculator.calculate');
 
 Route::get(
