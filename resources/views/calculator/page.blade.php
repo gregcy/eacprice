@@ -19,8 +19,7 @@
             <div class="max-w-6xl m-auto p-5">
                 <h1 class="text-4xl font-bold text-white w-full text-center p-8">{{ __('Cyprus Electricity Calculator') }}</h1>
                 <div class="text-white text-xl w-full">
-                    {{ __('The calculator uses the latest tariffs from the Electricity Authority of Cyprus to calculate the cost
-                    of your electricity consumption.') }}
+                    {{ __('The calculator uses the latest tariffs from the Electricity Authority of Cyprus to calculate the cost of your electricity consumption.') }}
                 </div>
                 <div class="text-sm text-white w-full py-6">
                     <p>{{ __('This site is not affiliated with the Electricity Authority of Cyprus.') }}</p>
