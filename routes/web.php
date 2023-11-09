@@ -24,8 +24,8 @@ Route::get(
     }
 );
 
-Route::get('calculator', [CalculatorController::class, 'index'])->name('calculator.index');
-Route::post('calculator', [CalculatorController::class, 'calculate'])->name('calculator.calculate');
+Route::get('{lang?}/calculator', [CalculatorController::class, 'index'])->name('calculator.index');
+Route::post('{lang?}/calculator', [CalculatorController::class, 'calculate'])->name('calculator.calculate');
 
 Route::get(
     '/dashboard', function () {

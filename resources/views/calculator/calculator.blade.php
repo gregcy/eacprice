@@ -1,4 +1,4 @@
-<form id="eac-calculator" class="p-6 mb-12" method="POST" action="{{ route('calculator.calculate') }}">
+<form id="eac-calculator" class="p-6 mb-12" method="POST" action="{{ route('calculator.calculate',['lang' => app()->getLocale()]) }}">
     @csrf
     <fieldset id="tariff" class="py-4">
         <label for="tariff-select" class="text-lg font-medium pr-4">{{ __('Tariff') }}:</label>
