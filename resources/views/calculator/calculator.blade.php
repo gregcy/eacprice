@@ -67,6 +67,11 @@
             class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-md w-full md:w-[200px]">
         </div>
     </fieldset>
+        <label for="include-fixed" class="text-lg font-medium pr-4 inline-block">{{ __("Include Fixed Costs") }}:</label>
+        <input id="include-fixed" type="checkbox" name="include-fixed" value="1" @if(old('include-fixed', $values['include-fixed'] ?? 1)) checked @endif
+        class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-md"/>
+    <fieldset>
+    </fieldset>
 
     <x-primary-button class="mt-4">{{ __('Calculate') }}</x-primary-button>
 </form>
