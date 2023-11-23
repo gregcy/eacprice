@@ -37,12 +37,13 @@ class CalculatorController extends Controller
                         'credit-amount' => $validated['credit-amount'] ?? 0,
                         'consumption-standard' => $validated['consumption-standard'] ?? 0,
                         'consumption-economy' => $validated['consumption-economy'] ?? 0,
-                        'include-fixed' => $validated['include-fixed'] ?? true);
+                        'include-fixed' => $validated['include-fixed'] ?? 0);
 
         if ($validated['tariff'] == "01") {
             $cost = $this->calculateEACCost01(
                 $values['consumption'],
                 $values['credit-amount'],
+                $values['include-fixed'],
                 date_create('now'),
                 date_create('now')
             );
@@ -50,6 +51,7 @@ class CalculatorController extends Controller
             $cost = $this->calculateEACCost02(
                 $values['consumption-standard'],
                 $values['consumption-economy'],
+                $values['include-fixed'],
                 date_create('now'),
                 date_create('now')
             );
@@ -57,11 +59,11 @@ class CalculatorController extends Controller
             $cost = $this->calculateEACCost08(
                 $values['consumption'],
                 $values['credit-amount'],
+                $values['include-fixed'],
                 date_create('now'),
                 date_create('now')
             );
         }
-
         if (!$values['include-fixed']) {
             unset($cost['supplyCharge']);
             unset($cost['meterReading']);

@@ -20,7 +20,7 @@ use DateTime;
 
 
 /**
- * Traits that provides all calculation methods for the Electricity Cost for EAC
+ * Trait that provides all calculation methods for the Electricity Cost for EAC
  *
  * @category Utilities
  * @package  EACPrice
@@ -36,12 +36,13 @@ trait EACTrait
      *
      * @param int      $consumption Consumption in kWh
      * @param int      $creditUnits Credit Units
+     * @param bool     $includeFixed Include Fixed Charges
      * @param DateTime $periodStart Period Start date
      * @param DateTime $periodEnd   Period End date
      *
      * @return array
      */
-    public function calculateEACCost01(int $consumption, int $creditUnits, DateTime $periodStart , DateTime $periodEnd): array
+    public function calculateEACCost01(int $consumption, int $creditUnits, bool $includeFixed, DateTime $periodStart , DateTime $periodEnd): array
     {
         $lowCostConsumption = 0;
         $highCostConsumption = 0;
@@ -85,8 +86,14 @@ trait EACTrait
         } else {
             $costs->fuelAdjustment = 0;
         }
-        $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
-        $costs->meterReading = (float) $tariff->recurring_meter_reading;
+        if ($includeFixed) {
+            $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
+            $costs->meterReading = (float) $tariff->recurring_meter_reading;
+        }
+        else {
+            $costs->supplyCharge = 0;
+            $costs->meterReading = 0;
+        }
         $costs->vatRate = (float) $vatRate->value;
         $costs->sources = $sources;
 
@@ -99,12 +106,13 @@ trait EACTrait
      *
      * @param int      $consumptionNormal  Normal cost consumption in kWh
      * @param int      $consumptionReduced Rediced cost consumpation in kWh
+     * @oaram bool     $includeFixed       Include Fixed Charges
      * @param DateTime $periodStart        Period Start date
      * @param DateTime $periodEnd          Period End date
      *
      * @return array
      */
-    public function calculateEACCost02(int $consumptionNormal, int $consumptionReduced, DateTime $periodStart, DateTime $periodEnd) :array
+    public function calculateEACCost02(int $consumptionNormal, int $consumptionReduced, bool $includeFixed, DateTime $periodStart, DateTime $periodEnd) :array
     {
         $costs = New \stdClass();
         $costs->energyCharge = 0;
@@ -141,8 +149,13 @@ trait EACTrait
         }
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($consumptionNormal + $consumptionReduced);
         $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
-        $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
-        $costs->meterReading = (float) $tariff->recurring_meter_reading;
+        if ($includeFixed) {
+            $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
+            $costs->meterReading = (float) $tariff->recurring_meter_reading;
+        } else {
+            $costs->supplyCharge = 0;
+            $costs->meterReading = 0;
+        }
         $costs->vatRate = (float) $vatRate->value;
         $costs->sources = $sources;
 
@@ -154,12 +167,13 @@ trait EACTrait
      *
      * @param int      $consumption Normal cost consumption in kWh
      * @param int      $creditUnits Rediced cost consumpation in kWh
+     * @param bool     $includeFixed Include Fixed Charges
      * @param DateTime $periodStart Period Start date
      * @param DateTime $periodEnd   Period End date
      *
      * @return array
      */
-    public function calculateEACCost08(int $consumption, int $creditUnits, DateTime $periodStart, DateTime $periodEnd): array
+    public function calculateEACCost08(int $consumption, int $creditUnits, bool $includeFixed, DateTime $periodStart, DateTime $periodEnd): array
     {
         $costs = New \stdClass();
         $costs->energyCharge = 0;
@@ -184,14 +198,26 @@ trait EACTrait
             if ($costs->energyCharge < 0) {
                 $costs->energyCharge = 0;
             }
-            $costs->supplyCharge = (float) $tariff->supply_subsidy_first;
+            if ($includeFixed) {
+                $costs->supplyCharge = (float) $tariff->supply_subsidy_first;
+            } else {
+                $costs->supplyCharge = 0;
+            }
         } elseif (($consumption - $creditUnits) > 1000 && ($consumption - $creditUnits) <= 2000) {
             $costs->energyCharge = 1000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 1000) * $tariff->energy_charge_subsidy_second;
-            $costs->supplyCharge = (float) $tariff->supply_subsidy_second;
-
+            if ($includeFixed) {
+                $costs->supplyCharge = (float) $tariff->supply_subsidy_second;
+            } else {
+                $costs->supplyCharge = 0;
+            }
         } elseif (($consumption - $creditUnits) > 2000) {
             $costs->energyCharge = 2000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 2000) * $tariff->energy_charge_subsidy_third;
-            $costs->supplyCharge = (float) $tariff->supply_subsidy_third;
+            if ($includeFixed) {
+                $costs->supplyCharge = (float) $tariff->supply_subsidy_third;
+            }  else {
+                $costs->supplyCharge = 0;
+            }
+
         }
         $costs->fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits), 6, '.', '');
         $costs->vatRate = (float) $vatRate->value;
