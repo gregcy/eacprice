@@ -70,10 +70,12 @@
                                     <td class="text-gray-800"> {{__('Total') }}</td>
                                     <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($adjustment->total, 6) }}</td>
                                 </tr>
-                                <tr>
-                                    <td class="text-gray-800"> {{__('Total Adjusted') }}</td>
-                                    <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($adjustment->revised_fuel_adjustment_price, 6) }}</td>
-                                </tr>
+                                @if ($adjustment->revised_fuel_adjustment_price > 0)
+                                    <tr>
+                                        <td class="text-gray-800"> {{__('Total Adjusted') }}</td>
+                                        <td class="pl-4 inline text-gray-800 font-mono">€{{ number_format($adjustment->revised_fuel_adjustment_price, 6) }}</td>
+                                    </tr>
+                                @endif
                             </table>
                             <table>
                                 <tr>
