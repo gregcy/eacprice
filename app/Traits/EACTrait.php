@@ -34,11 +34,11 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 01
      *
-     * @param  int      $consumption Consumption in kWh
-     * @param  int      $creditUnits Credit Units
-     * @param  bool     $includeFixed Include Fixed Charges
-     * @param  DateTime $periodStart Period Start date
-     * @param  DateTime $periodEnd   Period End date
+     * @param int      $consumption  Consumption in kWh
+     * @param int      $creditUnits  Credit Units
+     * @param bool     $includeFixed Include Fixed Charges
+     * @param DateTime $periodStart  Period Start date
+     * @param DateTime $periodEnd    Period End date
      *
      * @return array
      */
@@ -109,7 +109,7 @@ trait EACTrait
      *
      * @param int      $consumptionNormal  Normal cost consumption in kWh
      * @param int      $consumptionReduced Rediced cost consumpation in kWh
-     * @oaram bool     $includeFixed       Include Fixed Charges
+     * @param bool     $includeFixed       Include Fixed Charges
      * @param DateTime $periodStart        Period Start date
      * @param DateTime $periodEnd          Period End date
      *
@@ -172,11 +172,11 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 08
      *
-     * @param int      $consumption Normal cost consumption in kWh
-     * @param int      $creditUnits Rediced cost consumpation in kWh
+     * @param int      $consumption  Normal cost consumption in kWh
+     * @param int      $creditUnits  Rediced cost consumpation in kWh
      * @param bool     $includeFixed Include Fixed Charges
-     * @param DateTime $periodStart Period Start date
-     * @param DateTime $periodEnd   Period End date
+     * @param DateTime $periodStart  Period Start date
+     * @param DateTime $periodEnd    Period End date
      *
      * @return array
      */
@@ -221,7 +221,7 @@ trait EACTrait
             $costs->energyCharge = 2000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 2000) * $tariff->energy_charge_subsidy_third;
             if ($includeFixed) {
                 $costs->supplyCharge = (float) $tariff->supply_subsidy_third;
-            }  else {
+            } else {
                 $costs->supplyCharge = 0;
             }
 

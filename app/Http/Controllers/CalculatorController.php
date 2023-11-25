@@ -32,43 +32,44 @@ class CalculatorController extends Controller
         );
 
         $cost = [];
-        $values = array('tariff' => $validated['tariff'],
-                        'consumption' => $validated['consumption'] ?? 0,
-                        'credit-amount' => $validated['credit-amount'] ?? 0,
-                        'consumption-standard' => $validated['consumption-standard'] ?? 0,
-                        'consumption-economy' => $validated['consumption-economy'] ?? 0,
-                        'include-fixed' => $validated['include-fixed'] ?? 0);
+        $values = array(
+            'tariff' => $validated['tariff'],
+            'consumption' => $validated['consumption'] ?? 0,
+            'credit-amount' => $validated['credit-amount'] ?? 0,
+            'consumption-standard' => $validated['consumption-standard'] ?? 0,
+            'consumption-economy' => $validated['consumption-economy'] ?? 0,
+            'include-fixed' => $validated['include-fixed'] ?? 0,
+            'date-start' => date_create_from_format('Y-m', $validated['period']) ?? date_create('now'),
+            'date-end' => date_create_from_format('Y-m', $validated['period']) ?? date_create('now'),
+            'period' => $validated['period']
+        );
+
 
         if ($validated['tariff'] == "01") {
             $cost = $this->calculateEACCost01(
                 $values['consumption'],
                 $values['credit-amount'],
                 $values['include-fixed'],
-                date_create('now'),
-                date_create('now')
+                $values['date-start'],
+                $values['date-end']
             );
         } else if ($validated['tariff'] == "02") {
             $cost = $this->calculateEACCost02(
                 $values['consumption-standard'],
                 $values['consumption-economy'],
                 $values['include-fixed'],
-                date_create('now'),
-                date_create('now')
+                $values['date-start'],
+                $values['date-end']
             );
         } else if ($validated['tariff'] == "08") {
             $cost = $this->calculateEACCost08(
                 $values['consumption'],
                 $values['credit-amount'],
                 $values['include-fixed'],
-                date_create('now'),
-                date_create('now')
+                $values['date-start'],
+                $values['date-end']
             );
         }
-        if (!$values['include-fixed']) {
-            unset($cost['supplyCharge']);
-            unset($cost['meterReading']);
-        }
-
         foreach ($cost as $key => $value) {
             if ($key != 'sources') {
                 $cost[$key] = $this->min_precision($value, 2);
