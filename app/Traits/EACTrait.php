@@ -34,11 +34,11 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 01
      *
-     * @param int      $consumption Consumption in kWh
-     * @param int      $creditUnits Credit Units
-     * @param bool     $includeFixed Include Fixed Charges
-     * @param DateTime $periodStart Period Start date
-     * @param DateTime $periodEnd   Period End date
+     * @param  int      $consumption Consumption in kWh
+     * @param  int      $creditUnits Credit Units
+     * @param  bool     $includeFixed Include Fixed Charges
+     * @param  DateTime $periodStart Period Start date
+     * @param  DateTime $periodEnd   Period End date
      *
      * @return array
      */
@@ -82,15 +82,18 @@ trait EACTrait
         $costs->ancilaryServicesCharge = (float) $tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption);
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($lowCostConsumption + $highCostConsumption);
         if ($highCostConsumption > 0) {
-            $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * $highCostConsumption;
+            if ($adjustment->revised_fuel_adjustment_price > 0 ) {
+                $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * $highCostConsumption;
+            } else {
+                $costs->fuelAdjustment = (float) $adjustment->fuel_adjustment_price * $highCostConsumption;
+            }
         } else {
             $costs->fuelAdjustment = 0;
         }
         if ($includeFixed) {
             $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
             $costs->meterReading = (float) $tariff->recurring_meter_reading;
-        }
-        else {
+        } else {
             $costs->supplyCharge = 0;
             $costs->meterReading = 0;
         }
@@ -148,7 +151,11 @@ trait EACTrait
             $costs->ancilaryServices += (float) $tariff->ancilary_services_reduced * $consumptionReduced;
         }
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($consumptionNormal + $consumptionReduced);
-        $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
+        if ($adjustment->revised_fuel_adjustment_price > 0 ) {
+            $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
+        } else {
+            $costs->fuelAdjustment = (float) $adjustment->fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
+        }
         if ($includeFixed) {
             $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
             $costs->meterReading = (float) $tariff->recurring_meter_reading;
@@ -219,7 +226,11 @@ trait EACTrait
             }
 
         }
-        $costs->fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits), 6, '.', '');
+        if ($adjustment->revised_fuel_adjustment_price > 0 ) {
+            $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits);
+        } else {
+            $costs->fuelAdjustment = (float) $adjustment->fuel_adjustment_price * ($consumption - $creditUnits);
+        }
         $costs->vatRate = (float) $vatRate->value;
         $costs->sources = $sources;
 
