@@ -94,6 +94,7 @@
                     </div>
                 </div>
             @endforeach
+            {{ $adjustments->links() }}
         </div>
     </div>
 </x-app-layout>
