@@ -79,7 +79,7 @@ trait EACTrait
 
         $costs->energyCharge = (float) $tariff->energy_charge_normal * $highCostConsumption;
         $costs->networkCharge = (float) $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption);
-        $costs->ancilaryServicesCharge = (float) $tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption);
+        $costs->ancilaryServices = (float) $tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption);
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($lowCostConsumption + $highCostConsumption);
         if ($highCostConsumption > 0) {
             if ($adjustment->revised_fuel_adjustment_price > 0 ) {
