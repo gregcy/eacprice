@@ -17,7 +17,7 @@ class AdjustmentController extends Controller
         return view(
             'adjustments.index',
             [
-                'adjustments' => Adjustment::with('user')->latest()->paginate(10),
+                'adjustments' => Adjustment::with('user')->latest('start_date')->paginate(10),
             ]
         );
     }
