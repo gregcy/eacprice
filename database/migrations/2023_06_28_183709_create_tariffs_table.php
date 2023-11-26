@@ -24,8 +24,8 @@ return new class extends Migration
             $table->decimal('energy_charge_reduced', 5, 4)->nullable()->default(null);
             $table->decimal('network_charge_normal', 5, 4)->nullable()->default(null);
             $table->decimal('network_charge_reduced', 5, 4)->nullable()->default(null);
-            $table->decimal('ancilary_services_normal', 5, 4)->nullable()->default(null);
-            $table->decimal('ancilary_services_reduced', 5, 4)->nullable()->default(null);
+            $table->decimal('ancillary_services_normal', 5, 4)->nullable()->default(null);
+            $table->decimal('ancillary_services_reduced', 5, 4)->nullable()->default(null);
             $table->decimal('energy_charge_subsidy_first', 5, 4)->nullable()->default(null);
             $table->decimal('energy_charge_subsidy_second', 5, 4)->nullable()->default(null);
             $table->decimal('energy_charge_subsidy_third', 5, 4)->nullable()->default(null);

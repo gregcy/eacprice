@@ -17,7 +17,7 @@ use App\Models\Tariff;
 use App\Models\Adjustment;
 use App\Models\Cost;
 use DateTime;
-
+use PhpParser\Node\Expr\Cast\String_;
 
 /**
  * Trait that provides all calculation methods for the Electricity Cost for EAC
@@ -49,9 +49,10 @@ trait EACTrait
         $costs = New \stdClass();
         $costs->energyCharge = 0;
         $costs->networkCharge = 0;
-        $costs->ancilaryServices = 0;
+        $costs->ancillaryServices = 0;
         $costs->publicServiceObligation = 0;
         $costs->fuelAdjustment = 0;
+        $costs->resEsFund = 0;
 
         if ($consumption >= $creditUnits) {
             $lowCostConsumption = $creditUnits;
@@ -62,8 +63,10 @@ trait EACTrait
         }
 
         $tariff = $this->_getTariff('01',  $periodStart, $periodEnd);
-        $vatRate = $this->_getVatRate($periodStart, $periodEnd);
+        $vatRate = $this->_getVatRate($periodStart, $periodEnd, '01');
         $publicServiceObligation = $this->_getPublicServiceObligation($periodStart, $periodEnd);
+        $resEsFund = $this->_getResEsFund($periodStart, $periodEnd);
+
         $sources = [
             $tariff->source,
             $publicServiceObligation->source
@@ -73,14 +76,16 @@ trait EACTrait
             $sources = [
                 $tariff->source,
                 $adjustment->source,
-                $publicServiceObligation->source
+                $publicServiceObligation->source,
+                $resEsFund->source
             ];
         }
 
         $costs->energyCharge = (float) $tariff->energy_charge_normal * $highCostConsumption;
         $costs->networkCharge = (float) $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption);
-        $costs->ancilaryServicesCharge = (float) $tariff->ancilary_services_normal * ($lowCostConsumption + $highCostConsumption);
+        $costs->ancillaryServices = (float) $tariff->ancillary_services_normal * ($lowCostConsumption + $highCostConsumption);
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($lowCostConsumption + $highCostConsumption);
+        $costs->resEsFund = (float) $resEsFund->value * $highCostConsumption;
         if ($highCostConsumption > 0) {
             $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * $highCostConsumption;
         } else {
@@ -96,7 +101,6 @@ trait EACTrait
         }
         $costs->vatRate = (float) $vatRate->value;
         $costs->sources = $sources;
-
         $formattedCosts = $this->_formatCosts($costs);
         return $formattedCosts;
     }
@@ -117,13 +121,13 @@ trait EACTrait
         $costs = New \stdClass();
         $costs->energyCharge = 0;
         $costs->networkCharge = 0;
-        $costs->ancilaryServices = 0;
+        $costs->ancillaryServices = 0;
         $costs->publicServiceObligation = 0;
         $costs->fuelAdjustment = 0;
 
         $tariff = $this->_getTariff('02',  $periodStart, $periodEnd);
         $adjustment = $this->_getAdjustment($periodStart, $periodEnd);
-        $vatRate = $this->_getVatRate($periodStart, $periodEnd);
+        $vatRate = $this->_getVatRate($periodStart, $periodEnd, '02');
         $publicServiceObligation = $this->_getPublicServiceObligation($periodStart, $periodEnd);
         if ($consumptionNormal || $consumptionReduced > 0) {
             $sources = [
@@ -140,12 +144,12 @@ trait EACTrait
         if ($consumptionNormal > 0 ) {
             $costs->energyCharge = (float) $tariff->energy_charge_normal * $consumptionNormal;
             $costs->networkCharge = (float) $tariff->network_charge_normal * $consumptionNormal;
-            $costs->ancilaryServices = (float) $tariff->ancilary_services_normal * $consumptionNormal;
+            $costs->ancillaryServices = (float) $tariff->ancillary_services_normal * $consumptionNormal;
         }
         if ($consumptionReduced > 0 ) {
             $costs->energyCharge += (float) $tariff->energy_charge_reduced * $consumptionReduced;
             $costs->networkCharge += (float) $tariff->network_charge_reduced * $consumptionReduced;
-            $costs->ancilaryServices += (float) $tariff->ancilary_services_reduced * $consumptionReduced;
+            $costs->ancillaryServices += (float) $tariff->ancillary_services_reduced * $consumptionReduced;
         }
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($consumptionNormal + $consumptionReduced);
         $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
@@ -178,14 +182,14 @@ trait EACTrait
         $costs = New \stdClass();
         $costs->energyCharge = 0;
         $costs->networkCharge = 0;
-        $costs->ancilaryServices = 0;
+        $costs->ancillaryServices = 0;
         $costs->publicServiceObligation = 0;
         $costs->fuelAdjustment = 0;
         $costs->meterReading = 0;
 
         $tariff = $this->_getTariff('08',  $periodStart, $periodEnd);
         $adjustment = $this->_getAdjustment($periodStart, $periodEnd);
-        $vatRate = $this->_getVatRate($periodStart, $periodEnd);
+        $vatRate = $this->_getVatRate($periodStart, $periodEnd, '08');
         $sources = [
             $tariff->source,
         ];
@@ -272,22 +276,23 @@ trait EACTrait
      *
      * @param DateTime $periodStart Period Start date
      * @param DateTime $periodEnd   Period End date
+     * @param string   $tariffCode  Tariff Code
      *
      * @return Cost
      */
-    private function _getVatRate(DateTime $periodStart , DateTime $periodEnd):Cost
+    private function _getVatRate(DateTime $periodStart , DateTime $periodEnd, string $tariffCode = Null ):Cost
     {
-        return Cost::where('name', '=', 'VAT')
-            ->where(
-                function ($query) use ($periodStart, $periodEnd) {
-                    $query->where('start_date', '<=', $periodStart)->where(
-                        function ($subquery) use ($periodEnd) {
-                            $subquery->where('end_date', '>=', $periodEnd)
-                                ->orWhereNull('end_date');
-                        }
-                    );
-                }
-            )->first();
+        return Cost::where('name', 'VAT')
+        ->where(function ($query) use ($tariffCode) {
+            $query->where('code', $tariffCode)
+                ->orWhereNull('code');
+        })
+        ->where('start_date', '<=', $periodStart)
+        ->where(function ($query) use ($periodEnd) {
+            $query->where('end_date', '>=', $periodEnd)
+                ->orWhereNull('end_date');
+        })
+        ->first();
     }
 
     /**
@@ -301,6 +306,29 @@ trait EACTrait
     private function _getPublicServiceObligation(DateTime $periodStart , DateTime $periodEnd):Cost
     {
         return Cost::where('name', '=', 'Public Service Obligation')
+            ->where(
+                function ($query) use ($periodStart, $periodEnd) {
+                    $query->where('start_date', '<=', $periodStart)->where(
+                        function ($subquery) use ($periodEnd) {
+                            $subquery->where('end_date', '>=', $periodEnd)
+                                ->orWhereNull('end_date');
+                        }
+                    );
+                }
+            )->first();
+    }
+
+    /**
+     * Returns the RES & ES Fund for a given period
+     *
+     * @param DateTime $periodStart Period Start date
+     * @param DateTime $periodEnd   Period End date
+     *
+     * @return Cost
+     */
+    private function _getResEsFund(DateTime $periodStart , DateTime $periodEnd):Cost
+    {
+        return Cost::where('name', '=', 'RES & ES Fund')
             ->where(
                 function ($query) use ($periodStart, $periodEnd) {
                     $query->where('start_date', '<=', $periodStart)->where(
@@ -337,11 +365,11 @@ trait EACTrait
             );
             $total += $costs->networkCharge;
         }
-        if ($costs->ancilaryServices > 0) {
-            $formattedCosts['ancilaryServices'] = (float) number_format(
-                $costs->ancilaryServices, 6, '.', ''
+        if ($costs->ancillaryServices > 0) {
+            $formattedCosts['ancillaryServices'] = (float) number_format(
+                $costs->ancillaryServices, 6, '.', ''
             );
-            $total += $costs->ancilaryServices;
+            $total += $costs->ancillaryServices;
         }
         if ($costs->publicServiceObligation > 0) {
             $formattedCosts['publicServiceObligation'] = (float) number_format(

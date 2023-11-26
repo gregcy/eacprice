@@ -14,6 +14,7 @@ class Cost extends Model
         'start_date',
         'end_date',
         'name',
+        'code',
         'prefix',
         'suffix',
         'value',

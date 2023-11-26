@@ -64,13 +64,13 @@
                         >
                 </div>
                 <div class="flex w-full pb-1">
-                    <label class="inline w-72 align-middle pt-2.5 pr-2.5" for="ancilary_services_normal">{{ __('Ancilary Services Normal (€/kWh)') }}</label>
+                    <label class="inline w-72 align-middle pt-2.5 pr-2.5" for="ancillary_services_normal">{{ __('ancillary Services Normal (€/kWh)') }}</label>
                     <input type="number"
-                        name="ancilary_services_normal"
+                        name="ancillary_services_normal"
                         step = "0.0001"
                         min="0"
                         placeholder="0.0000"
-                        value="{{ old('ancilary_services_normal', $tariff->ancilary_services_normal) }}"
+                        value="{{ old('ancillary_services_normal', $tariff->ancillary_services_normal) }}"
                         class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         >
                 </div>
@@ -78,7 +78,7 @@
             <fieldset class="border-b pb-2 mb-2 inline-block w-full border-gray-300">
                 <legend class="text-base font-medium text-gray-900">{{ __('Tariff 02') }}</legend>
                 <div class="flex w-full pb-1">
-                    <label class="inline w-72 align-middle pt-2.5 pr-2.5" for="ancilary_services_normal" for="energy_charge_reduced">{{ __('Energy Charge Reduced (€/kWh)') }}</label>
+                    <label class="inline w-72 align-middle pt-2.5 pr-2.5" for="ancillary_services_normal" for="energy_charge_reduced">{{ __('Energy Charge Reduced (€/kWh)') }}</label>
                     <input type="number"
                         name="energy_charge_reduced"
                         step = "0.0001"
@@ -100,13 +100,13 @@
                         >
                 </div>
                 <div class="flex w-full pb-1">
-                    <label class="inline w-72 align-middle pt-2.5 pr-2.5" for="ancilary_services_reduced">{{ __('Ancilary Services Reduced (€/kWh)') }}</label>
+                    <label class="inline w-72 align-middle pt-2.5 pr-2.5" for="ancillary_services_reduced">{{ __('ancillary Services Reduced (€/kWh)') }}</label>
                     <input type="number"
-                        name="ancilary_services_reduced"
+                        name="ancillary_services_reduced"
                         step = "0.0001"
                         min="0"
                         placeholder="0.0000"
-                        value="{{ old('ancilary_services_reduced', $tariff->ancilary_services_reduced) }}"
+                        value="{{ old('ancillary_services_reduced', $tariff->ancillary_services_reduced) }}"
                         class="block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         >
                 </div>

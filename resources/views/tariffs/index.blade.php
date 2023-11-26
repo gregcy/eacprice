@@ -79,9 +79,9 @@
                                     </tr>
                                     <tr>
                                         <td class="text-gray-800"> {{__('Ancillary Services') }}</td>
-                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->ancilary_services_normal, 5) }}</td>
+                                        <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->ancillary_services_normal, 5) }}</td>
                                         @if ($tariff->code == '02')
-                                            <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->ancilary_services_reduced, 5) }}</td>
+                                            <td class="text-gray-800 pl-4 font-mono">€{{ number_format($tariff->ancillary_services_reduced, 5) }}</td>
                                         @endif
                                     </tr>
                                 </table>

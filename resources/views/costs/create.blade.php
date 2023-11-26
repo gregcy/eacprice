@@ -32,6 +32,14 @@
                 value = "{{ old('suffix') }}"
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 >
+            <label for="code">{{ __('Tariff Code') }}</label>
+            <select name="code"
+                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                <option value="">{{ __('None') }}</option>
+                <option value="01">{{ __('01 - Single Rate Domestic Use') }}</option>
+                <option value="02">{{ __('02 - Two Rate Domestic Use') }}</option>
+                <option value="08">{{ __('08 - Special for Vulnerable Customers') }}</option>
+            </select>
             <label for="value">{{ __('Value') }}</label>
             <input type="number"
                 name="value"

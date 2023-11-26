@@ -25,22 +25,22 @@
             @isset($cost['energyCharge'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">{{ __('Energy Charge') }}<sup class="pl-2">1</sup></td>
+                    <td class="px-2">{{ __('Electricity Generation') }}<sup class="pl-2">1</sup></td>
                     <td class="px-2">€{{ $cost['energyCharge'] }}</td>
                 </tr>
             @endisset
             @isset($cost['networkCharge'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">{{ __('Network Charge') }}<sup class="pl-2">1</sup></td>
+                    <td class="px-2">{{ __('Network Usage') }}<sup class="pl-2">1</sup></td>
                     <td class="px-2">€{{ $cost['networkCharge'] }}</td>
                 </tr>
             @endisset
-            @isset($cost['ancilaryServices'])
+            @isset($cost['ancillaryServices'])
                 <tr>
                     <td class="px-41 border-white border-b-8 border-t-8"></td>
                     <td class="px-2">{{ __('Ancillary Services') }}<sup class="pl-2">1</sup></td>
-                    <td class="px-2">€{{ $cost['ancilaryServices'] }}</td>
+                    <td class="px-2">€{{ $cost['ancillaryServices'] }}</td>
                 </tr>
             @endisset
             @isset($cost['fuelAdjustment'])
@@ -127,7 +127,7 @@
             @isset($cost['networkCharge'])
                 '{{ __('Network Charge') }}',
             @endisset
-            @isset($cost['ancilaryServices'])
+            @isset($cost['ancillaryServices'])
                 '{{ __('Ancillary Services') }}',
             @endisset
             @isset($cost['publicServiceObligation'])

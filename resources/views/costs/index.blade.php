@@ -43,6 +43,16 @@
                                 </x-dropdown>
                             @endif
                         </div>
+                        <div class="flex justify-start items-center border-b pb-2 mb-2">
+                            <div>
+                                <span class="text-gray-500 text-bases font-bold"> {{__('Tariff Code:') }}</span>
+                                @if($cost->code == '')
+                                    <span class="inline text-gray-500 text-base font-bold">{{ __('All') }}</span>
+                                @else
+                                    <span class="inline text-gray-500 text-base font-bold">{{ ucfirst(__($cost->code)) }}</span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="flex justify-between items-start">
                             <table>
                                 <tr>

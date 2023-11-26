@@ -44,6 +44,7 @@ class CostController extends Controller
                 'name' => 'string',
                 'prefix' => 'nullable|string',
                 'suffix' => 'nullable|string',
+                'code' => 'nullable|string',
                 'value' => 'required|numeric',
                 'source' => 'nullable|url',
                 'source_name' => 'nullable|string'
@@ -86,6 +87,7 @@ class CostController extends Controller
                 'name' => 'string',
                 'prefix' => 'nullable|string',
                 'suffix' => 'nullable|string',
+                'code' => 'nullable|string',
                 'value' => 'required|numeric',
                 'source' => 'nullable|url',
                 'source_name' => 'nullable|string'
