@@ -34,11 +34,11 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 01
      *
-     * @param int      $consumption Consumption in kWh
-     * @param int      $creditUnits Credit Units
+     * @param int      $consumption  Consumption in kWh
+     * @param int      $creditUnits  Credit Units
      * @param bool     $includeFixed Include Fixed Charges
-     * @param DateTime $periodStart Period Start date
-     * @param DateTime $periodEnd   Period End date
+     * @param DateTime $periodStart  Period Start date
+     * @param DateTime $periodEnd    Period End date
      *
      * @return array
      */
@@ -87,15 +87,18 @@ trait EACTrait
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($lowCostConsumption + $highCostConsumption);
         $costs->resEsFund = (float) $resEsFund->value * $highCostConsumption;
         if ($highCostConsumption > 0) {
-            $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * $highCostConsumption;
+            if ($adjustment->revised_fuel_adjustment_price > 0 ) {
+                $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * $highCostConsumption;
+            } else {
+                $costs->fuelAdjustment = (float) $adjustment->fuel_adjustment_price * $highCostConsumption;
+            }
         } else {
             $costs->fuelAdjustment = 0;
         }
         if ($includeFixed) {
             $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
             $costs->meterReading = (float) $tariff->recurring_meter_reading;
-        }
-        else {
+        } else {
             $costs->supplyCharge = 0;
             $costs->meterReading = 0;
         }
@@ -110,7 +113,7 @@ trait EACTrait
      *
      * @param int      $consumptionNormal  Normal cost consumption in kWh
      * @param int      $consumptionReduced Rediced cost consumpation in kWh
-     * @oaram bool     $includeFixed       Include Fixed Charges
+     * @param bool     $includeFixed       Include Fixed Charges
      * @param DateTime $periodStart        Period Start date
      * @param DateTime $periodEnd          Period End date
      *
@@ -152,7 +155,11 @@ trait EACTrait
             $costs->ancillaryServices += (float) $tariff->ancillary_services_reduced * $consumptionReduced;
         }
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($consumptionNormal + $consumptionReduced);
-        $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
+        if ($adjustment->revised_fuel_adjustment_price > 0 ) {
+            $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
+        } else {
+            $costs->fuelAdjustment = (float) $adjustment->fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
+        }
         if ($includeFixed) {
             $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
             $costs->meterReading = (float) $tariff->recurring_meter_reading;
@@ -169,11 +176,11 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 08
      *
-     * @param int      $consumption Normal cost consumption in kWh
-     * @param int      $creditUnits Rediced cost consumpation in kWh
+     * @param int      $consumption  Normal cost consumption in kWh
+     * @param int      $creditUnits  Rediced cost consumpation in kWh
      * @param bool     $includeFixed Include Fixed Charges
-     * @param DateTime $periodStart Period Start date
-     * @param DateTime $periodEnd   Period End date
+     * @param DateTime $periodStart  Period Start date
+     * @param DateTime $periodEnd    Period End date
      *
      * @return array
      */
@@ -218,12 +225,16 @@ trait EACTrait
             $costs->energyCharge = 2000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 2000) * $tariff->energy_charge_subsidy_third;
             if ($includeFixed) {
                 $costs->supplyCharge = (float) $tariff->supply_subsidy_third;
-            }  else {
+            } else {
                 $costs->supplyCharge = 0;
             }
 
         }
-        $costs->fuelAdjustment = (float) number_format($adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits), 6, '.', '');
+        if ($adjustment->revised_fuel_adjustment_price > 0 ) {
+            $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits);
+        } else {
+            $costs->fuelAdjustment = (float) $adjustment->fuel_adjustment_price * ($consumption - $creditUnits);
+        }
         $costs->vatRate = (float) $vatRate->value;
         $costs->sources = $sources;
 

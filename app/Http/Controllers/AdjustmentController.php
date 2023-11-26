@@ -17,7 +17,7 @@ class AdjustmentController extends Controller
         return view(
             'adjustments.index',
             [
-                'adjustments' => Adjustment::with('user')->latest()->paginate(10),
+                'adjustments' => Adjustment::with('user')->latest('start_date')->paginate(10),
             ]
         );
     }
@@ -49,7 +49,7 @@ class AdjustmentController extends Controller
                 'fuel' => 'required|numeric',
                 'co2_emissions' => 'required|numeric',
                 'cosmos' => 'required|numeric',
-                'revised_fuel_adjustment_price' => 'required|numeric',
+                'revised_fuel_adjustment_price' => 'nullable|numeric',
                 'source' => 'nullable|url',
                 'source_name' => 'nullable|string'
             ]
@@ -96,7 +96,7 @@ class AdjustmentController extends Controller
                 'fuel' => 'required|numeric',
                 'co2_emissions' => 'required|numeric',
                 'cosmos' => 'required|numeric',
-                'revised_fuel_adjustment_price' => 'required|numeric',
+                'revised_fuel_adjustment_price' => 'nullable|numeric',
                 'source' => 'nullable|url',
                 'source_name' => 'nullable|string'
             ]
