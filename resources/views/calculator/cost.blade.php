@@ -43,6 +43,20 @@
                     <td class="px-2">€{{ $cost['ancillaryServices'] }}</td>
                 </tr>
             @endisset
+            @isset($cost['meterReading'])
+                <tr>
+                    <td class="px-4 border-white border-b-8 border-t-8"></td>
+                    <td class="px-2">{{ __('Meter Reading') }}<sup class="pl-2">1</sup></td>
+                    <td class="px-2">€{{ $cost['meterReading'] }}</td>
+                </tr>
+            @endisset
+            @isset($cost['supplyCharge'])
+                <tr>
+                    <td class="px-4 border-white border-b-8 border-t-8"></td>
+                    <td class="px-2">{{ __('Supply Charge') }}<sup class="pl-2">1</sup></td>
+                    <td class="px-2">€{{ $cost['supplyCharge'] }}</td>
+                </tr>
+            @endisset
             @isset($cost['fuelAdjustment'])
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8"></td>
@@ -57,18 +71,11 @@
                     <td class="px-2">€{{ $cost['publicServiceObligation'] }}</td>
                 </tr>
             @endisset
-            @isset($cost['supplyCharge'])
+            @isset($cost['resEsFund'])
                 <tr>
-                    <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">{{ __('Supply Charge') }}<sup class="pl-2">1</sup></td>
-                    <td class="px-2">€{{ $cost['supplyCharge'] }}</td>
-                </tr>
-            @endisset
-            @isset($cost['meterReading'])
-                <tr>
-                    <td class="px-4 border-white border-b-8 border-t-8"></td>
-                    <td class="px-2">{{ __('Meter Reading') }}<sup class="pl-2">1</sup></td>
-                    <td class="px-2">€{{ $cost['meterReading'] }}</td>
+                    <td class="px-41 border-white border-b-8 border-t-8"></td>
+                    <td class="px-2">{{ __('RES & ES Fund') }}<sup class="pl-2">{{ count($sources) }}</sup></td>
+                    <td class="px-2">€{{ $cost['resEsFund'] }}</td>
                 </tr>
             @endisset
             <tr>
@@ -122,13 +129,19 @@
     const data = {
         labels: [
             @isset($cost['energyCharge'])
-                '{{ __('Energy Charge') }}',
+                '{{ __('Electricity Generation') }}',
             @endisset
             @isset($cost['networkCharge'])
-                '{{ __('Network Charge') }}',
+                '{{ __('Network Usage') }}',
             @endisset
             @isset($cost['ancillaryServices'])
                 '{{ __('Ancillary Services') }}',
+            @endisset
+            @isset($cost['meterReading'])
+                '{{ __('Meter Reading') }}',
+            @endisset
+            @isset($cost['supplyCharge'])
+                '{{ __('Supply Charge') }}',
             @endisset
             @isset($cost['publicServiceObligation'])
                 '{{ __('Public Service Obligation') }}',
@@ -136,12 +149,7 @@
             @isset($cost['fuelAdjustment'])
                 '{{ __('Fuel Adjustment') }}',
             @endisset
-            @isset($cost['supplyCharge'])
-                '{{ __('Supply Charge') }}',
-            @endisset
-            @isset($cost['meterReading'])
-                '{{ __('Meter Reading') }}',
-            @endisset
+
             '{{ __('VAT') }}'],
         datasets: [{
             label: '{{ __('Cost') }}',
@@ -159,7 +167,8 @@
             '#4bc0c0',
             '#9966ff',
             '#c8cace',
-            '#4FF0CE'
+            '#4FF0CE',
+            '#388c12'
             ],
             borderWidth: 1
         }],

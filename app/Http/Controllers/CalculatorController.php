@@ -76,9 +76,7 @@ class CalculatorController extends Controller
             }
         }
 
-        $vat_rate = Cost::where('name', 'vat')
-            ->where('end_date', '=', null)
-            ->first();
+        $vat_rate = $this->_getVatRate($values['date-start'], $values['date-end'], $validated['tariff']);
 
         $sources = array_pop($cost);
         return view(

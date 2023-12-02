@@ -90,7 +90,7 @@ trait EACTrait
             if ($adjustment->revised_fuel_adjustment_price > 0 ) {
                 $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * $highCostConsumption;
             } else {
-                $costs->fuelAdjustment = (float) $adjustment->fuel_adjustment_price * $highCostConsumption;
+                $costs->fuelAdjustment = (float) $adjustment->total * $highCostConsumption;
             }
         } else {
             $costs->fuelAdjustment = 0;
@@ -105,6 +105,7 @@ trait EACTrait
         $costs->vatRate = (float) $vatRate->value;
         $costs->sources = $sources;
         $formattedCosts = $this->_formatCosts($costs);
+        //dd($formattedCosts);
         return $formattedCosts;
     }
 
@@ -158,7 +159,7 @@ trait EACTrait
         if ($adjustment->revised_fuel_adjustment_price > 0 ) {
             $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
         } else {
-            $costs->fuelAdjustment = (float) $adjustment->fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
+            $costs->fuelAdjustment = (float) $adjustment->cost * ($consumptionNormal + $consumptionReduced);
         }
         if ($includeFixed) {
             $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
@@ -233,7 +234,7 @@ trait EACTrait
         if ($adjustment->revised_fuel_adjustment_price > 0 ) {
             $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits);
         } else {
-            $costs->fuelAdjustment = (float) $adjustment->fuel_adjustment_price * ($consumption - $creditUnits);
+            $costs->fuelAdjustment = (float) $adjustment->cost * ($consumption - $creditUnits);
         }
         $costs->vatRate = (float) $vatRate->value;
         $costs->sources = $sources;
@@ -293,15 +294,15 @@ trait EACTrait
      */
     private function _getVatRate(DateTime $periodStart , DateTime $periodEnd, string $tariffCode = Null ):Cost
     {
-        return Cost::where('name', 'VAT')
-        ->where(function ($query) use ($tariffCode) {
-            $query->where('code', $tariffCode)
-                ->orWhereNull('code');
-        })
+        return Cost::where('name','=','VAT')
         ->where('start_date', '<=', $periodStart)
         ->where(function ($query) use ($periodEnd) {
             $query->where('end_date', '>=', $periodEnd)
                 ->orWhereNull('end_date');
+        })
+        ->where(function ($query1) use ($tariffCode) {
+            $query1->where('code' ,'=', $tariffCode)
+                ->orWhereNull('code');
         })
         ->first();
     }
@@ -362,54 +363,68 @@ trait EACTrait
     private function _formatCosts(\stdClass $costs):array
     {
         $formattedCosts = [];
-
         $total = 0;
+        $vatTotal = 0;
         if ($costs->energyCharge > 0) {
             $formattedCosts['energyCharge'] = (float) number_format(
                 $costs->energyCharge, 6, '.', ''
             );
             $total += $costs->energyCharge;
+            $vatTotal += $costs->energyCharge;
         }
         if ($costs->networkCharge > 0) {
             $formattedCosts['networkCharge'] = (float) number_format(
                 $costs->networkCharge, 6, '.', ''
             );
             $total += $costs->networkCharge;
+            $vatTotal += $costs->networkCharge;
         }
         if ($costs->ancillaryServices > 0) {
             $formattedCosts['ancillaryServices'] = (float) number_format(
                 $costs->ancillaryServices, 6, '.', ''
             );
             $total += $costs->ancillaryServices;
+            $vatTotal += $costs->ancillaryServices;
+        }
+        if ($costs->resEsFund > 0) {
+            $formattedCosts['resEsFund'] = (float) number_format(
+                $costs->resEsFund, 6, '.', ''
+            );
+            $total += $costs->resEsFund;
+            // RES & ES doesn't have VAT
         }
         if ($costs->publicServiceObligation > 0) {
             $formattedCosts['publicServiceObligation'] = (float) number_format(
                 $costs->publicServiceObligation, 6, '.', ''
             );
             $total += $costs->publicServiceObligation;
+            $vatTotal += $costs->publicServiceObligation;
         }
         if ($costs->fuelAdjustment > 0) {
             $formattedCosts['fuelAdjustment'] = (float) number_format(
                 $costs->fuelAdjustment, 6, '.', ''
             );
             $total += $costs->fuelAdjustment;
+            $vatTotal += $costs->fuelAdjustment;
         }
         if ($costs->supplyCharge > 0) {
             $formattedCosts['supplyCharge'] = (float) number_format(
                 $costs->supplyCharge, 6, '.', ''
             );
             $total += $costs->supplyCharge;
+            $vatTotal += $costs->supplyCharge;
         }
         if ($costs->meterReading > 0) {
             $formattedCosts['meterReading'] = (float) number_format(
                 $costs->meterReading, 6, '.', ''
             );
             $total += $costs->meterReading;
+            $vatTotal += $costs->meterReading;
         }
         $formattedCosts['vat'] = (float) number_format(
-            $costs->vatRate * $total, 6, '.', ''
+            $costs->vatRate * $vatTotal, 6, '.', ''
         );
-        $total += $costs->vatRate * $total;
+        $total += $costs->vatRate * $vatTotal;
         $formattedCosts['total'] = (float) number_format(
             $total, 6, '.', ''
         );
