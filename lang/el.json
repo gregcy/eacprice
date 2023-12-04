@@ -39,5 +39,7 @@
     "October": "Οκτώβριος",
     "November": "Νοέμβριος",
     "December": "Δεκέμβριος",
-    "Include Fixed Costs": "Συμπερίληψη Παγίων"
+    "Include Fixed Costs": "Συμπερίληψη Παγίων",
+    "Electricity Generation": "Παραγωγή Ηλεκτρικής Ενέργειας",
+    "Network Usage": "Χρήση Δικτύου"
 }
