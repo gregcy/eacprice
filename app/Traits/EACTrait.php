@@ -380,7 +380,7 @@ trait EACTrait
             );
             $formattedCosts['energyCharge']->description = __('Electricity Generation');
             $formattedCosts['energyCharge']->color = '#36a2eb';
-            $formattedCosts['energyCharge']->sources = $costs->sources[0];
+            $formattedCosts['energyCharge']->source = $costs->sources[0];
             $total += round($costs->energyCharge, 2);
             $vatTotal += round($costs->energyCharge, 2);
         }
@@ -391,7 +391,7 @@ trait EACTrait
             );
             $formattedCosts['networkCharge']->description = __('Network Usage');
             $formattedCosts['networkCharge']->color = '#ff6384';
-            $formattedCosts['networkCharge']->sources = $costs->sources[0];
+            $formattedCosts['networkCharge']->source = $costs->sources[0];
             $total += round($costs->networkCharge, 2);
             $vatTotal += round($costs->networkCharge, 2);
         }
@@ -402,7 +402,7 @@ trait EACTrait
             );
             $formattedCosts['ancillaryServices']->description = __('Ancillary Services');
             $formattedCosts['ancillaryServices']->color = '#ff9f40';
-            $formattedCosts['ancillaryServices']->sources = $costs->sources[0];
+            $formattedCosts['ancillaryServices']->source = $costs->sources[0];
             $total += round($costs->ancillaryServices, 2);
             $vatTotal += round($costs->ancillaryServices, 2);
         }
@@ -413,7 +413,7 @@ trait EACTrait
             );
             $formattedCosts['meterReading']->description = __('Meter Reading');
             $formattedCosts['meterReading']->color = '#ffe29d';
-            $formattedCosts['meterReading']->sources = $costs->sources[0];
+            $formattedCosts['meterReading']->source = $costs->sources[0];
             $total += round($costs->meterReading, 2);
             $vatTotal += round($costs->meterReading, 2);
         }
@@ -424,7 +424,7 @@ trait EACTrait
             );
             $formattedCosts['supplyCharge']->description = __('Electricity Supply');
             $formattedCosts['supplyCharge']->color = '#4bc0c0';
-            $formattedCosts['supplyCharge']->sources = $costs->sources[0];
+            $formattedCosts['supplyCharge']->source = $costs->sources[0];
             $total += round($costs->supplyCharge, 2);
             $vatTotal += round($costs->supplyCharge, 2);
         }
@@ -435,7 +435,7 @@ trait EACTrait
             );
             $formattedCosts['fuelAdjustment']->description = __('Fuel Adjustment');
             $formattedCosts['fuelAdjustment']->color = '#96f';
-            $formattedCosts['fuelAdjustment']->sources = $costs->sources[2];
+            $formattedCosts['fuelAdjustment']->source = $costs->sources[2];
             $total += round($costs->fuelAdjustment, 2);
             $vatTotal += round($costs->fuelAdjustment, 2);
         }
@@ -446,7 +446,7 @@ trait EACTrait
             );
             $formattedCosts['publicServiceObligation']->description = __('Public Service Obligation');
             $formattedCosts['publicServiceObligation']->color = '#c8cace';
-            $formattedCosts['publicServiceObligation']->sources = $costs->sources[1];
+            $formattedCosts['publicServiceObligation']->source = $costs->sources[1];
             $total += round($costs->publicServiceObligation, 2);
             $vatTotal += round($costs->publicServiceObligation, 2);
         }
@@ -457,7 +457,7 @@ trait EACTrait
             );
             $formattedCosts['resEsFund']->description = __('RES & ES Fund');
             $formattedCosts['resEsFund']->color = '#63ffde';
-            $formattedCosts['resEsFund']->sources = $costs->sources[3];
+            $formattedCosts['resEsFund']->source = $costs->sources[3];
             $total += round($costs->resEsFund, 2);
             // RES & ES doesn't have VAT
         }
@@ -466,7 +466,7 @@ trait EACTrait
         $formattedCosts['vat']->value = (float) number_format(
             $costs->vatRate * $vatTotal, 2, '.', ''
         );
-        $formattedCosts['vat']->description = __('VAT');
+        $formattedCosts['vat']->description = __('VAT') . ' (' . $costs->vatRate*100 . ' %)';
         $formattedCosts['vat']->color = '#ffcd56';
 
         $total += $costs->vatRate * $vatTotal;
