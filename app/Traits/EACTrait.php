@@ -369,7 +369,6 @@ trait EACTrait
      */
     public function formatCostsCalculator(\stdClass $costs):array
     {
-        //dd($costs);
         $formattedCosts = [];
         $total = 0;
         $vatTotal = 0;
