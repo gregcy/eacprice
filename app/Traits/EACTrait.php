@@ -16,6 +16,7 @@ namespace App\Traits;
 use App\Models\Tariff;
 use App\Models\Adjustment;
 use App\Models\Cost;
+use App\Classes\EacCosts;
 use DateTime;
 use stdClass;
 
@@ -46,14 +47,7 @@ trait EACTrait
     {
         $lowCostConsumption = 0;
         $highCostConsumption = 0;
-        $costs = New \stdClass();
-        $costs->energyCharge = 0;
-        $costs->networkCharge = 0;
-        $costs->ancillaryServices = 0;
-        $costs->publicServiceObligation = 0;
-        $costs->fuelAdjustment = 0;
-        $costs->resEsFund = 0;
-        $costs->sources = [];
+        $costs = new EacCosts();
 
         if ($consumption >= $creditUnits) {
             $lowCostConsumption = $creditUnits;
@@ -79,8 +73,8 @@ trait EACTrait
                 $adjustment->source_name => $adjustment->source,
             );
         }
-        $costs->energyCharge = (float) $tariff->energy_charge_normal * $highCostConsumption;
-        $costs->networkCharge = (float) $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption);
+        $costs->electricityGeneration = (float) $tariff->energy_charge_normal * $highCostConsumption;
+        $costs->networkUsage = (float) $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption);
         $costs->ancillaryServices = (float) $tariff->ancillary_services_normal * ($lowCostConsumption + $highCostConsumption);
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($lowCostConsumption + $highCostConsumption);
         $costs->resEsFund = (float) $resEsFund->value * $highCostConsumption;
@@ -99,10 +93,10 @@ trait EACTrait
             $costs->fuelAdjustment = 0;
         }
         if ($includeFixed) {
-            $costs->supplyCharge = (float) $tariff->recurring_supply_charge;
+            $costs->electricitySupply = (float) $tariff->recurring_supply_charge;
             $costs->meterReading = (float) $tariff->recurring_meter_reading;
         } else {
-            $costs->supplyCharge = 0;
+            $costs->electricitySupply = 0;
             $costs->meterReading = 0;
         }
         $costs->vatRate = (float) $vatRate->value;
