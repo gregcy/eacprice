@@ -461,18 +461,20 @@ trait EACTrait
             $total += round($costs->resEsFund, 2);
             // RES & ES doesn't have VAT
         }
+
         $formattedCosts['vat'] = new \stdClass();
         $formattedCosts['vat']->value = (float) number_format(
             $costs->vatRate * $vatTotal, 2, '.', ''
         );
         $formattedCosts['vat']->description = __('VAT');
         $formattedCosts['vat']->color = '#ffcd56';
+
         $total += $costs->vatRate * $vatTotal;
-        $formattedCosts['total'] = (float) number_format(
+        $formattedCosts['total'] = new \stdClass();
+        $formattedCosts['total']->value = (float) number_format(
             $total, 2, '.', ''
         );
-        $formattedCosts['sources'] = $costs->sources;
-        dd($formattedCosts);
+        $formattedCosts['total']->description = __('Total');
         return $formattedCosts;
     }
 }

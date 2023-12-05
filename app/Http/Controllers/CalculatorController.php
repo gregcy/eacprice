@@ -70,14 +70,13 @@ class CalculatorController extends Controller
                 $values['date-end']
             );
         }
-        dd($cost);
         foreach ($cost as $key => $value) {
-            if ($key != 'sources') {
-                $cost[$key] = $this->min_precision($value, 2);
+            if (isset($value->value)) {
+                $cost[$key]->value = $this->min_precision($value->value, 2);
             }
         }
-
         $vat_rate = $this->getVatRate($values['date-start'], $values['date-end'], $validated['tariff']);
+        $vat_rate = number_format($vat_rate->value*100, 0, '.', '');
 
         $sources = array_pop($cost);
         return view(
@@ -85,7 +84,7 @@ class CalculatorController extends Controller
             [
                 'cost' => $cost,
                 'values' => $values,
-                'vat_rate' => number_format($vat_rate->value*100, 0, '.', ''),
+                'vat_rate' => $vat_rate,
                 'sources' => $sources
             ]
         );
