@@ -91,9 +91,10 @@ trait EACTrait
         // Public Service Obligation costs
         $publicServiceObligation = $this->getPublicServiceObligation($periodStart, $periodEnd);
         $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($lowCostConsumption + $highCostConsumption);
-        $costs->addSource('publicServiceObligation', $publicServiceObligation->source_name, $publicServiceObligation->source, $sourcesSuperscript);
-        $sourcesSuperscript++;
-
+        if ($costs->publicServiceObligation > 0) {
+            $costs->addSource('publicServiceObligation', $publicServiceObligation->source_name, $publicServiceObligation->source, $sourcesSuperscript);
+            $sourcesSuperscript++;
+        }
         // RES & ES Fund costs
         if ($highCostConsumption > 0) {
             $resEsFund = $this->getResEsFund($periodStart, $periodEnd);

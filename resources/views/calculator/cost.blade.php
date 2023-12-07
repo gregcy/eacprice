@@ -43,5 +43,84 @@
             @endforeach
         </table>
     </div>
+    <script type="module">
+        const total = {{ number_format($cost['total']->value, 2, '.', '') }};
+        const data = {
+            labels: [
+                @foreach($cost as $key => $value)
+                    @if($key != 'total')
+                        '{{ $value->description }}',
+                    @endif
+                @endforeach
+            ],
+            datasets: [{
+                label: '{{ __('Cost') }}',
+                data: [
+                    @foreach($cost as $key => $value)
+                    @if($key != 'total')
+                        '{{ $value->value }}',
+                    @endif
+                @endforeach
+                ],
+                backgroundColor: [
+                    @foreach($cost as $key => $value)
+                        @if($key != 'total')
+                            '{{ $value->color }}',
+                        @endif
+                    @endforeach
+                ],
+                borderWidth: 1
+            }],
+        };
+        const doughnutLabel = {
+            id: 'doughnutLabel',
+            beforeDatasetsDraw(chart, args, pluginOptions) {
+                const { ctx, data} = chart;
+
+                ctx.save();
+                const xCoor = chart.getDatasetMeta(0).data[0].x;
+                const yCoor = chart.getDatasetMeta(0).data[0].y;
+                ctx.font = 'bold 25px sans-serif';
+                ctx.fillStyle = 'rgba(54,162,235,1)';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('€'+total.toFixed(2), xCoor, yCoor);
+            }
+        }
+        const config = {
+            type: 'doughnut',
+            data,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(context.parsed);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+
+            },
+            plugins: [doughnutLabel]
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    </script>
 
 </div>
