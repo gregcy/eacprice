@@ -70,7 +70,6 @@ class CalculatorController extends Controller
         }
         $sources = $cost->getSourceList();
         $formattedCost = $this->formatCostsCalculator($cost);
-        //dd($formattedCost);
         foreach ($formattedCost as $key => $value) {
             if (isset($value->value)) {
                 $formattedCost[$key]->value = $this->min_precision($value->value, 2);
