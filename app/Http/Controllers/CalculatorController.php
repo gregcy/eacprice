@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Traits\EACTrait;
-use App\Models\Cost;
 
 class CalculatorController extends Controller
 {
@@ -31,7 +30,6 @@ class CalculatorController extends Controller
             ]
         );
 
-        $cost = [];
         $values = array(
             'tariff' => $validated['tariff'],
             'consumption' => $validated['consumption'] ?? 0,
@@ -70,19 +68,21 @@ class CalculatorController extends Controller
                 $values['date-end']
             );
         }
-        foreach ($cost as $key => $value) {
+        $sources = $cost->getSourceList();
+        $formattedCost = $this->formatCostsCalculator($cost);
+        //dd($formattedCost);
+        foreach ($formattedCost as $key => $value) {
             if (isset($value->value)) {
-                $cost[$key]->value = $this->min_precision($value->value, 2);
+                $formattedCost[$key]->value = $this->min_precision($value->value, 2);
             }
         }
         $vat_rate = $this->getVatRate($values['date-start'], $values['date-end'], $validated['tariff']);
         $vat_rate = number_format($vat_rate->value*100, 0, '.', '');
 
-        $sources = array_pop($cost);
         return view(
             'calculator.page',
             [
-                'cost' => $cost,
+                'cost' => $formattedCost,
                 'values' => $values,
                 'vat_rate' => $vat_rate,
                 'sources' => $sources

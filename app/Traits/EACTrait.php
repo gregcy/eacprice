@@ -43,10 +43,11 @@ trait EACTrait
      *
      * @return array
      */
-    public function calculateEACCost01(int $consumption, int $creditUnits, bool $includeFixed, DateTime $periodStart , DateTime $periodEnd): array
+    public function calculateEACCost01(int $consumption, int $creditUnits, bool $includeFixed, DateTime $periodStart , DateTime $periodEnd): EacCosts
     {
         $lowCostConsumption = 0;
         $highCostConsumption = 0;
+        $sourcesSuperscript = 1;
         $costs = new EacCosts();
 
         if ($consumption >= $creditUnits) {
@@ -56,54 +57,55 @@ trait EACTrait
             $lowCostConsumption = $consumption;
             $highCostConsumption = 0;
         }
-
+        // Basic Tariff costs
         $tariff = $this->getTariff('01',  $periodStart, $periodEnd);
-        $vatRate = $this->getVatRate($periodStart, $periodEnd, '01');
-        $publicServiceObligation = $this->getPublicServiceObligation($periodStart, $periodEnd);
-        $resEsFund = $this->getResEsFund($periodStart, $periodEnd);
-        $sources[] = array(
-            $tariff->source_name => $tariff->source,
-        );
-        $sources[] = array(
-            $publicServiceObligation->source_name => $publicServiceObligation->source,
-        );
-        if ($highCostConsumption > 0) {
-            $adjustment = $this->getAdjustment($periodStart, $periodEnd);
-            $sources[] = array(
-                $adjustment->source_name => $adjustment->source,
-            );
-        }
+        $costs->addSource('electricityGeneration', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        $costs->addSource('networkUsage', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        $costs->addSource('ancillaryServices', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        $costs->addSource('meterReading', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        $costs->addSource('electricitySupply', $tariff->source_name, $tariff->source, $sourcesSuperscript);
         $costs->electricityGeneration = (float) $tariff->energy_charge_normal * $highCostConsumption;
         $costs->networkUsage = (float) $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption);
         $costs->ancillaryServices = (float) $tariff->ancillary_services_normal * ($lowCostConsumption + $highCostConsumption);
-        $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($lowCostConsumption + $highCostConsumption);
-        $costs->resEsFund = (float) $resEsFund->value * $highCostConsumption;
-        if ($costs->resEsFund > 0) {
-            $sources[] = array(
-                $resEsFund->source_name => $resEsFund->source,
-            );
+        if ($includeFixed) {
+            $costs->meterReading = (float) $tariff->recurring_meter_reading;
+            $costs->electricitySupply = (float) $tariff->recurring_supply_charge;
+        } else {
+            $costs->meterReading = 0;
+            $costs->electricitySupply = 0;
         }
+        $sourcesSuperscript++;
+
+        // Fuel Adjustment costs
         if ($highCostConsumption > 0) {
+            $adjustment = $this->getAdjustment($periodStart, $periodEnd);
             if ($adjustment->revised_fuel_adjustment_price > 0 ) {
                 $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * $highCostConsumption;
             } else {
                 $costs->fuelAdjustment = (float) $adjustment->total * $highCostConsumption;
             }
-        } else {
-            $costs->fuelAdjustment = 0;
+            $costs->addSource('fuelAdjustment', $adjustment->source_name, $adjustment->source, $sourcesSuperscript);
+            $sourcesSuperscript++;
         }
-        if ($includeFixed) {
-            $costs->electricitySupply = (float) $tariff->recurring_supply_charge;
-            $costs->meterReading = (float) $tariff->recurring_meter_reading;
-        } else {
-            $costs->electricitySupply = 0;
-            $costs->meterReading = 0;
+
+        // Public Service Obligation costs
+        $publicServiceObligation = $this->getPublicServiceObligation($periodStart, $periodEnd);
+        $costs->publicServiceObligation = (float) $publicServiceObligation->value * ($lowCostConsumption + $highCostConsumption);
+        $costs->addSource('publicServiceObligation', $publicServiceObligation->source_name, $publicServiceObligation->source, $sourcesSuperscript);
+        $sourcesSuperscript++;
+
+        // RES & ES Fund costs
+        if ($highCostConsumption > 0) {
+            $resEsFund = $this->getResEsFund($periodStart, $periodEnd);
+            $costs->resEsFund = (float) $resEsFund->value * $highCostConsumption;
+            $costs->addSource('resEsFund', $resEsFund->source_name, $resEsFund->source, $sourcesSuperscript);
+            $sourcesSuperscript++;
         }
+        // VAT rate
+        $vatRate = $this->getVatRate($periodStart, $periodEnd, '01');
         $costs->vatRate = (float) $vatRate->value;
-        $costs->sources = $sources;
-        $formattedCosts = $this->formatCostsCalculator($costs);
-        return $formattedCosts;
-        dd($formattedCosts);
+
+        return $costs;
     }
 
     /**
@@ -361,32 +363,28 @@ trait EACTrait
      *
      * @return array
      */
-    public function formatCostsCalculator(\stdClass $costs):array
+    public function formatCostsCalculator(EacCosts $costs):array
     {
         $formattedCosts = [];
         $total = 0;
         $vatTotal = 0;
-        if ($costs->energyCharge > 0) {
-            $formattedCosts['energyCharge'] = new \stdClass();
-            $formattedCosts['energyCharge']->value = (float) number_format(
-                $costs->energyCharge, 2, '.', ''
+        if ($costs->electricityGeneration > 0) {
+            $formattedCosts['electricityGeneration'] = new \stdClass();
+            $formattedCosts['electricityGeneration']->value = (float) number_format(
+                $costs->electricityGeneration, 2, '.', ''
             );
-            $formattedCosts['energyCharge']->description = __('Electricity Generation');
-            $formattedCosts['energyCharge']->color = '#36a2eb';
-            $formattedCosts['energyCharge']->source = $costs->sources[0];
-            $total += round($costs->energyCharge, 2);
-            $vatTotal += round($costs->energyCharge, 2);
+            $formattedCosts['electricityGeneration']->description = __('Electricity Generation');
+            $formattedCosts['electricityGeneration']->color = '#36a2eb';
+            $formattedCosts['electricityGeneration']->source = $costs->getSource('electricityGeneration');
         }
-        if ($costs->networkCharge > 0) {
-            $formattedCosts['networkCharge'] = new \stdClass();
-            $formattedCosts['networkCharge'] ->value = (float) number_format(
-                $costs->networkCharge, 2, '.', ''
+        if ($costs->networkUsage > 0) {
+            $formattedCosts['networkUsage'] = new \stdClass();
+            $formattedCosts['networkUsage'] ->value = (float) number_format(
+                $costs->networkUsage, 2, '.', ''
             );
-            $formattedCosts['networkCharge']->description = __('Network Usage');
-            $formattedCosts['networkCharge']->color = '#ff6384';
-            $formattedCosts['networkCharge']->source = $costs->sources[0];
-            $total += round($costs->networkCharge, 2);
-            $vatTotal += round($costs->networkCharge, 2);
+            $formattedCosts['networkUsage']->description = __('Network Usage');
+            $formattedCosts['networkUsage']->color = '#ff6384';
+            $formattedCosts['networkUsage']->source = $costs->getSource('networkUsage');
         }
         if ($costs->ancillaryServices > 0) {
             $formattedCosts['ancillaryServices'] = new \stdClass();
@@ -395,9 +393,7 @@ trait EACTrait
             );
             $formattedCosts['ancillaryServices']->description = __('Ancillary Services');
             $formattedCosts['ancillaryServices']->color = '#ff9f40';
-            $formattedCosts['ancillaryServices']->source = $costs->sources[0];
-            $total += round($costs->ancillaryServices, 2);
-            $vatTotal += round($costs->ancillaryServices, 2);
+            $formattedCosts['ancillaryServices']->source = $costs->getSource('ancillaryServices');
         }
         if ($costs->meterReading > 0) {
             $formattedCosts['meterReading'] = new \stdClass();
@@ -406,20 +402,16 @@ trait EACTrait
             );
             $formattedCosts['meterReading']->description = __('Meter Reading');
             $formattedCosts['meterReading']->color = '#ffe29d';
-            $formattedCosts['meterReading']->source = $costs->sources[0];
-            $total += round($costs->meterReading, 2);
-            $vatTotal += round($costs->meterReading, 2);
+            $formattedCosts['meterReading']->source = $costs->getSource('meterReading');
         }
-        if ($costs->supplyCharge > 0) {
-            $formattedCosts['supplyCharge'] = new \stdClass();
-            $formattedCosts['supplyCharge']->value = (float) number_format(
-                $costs->supplyCharge, 2, '.', ''
+        if ($costs->electricitySupply > 0) {
+            $formattedCosts['electricitySupply'] = new \stdClass();
+            $formattedCosts['electricitySupply']->value = (float) number_format(
+                $costs->electricitySupply, 2, '.', ''
             );
-            $formattedCosts['supplyCharge']->description = __('Electricity Supply');
-            $formattedCosts['supplyCharge']->color = '#4bc0c0';
-            $formattedCosts['supplyCharge']->source = $costs->sources[0];
-            $total += round($costs->supplyCharge, 2);
-            $vatTotal += round($costs->supplyCharge, 2);
+            $formattedCosts['electricitySupply']->description = __('Electricity Supply');
+            $formattedCosts['electricitySupply']->color = '#4bc0c0';
+            $formattedCosts['electricitySupply']->source = $costs->getSource('electricitySupply');
         }
         if ($costs->fuelAdjustment > 0) {
             $formattedCosts['fuelAdjustment'] = new \stdClass();
@@ -428,9 +420,7 @@ trait EACTrait
             );
             $formattedCosts['fuelAdjustment']->description = __('Fuel Adjustment');
             $formattedCosts['fuelAdjustment']->color = '#96f';
-            $formattedCosts['fuelAdjustment']->source = $costs->sources[2];
-            $total += round($costs->fuelAdjustment, 2);
-            $vatTotal += round($costs->fuelAdjustment, 2);
+            $formattedCosts['fuelAdjustment']->source = $costs->getSource('fuelAdjustment');
         }
         if ($costs->publicServiceObligation > 0) {
             $formattedCosts['publicServiceObligation'] = new \stdClass();
@@ -439,9 +429,7 @@ trait EACTrait
             );
             $formattedCosts['publicServiceObligation']->description = __('Public Service Obligation');
             $formattedCosts['publicServiceObligation']->color = '#c8cace';
-            $formattedCosts['publicServiceObligation']->source = $costs->sources[1];
-            $total += round($costs->publicServiceObligation, 2);
-            $vatTotal += round($costs->publicServiceObligation, 2);
+            $formattedCosts['publicServiceObligation']->source = $costs->getSource('publicServiceObligation');
         }
         if ($costs->resEsFund > 0) {
             $formattedCosts['resEsFund'] = new \stdClass();
@@ -450,24 +438,22 @@ trait EACTrait
             );
             $formattedCosts['resEsFund']->description = __('RES & ES Fund');
             $formattedCosts['resEsFund']->color = '#63ffde';
-            $formattedCosts['resEsFund']->source = $costs->sources[3];
-            $total += round($costs->resEsFund, 2);
-            // RES & ES doesn't have VAT
+            $formattedCosts['resEsFund']->source = $costs->getSource('resEsFund');
         }
 
         $formattedCosts['vat'] = new \stdClass();
         $formattedCosts['vat']->value = (float) number_format(
-            $costs->vatRate * $vatTotal, 2, '.', ''
+            $costs->calculateVat(), 2, '.', ''
         );
         $formattedCosts['vat']->description = __('VAT') . ' (' . $costs->vatRate*100 . ' %)';
         $formattedCosts['vat']->color = '#ffcd56';
 
-        $total += $costs->vatRate * $vatTotal;
         $formattedCosts['total'] = new \stdClass();
         $formattedCosts['total']->value = (float) number_format(
-            $total, 2, '.', ''
+            $costs->calculateTotal(), 2, '.', ''
         );
         $formattedCosts['total']->description = __('Total');
+        $formattedCosts['total']->color = 'transparent';
         return $formattedCosts;
     }
 }

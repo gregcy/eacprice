@@ -20,12 +20,25 @@
             @foreach($cost as $key => $value)
                 <tr>
                     <td class="px-4 border-white border-b-8 border-t-8" style="background-color: {{ $value->color }}"></td>
-                    <td class="px-2">{{ __($value->description) }}
+                    @if($key != 'total')
+                        <td class="px-2">{{ __($value->description) }}
+                    @else
+                    <td class="px-2 font-bold">{{ __($value->description) }}:
+                    @endif
                     @if(isset($value->source))
-                        <sup class="pl-2">1</sup>
+                        <sup class="pl-2">{{ $value->source['superscript'] }}</sup>
                     @endif
                     </td>
-                    <td class="px-2 font-mono">€{{ $value->value }}</td>
+                    @if($key != 'total')
+                    <td class="px-2 font-mono text-right text-sm">€{{ $value->value }}</td>
+                    @else
+                    <td class="px-2 font-mono font-bold text-right text-sm">€{{ __($value->value) }}
+                    @endif
+                </tr>
+            @endforeach
+            @foreach ($sources as $key => $value)
+                <tr>
+                    <td colspan="3" class="text-xs"><a href="{{ $value['link'] }}" target="_blank">{{ $key}}. {{ __($value['description']) }}</a></td>
                 </tr>
             @endforeach
         </table>

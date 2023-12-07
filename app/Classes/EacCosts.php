@@ -13,6 +13,7 @@ class EacCosts
     public float $publicServiceObligation;
     public float $resEsFund;
     public float $vatRate;
+    private array $_sources;
 
 
 
@@ -37,5 +38,30 @@ class EacCosts
     public function calculateTotal(): float
     {
         return $this->electricityGeneration + $this->networkUsage + $this->ancillaryServices + $this->meterReading + $this->electricitySupply + $this->fuelAdjustment + $this->publicServiceObligation + $this->resEsFund + $this->calculateVat();
+    }
+
+    public function addSource(string $cost, string $description, string $link, string $superscript)
+    {
+        $this->_sources["$cost"] = [
+            'description' => $description,
+            'link' => $link,
+            'superscript' => $superscript
+        ];
+    }
+
+    public function getSource(string $cost): array
+    {
+        return $this->_sources[$cost];
+    }
+
+    public function getSourceList(): array
+    {
+        $sourceList = [];
+
+        foreach ($this->_sources as $key => $value) {
+            $sourceList[$value['superscript']] =  [ 'description' => $value['description'] , 'link' => $value['link'] ];
+        }
+
+        return $sourceList;
     }
 }
