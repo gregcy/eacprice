@@ -38,7 +38,7 @@
             @endforeach
             @foreach ($sources as $key => $value)
                 <tr>
-                    <td colspan="3" class="text-xs"><a href="{{ $value['link'] }}" target="_blank">{{ $key}}. {{ __($value['description']) }}</a></td>
+                    <td colspan="3" class="text-xs">{{ $key}}.<a class="text-blue-600" href="{{ $value['link'] }}" target="_blank"> {{ __($value['description']) }}</a></td>
                 </tr>
             @endforeach
         </table>
@@ -111,7 +111,6 @@
                         }
                     }
                 }
-
             },
             plugins: [doughnutLabel]
         };
