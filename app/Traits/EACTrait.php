@@ -152,14 +152,16 @@ trait EACTrait
         $sourcesSuperscript++;
 
         //Fuel Adjustment costs
-        $adjustment = $this->getAdjustment($periodStart, $periodEnd);
-        if ($adjustment->revised_fuel_adjustment_price > 0 ) {
-            $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
-        } else {
-            $costs->fuelAdjustment = (float) $adjustment->cost * ($consumptionNormal + $consumptionReduced);
+        if ($consumptionNormal + $consumptionReduced > 0) {
+            $adjustment = $this->getAdjustment($periodStart, $periodEnd);
+            if ($adjustment->revised_fuel_adjustment_price > 0 ) {
+                $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
+            } else {
+                $costs->fuelAdjustment = (float) $adjustment->cost * ($consumptionNormal + $consumptionReduced);
+            }
+            $costs->addSource('fuelAdjustment', $adjustment->source_name, $adjustment->source, $sourcesSuperscript);
+            $sourcesSuperscript++;
         }
-        $costs->addSource('fuelAdjustment', $adjustment->source_name, $adjustment->source, $sourcesSuperscript);
-        $sourcesSuperscript++;
 
         //Public Service Obligation costs
         $publicServiceObligation = $this->getPublicServiceObligation($periodStart, $periodEnd);
