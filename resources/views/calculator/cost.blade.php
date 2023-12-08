@@ -30,9 +30,9 @@
                     @endif
                     </td>
                     @if($key != 'total')
-                    <td class="px-2 font-mono text-right text-sm">€{{ $value->value }}</td>
+                    <td class="px-2 font-mono text-right text-sm">{{ $value->value }}</td>
                     @else
-                    <td class="px-2 font-mono font-bold text-right text-sm">€{{ __($value->value) }}
+                    <td class="px-2 font-mono font-bold text-right text-sm">{{ __($value->value) }}
                     @endif
                 </tr>
             @endforeach
@@ -44,7 +44,7 @@
         </table>
     </div>
     <script type="module">
-        const total = {{ number_format($cost['total']->value, 2, '.', '') }};
+        const total = {{ trim($cost['total']->value, "€") }};
         const data = {
             labels: [
                 @foreach($cost as $key => $value)
@@ -58,7 +58,7 @@
                 data: [
                     @foreach($cost as $key => $value)
                     @if($key != 'total')
-                        '{{ $value->value }}',
+                        '{{ trim($value->value, "€") }}',
                     @endif
                 @endforeach
                 ],

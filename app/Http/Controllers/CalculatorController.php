@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Traits\EACTrait;
+use NumberFormatter;
 
 class CalculatorController extends Controller
 {
@@ -70,9 +71,11 @@ class CalculatorController extends Controller
         }
         $sources = $cost->getSourceList();
         $formattedCost = $this->formatCostsCalculator($cost);
+
+        $currencyFormatter = numfmt_create(app()->getLocale(), NumberFormatter::CURRENCY );
         foreach ($formattedCost as $key => $value) {
             if (isset($value->value)) {
-                $formattedCost[$key]->value = $this->min_precision($value->value, 2);
+                $formattedCost[$key]->value = numfmt_format_currency($currencyFormatter, $value->value, "EUR");
             }
         }
         $vat_rate = $this->getVatRate($values['date-start'], $values['date-end'], $validated['tariff']);
@@ -87,11 +90,5 @@ class CalculatorController extends Controller
                 'sources' => $sources
             ]
         );
-    }
-
-    private function min_precision($x, $p)
-    {
-        $e = pow(10,$p);
-        return floor($x*$e)==$x*$e?sprintf("%.${p}f",$x):$x;
     }
 }

@@ -377,88 +377,68 @@ trait EACTrait
         $vatTotal = 0;
         if ($costs->electricityGeneration > 0) {
             $formattedCosts['electricityGeneration'] = new \stdClass();
-            $formattedCosts['electricityGeneration']->value = (float) number_format(
-                $costs->electricityGeneration, 2, '.', ''
-            );
+            $formattedCosts['electricityGeneration']->value = $costs->electricityGeneration;
             $formattedCosts['electricityGeneration']->description = __('Electricity Generation');
             $formattedCosts['electricityGeneration']->color = '#36a2eb';
             $formattedCosts['electricityGeneration']->source = $costs->getSource('electricityGeneration');
         }
         if ($costs->networkUsage > 0) {
             $formattedCosts['networkUsage'] = new \stdClass();
-            $formattedCosts['networkUsage'] ->value = (float) number_format(
-                $costs->networkUsage, 2, '.', ''
-            );
+            $formattedCosts['networkUsage']->value = $costs->networkUsage;
             $formattedCosts['networkUsage']->description = __('Network Usage');
             $formattedCosts['networkUsage']->color = '#ff6384';
             $formattedCosts['networkUsage']->source = $costs->getSource('networkUsage');
         }
         if ($costs->ancillaryServices > 0) {
             $formattedCosts['ancillaryServices'] = new \stdClass();
-            $formattedCosts['ancillaryServices']->value = (float) number_format(
-                $costs->ancillaryServices, 2, '.', ''
-            );
+            $formattedCosts['ancillaryServices']->value = $costs->ancillaryServices;
             $formattedCosts['ancillaryServices']->description = __('Ancillary Services');
             $formattedCosts['ancillaryServices']->color = '#ff9f40';
             $formattedCosts['ancillaryServices']->source = $costs->getSource('ancillaryServices');
         }
         if ($costs->meterReading > 0) {
             $formattedCosts['meterReading'] = new \stdClass();
-            $formattedCosts['meterReading']->value =(float) number_format(
-                $costs->meterReading, 2, '.', ''
-            );
+            $formattedCosts['meterReading']->value = $costs->meterReading;
             $formattedCosts['meterReading']->description = __('Meter Reading');
             $formattedCosts['meterReading']->color = '#ffe29d';
             $formattedCosts['meterReading']->source = $costs->getSource('meterReading');
         }
         if ($costs->electricitySupply > 0) {
             $formattedCosts['electricitySupply'] = new \stdClass();
-            $formattedCosts['electricitySupply']->value = (float) number_format(
-                $costs->electricitySupply, 2, '.', ''
-            );
+            $formattedCosts['electricitySupply']->value = $costs->electricitySupply;
             $formattedCosts['electricitySupply']->description = __('Electricity Supply');
             $formattedCosts['electricitySupply']->color = '#4bc0c0';
             $formattedCosts['electricitySupply']->source = $costs->getSource('electricitySupply');
         }
         if ($costs->fuelAdjustment > 0) {
             $formattedCosts['fuelAdjustment'] = new \stdClass();
-            $formattedCosts['fuelAdjustment']->value = (float) number_format(
-                $costs->fuelAdjustment, 2, '.', ''
-            );
+            $formattedCosts['fuelAdjustment']->value = $costs->fuelAdjustment;
             $formattedCosts['fuelAdjustment']->description = __('Fuel Adjustment');
             $formattedCosts['fuelAdjustment']->color = '#96f';
             $formattedCosts['fuelAdjustment']->source = $costs->getSource('fuelAdjustment');
         }
         if ($costs->publicServiceObligation > 0) {
             $formattedCosts['publicServiceObligation'] = new \stdClass();
-            $formattedCosts['publicServiceObligation']->value = (float) number_format(
-                $costs->publicServiceObligation, 2, '.', ''
-            );
+            $formattedCosts['publicServiceObligation']->value = $costs->publicServiceObligation;
             $formattedCosts['publicServiceObligation']->description = __('Public Service Obligation');
             $formattedCosts['publicServiceObligation']->color = '#c8cace';
             $formattedCosts['publicServiceObligation']->source = $costs->getSource('publicServiceObligation');
         }
         if ($costs->resEsFund > 0) {
             $formattedCosts['resEsFund'] = new \stdClass();
-            $formattedCosts['resEsFund']->value = (float) number_format(
-                $costs->resEsFund, 2, '.', ''
-            );
+            $formattedCosts['resEsFund']->value = $costs->resEsFund;
             $formattedCosts['resEsFund']->description = __('RES & ES Fund');
             $formattedCosts['resEsFund']->color = '#63ffde';
             $formattedCosts['resEsFund']->source = $costs->getSource('resEsFund');
         }
 
         $formattedCosts['vat'] = new \stdClass();
-        $formattedCosts['vat']->value = (float) number_format(
-            $costs->calculateVat(), 2, '.', ''
-        );
+        $formattedCosts['vat']->value = $costs->calculateVat();
         $formattedCosts['vat']->description = __('VAT') . ' (' . $costs->vatRate*100 . ' %)';
         $formattedCosts['vat']->color = '#ffcd56';
 
         $formattedCosts['total'] = new \stdClass();
-        $formattedCosts['total']->value = (float) number_format(
-            $costs->calculateTotal(), 2, '.', ''
-        );
+        $formattedCosts['total']->value = $costs->calculateTotal();
         $formattedCosts['total']->description = __('Total');
         $formattedCosts['total']->color = 'transparent';
         return $formattedCosts;
