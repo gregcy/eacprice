@@ -171,7 +171,6 @@ trait EACTrait
             $sourcesSuperscript++;
         }
         // RES & ES Fund costs
-
         $resEsFund = $this->getResEsFund($periodStart, $periodEnd);
         $costs->resEsFund = (float) $resEsFund->value * ($consumptionNormal + $consumptionReduced);
         if ($costs->resEsFund > 0) {
@@ -352,7 +351,7 @@ trait EACTrait
      */
     public function getResEsFund(DateTime $periodStart , DateTime $periodEnd):Cost
     {
-        return Cost::where('name', '=', 'RES & ES Fund')
+        return Cost::where('name', '=', 'RES and ES Fund')
             ->where(
                 function ($query) use ($periodStart, $periodEnd) {
                     $query->where('start_date', '<=', $periodStart)->where(
