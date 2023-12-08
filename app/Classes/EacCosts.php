@@ -32,12 +32,18 @@ class EacCosts
 
     public function calculateVat(): float
     {
-        return $this->vatRate * ($this->electricityGeneration + $this->networkUsage + $this->ancillaryServices + $this->meterReading + $this->electricitySupply + $this->fuelAdjustment + $this->publicServiceObligation);
+        return $this->vatRate * ($this->electricityGeneration + $this->networkUsage +
+        $this->ancillaryServices + $this->meterReading + $this->electricitySupply +
+        $this->fuelAdjustment + $this->publicServiceObligation);
     }
 
     public function calculateTotal(): float
     {
-        return $this->electricityGeneration + $this->networkUsage + $this->ancillaryServices + $this->meterReading + $this->electricitySupply + $this->fuelAdjustment + $this->publicServiceObligation + $this->resEsFund + $this->calculateVat();
+        return round($this->electricityGeneration, 2) + round($this->networkUsage, 2) +
+        round($this->ancillaryServices, 2) + round($this->meterReading, 2) +
+        round($this->electricitySupply, 2) + round($this->fuelAdjustment, 2)+
+        round($this->publicServiceObligation, 2) +round($this->resEsFund, 2) +
+        round($this->calculateVat(), 2);
     }
 
     public function addSource(string $cost, string $description, string $link, string $superscript)
