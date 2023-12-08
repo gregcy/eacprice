@@ -178,7 +178,7 @@ trait EACTrait
         }
 
         // VAT rate
-        $vatRate = $this->getVatRate($periodStart, $periodEnd, '01');
+        $vatRate = $this->getVatRate($periodStart, $periodEnd, '02');
         $costs->vatRate = (float) $vatRate->value;
 
         return $costs;
@@ -230,26 +230,23 @@ trait EACTrait
         }
         $sourcesSuperscript++;
 
-        $adjustment = $this->getAdjustment($periodStart, $periodEnd);
+        // Fuel Adjustment costs
+        if ($consumption - $creditUnits > 0) {
+            $adjustment = $this->getAdjustment($periodStart, $periodEnd);
+            if ($adjustment->revised_fuel_adjustment_price > 0 ) {
+                $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits);
+            } else {
+                $costs->fuelAdjustment = (float) $adjustment->cost * ($consumption - $creditUnits);
+            }
+            $costs->addSource('fuelAdjustment', $adjustment->source_name, $adjustment->source, $sourcesSuperscript);
+            $sourcesSuperscript++;
+        }
+
+        // VAT rate
         $vatRate = $this->getVatRate($periodStart, $periodEnd, '08');
-        $sources = [
-            $tariff->source,
-        ];
-        if (($consumption - $creditUnits) > 0) {
-            $sources[] = $adjustment->source;
-        }
-
-
-        if ($adjustment->revised_fuel_adjustment_price > 0 ) {
-            $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumption - $creditUnits);
-        } else {
-            $costs->fuelAdjustment = (float) $adjustment->cost * ($consumption - $creditUnits);
-        }
         $costs->vatRate = (float) $vatRate->value;
-        $costs->sources = $sources;
 
-        $formattedCosts = $this->formatCostsCalculator($costs);
-        return $formattedCosts;
+        return $costs;
     }
 
     /**
