@@ -71,8 +71,7 @@ class CalculatorController extends Controller
         }
         $sources = $cost->getSourceList();
         $formattedCost = $this->formatCostsCalculator($cost);
-
-        $currencyFormatter = numfmt_create(app()->getLocale(), NumberFormatter::CURRENCY );
+        $currencyFormatter = numfmt_create('en', NumberFormatter::CURRENCY);
         foreach ($formattedCost as $key => $value) {
             if (isset($value->value)) {
                 $formattedCost[$key]->value = numfmt_format_currency($currencyFormatter, $value->value, "EUR");

@@ -429,7 +429,7 @@ trait EACTrait
         if ($costs->resEsFund > 0) {
             $formattedCosts['resEsFund'] = new \stdClass();
             $formattedCosts['resEsFund']->value = $costs->resEsFund;
-            $formattedCosts['resEsFund']->description = __('RES & ES Fund');
+            $formattedCosts['resEsFund']->description = __('RES and ES Fund');
             $formattedCosts['resEsFund']->color = '#63ffde';
             $formattedCosts['resEsFund']->source = $costs->getSource('resEsFund');
         }
