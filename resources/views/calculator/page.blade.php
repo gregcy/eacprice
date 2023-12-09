@@ -21,13 +21,12 @@
                 <div class="text-white text-xl w-full">
                     {{ __('The calculator uses the latest tariffs from the Electricity Authority of Cyprus to calculate the cost of your electricity consumption.') }}
                 </div>
-                <div class="text-sm text-white w-full py-6">
+                <div class="text-sm text-white w-full pt-4 pb-2">
                     <p>{{ __('This site is not affiliated with the Electricity Authority of Cyprus.') }}</p>
                 </div>
                 <div class="text-sm w-full text-white flex justify-between items-center">
-                    <p class="align-self-center">{{ __('Click on the logo to go to the EAC website.') }}</p>
-                    <a href="https://www.eac.com.cy/" target="_blank">
-                        <img src="{{asset('/images/eac-logo.jpg')}}" alt="EAC Logo" class="w-16 h-16">
+                    <p class="align-self-center"> <a href="{{__('https://www.eac.com.cy/EN/Pages/default.aspx') }}" target="_blank">{{ __('Click here to go to the EAC website.') }}</a></p>
+                        <img height="65" width="78" src="{{asset('/images/calculator.png')}}" alt="Calculator">
                     </a>
                 </div>
             </div>
