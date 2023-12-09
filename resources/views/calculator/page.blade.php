@@ -1,5 +1,9 @@
+@php
+    $currentLocale = app()->getLocale();
+@endphp
+
 <!DOCTYPE html>
-<html class="bg-gray-100 h-screen" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="bg-gray-100 h-screen" lang="{{ str_replace('_', '-', $currentLocale ) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,9 +21,14 @@
     <body class="font-sans antialiased">
         <div class="bg-blue-700 w-full">
             <div class="max-w-6xl m-auto p-5">
-            <div class="w-full text-right">
-                    <span><a href="/en/calculator" class="text-white"><img src="/images/gb.png" width="30" />English</a></span>
-                    <span><a href="/el/calculator" class="text-white"><img src="/images/gr.png" width="30" />Greek</a></span>
+            <div class="w-full justify-between flex">
+                    @if ($currentLocale == 'el')
+                    <span class="ml-auto"><a href="/en/calculator" class="text-white "><img class="h-5 ml-[5px]" src="/images/gb.png" />English</a></span>
+                    <span class="ml-5 underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-1.5" src="/images/gr.png" />Greek</span>
+                    @else
+                    <span class="ml-auto underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-[5px]" src="/images/gb.png" />English</a></span>
+                    <span class="ml-5"><a href="/el/calculator" class="text-white"><img class="h-5 ml-1.5" src="/images/gr.png" />Greek</a></span>
+                    @endif
                 </div>
                 <h1 class="text-4xl font-bold text-white w-full text-center p-8">{{ __('Cyprus Electricity Calculator') }}</h1>
                 <div class="text-white text-xl w-full">
