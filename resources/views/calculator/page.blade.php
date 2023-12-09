@@ -23,11 +23,11 @@
             <div class="max-w-6xl m-auto p-5">
             <div class="w-full justify-between flex">
                     @if ($currentLocale == 'el')
-                    <span class="ml-auto"><a href="/en/calculator" class="text-white "><img class="h-5 ml-[5px]" src="/images/gb.png" />English</a></span>
+                    <span class="ml-auto"><a href="/en/" class="text-white "><img class="h-5 ml-[5px]" src="/images/gb.png" />English</a></span>
                     <span class="ml-5 underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-1.5" src="/images/gr.png" />Greek</span>
                     @else
                     <span class="ml-auto underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-[5px]" src="/images/gb.png" />English</a></span>
-                    <span class="ml-5"><a href="/el/calculator" class="text-white"><img class="h-5 ml-1.5" src="/images/gr.png" />Greek</a></span>
+                    <span class="ml-5"><a href="/el/" class="text-white"><img class="h-5 ml-1.5" src="/images/gr.png" />Greek</a></span>
                     @endif
                 </div>
                 <h1 class="text-4xl font-bold text-white w-full text-center p-8">{{ __('Cyprus Electricity Calculator') }}</h1>
@@ -38,7 +38,7 @@
                     <p>{{ __('This site is not affiliated with the Electricity Authority of Cyprus.') }}</p>
                 </div>
                 <div class="text-sm w-full text-white flex justify-between items-center">
-                    <p class="align-self-center"> <a href="{{__('https://www.eac.com.cy/EN/Pages/default.aspx') }}" target="_blank">{{ __('Click here to go to the EAC website.') }}</a></p>
+                    <p class="align-self-center"> <a href="{{__('https://www.eac.com.cy/EN/Pages/default.aspx') }}" target="_blank" class="underline">{{ __('Click here') }}</a> {{ __('to go to the EAC website.') }}</p>
                         <img height="65" width="78" src="{{asset('/images/calculator.png')}}" alt="Calculator">
                     </a>
                 </div>

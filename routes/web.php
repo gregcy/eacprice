@@ -18,15 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get(
-    '/', function () {
-        return view('welcome');
-    }
-);
-
-Route::get('/calculator', [CalculatorController::class, 'index']);
-Route::get('{lang?}/calculator', [CalculatorController::class, 'index']);
-Route::post('{lang?}/calculator', [CalculatorController::class, 'calculate'])->name('calculator.calculate');
+Route::get('/', [CalculatorController::class, 'index']);
+Route::get('{lang?}/', [CalculatorController::class, 'index']);
+Route::post('{lang?}/', [CalculatorController::class, 'calculate'])->name('calculator.calculate');
 
 Route::get(
     '/dashboard', function () {
