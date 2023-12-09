@@ -33,8 +33,9 @@
                     '2023-09' => __('September') . ' 2023',
                     '2023-10' => __('October') . ' 2023',
                     '2023-11' => __('November') . ' 2023',
+                    '2023-12' => __('December') . ' 2023',
                 ];
-                $selectedValue = old('period', $values['period'] ?? '2023-11');
+                $selectedValue = old('period', $values['period'] ?? '2023-12');
             @endphp
 
             @foreach($options as $value => $label)

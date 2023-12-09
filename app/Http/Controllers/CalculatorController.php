@@ -26,7 +26,7 @@ class CalculatorController extends Controller
                 'credit-amount' => 'nullable|numeric|gte:0',
                 'consumption-standard' => 'nullable|numeric|gte:0',
                 'consumption-economy' => 'nullable|numeric|gte:0',
-                'period' => 'required|in:2023-01,2023-02,2023-03,2023-04,2023-05,2023-06,2023-07,2023-08,2023-09,2023-10,2023-11',
+                'period' => 'required|in:2023-01,2023-02,2023-03,2023-04,2023-05,2023-06,2023-07,2023-08,2023-09,2023-10,2023-11,2023-12',
                 'include-fixed' => 'nullable|boolean',
             ]
         );
