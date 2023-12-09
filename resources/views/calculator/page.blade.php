@@ -17,6 +17,10 @@
     <body class="font-sans antialiased">
         <div class="bg-blue-700 w-full">
             <div class="max-w-6xl m-auto p-5">
+            <div class="w-full text-right">
+                    <span><a href="/en/calculator" class="text-white"><img src="/images/gb.png" width="30" />English</a></span>
+                    <span><a href="/el/calculator" class="text-white"><img src="/images/gr.png" width="30" />Greek</a></span>
+                </div>
                 <h1 class="text-4xl font-bold text-white w-full text-center p-8">{{ __('Cyprus Electricity Calculator') }}</h1>
                 <div class="text-white text-xl w-full">
                     {{ __('The calculator uses the latest tariffs from the Electricity Authority of Cyprus to calculate the cost of your electricity consumption.') }}
