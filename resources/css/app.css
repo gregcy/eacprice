@@ -1,35 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-#costBreakdown tr:nth-child(2) td:first-child.border-b-8 {
-    background-color: #36a2eb;
-}
-
-#costBreakdown tr:nth-child(3) td:first-child.border-b-8 {
-    background-color: #ff6384;
-}
-
-#costBreakdown tr:nth-child(4) td:first-child.border-b-8 {
-    background-color: #ff9f40;
-}
-
-#costBreakdown tr:nth-child(5) td:first-child.border-b-8 {
-    background-color: #ffe29d;
-}
-
-#costBreakdown tr:nth-child(6) td:first-child.border-b-8 {
-    background-color: #4bc0c0;
-}
-
-#costBreakdown tr:nth-child(7) td:first-child.border-b-8 {
-    background-color: #9966ff;
-}
-
-#costBreakdown tr:nth-child(8) td:first-child.border-b-8 {
-    background-color: #c8cace;
-}
-
-#costBreakdown tr:nth-child(9) td:first-child.border-b-8 {
-    background-color: #63FFDE;
-}

@@ -19,7 +19,11 @@
         <table id="costBreakdown">
             @foreach($cost as $key => $value)
                 <tr>
-                    <td class="px-4 border-white border-b-8 border-t-8" style="background-color: {{ $value->color }}"></td>
+                    <td class="px-4 border-white border-b-8 border-t-8">
+                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="100%" height="100%" fill="{{ $value->color }}" />
+                        </svg>
+                    </td>
                     @if($key != 'total')
                         <td class="px-2">{{ __($value->description) }}
                     @else
