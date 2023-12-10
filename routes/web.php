@@ -18,10 +18,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [CalculatorController::class, 'index']);
-Route::get('{lang?}/', [CalculatorController::class, 'index']);
-Route::post('{lang?}/', [CalculatorController::class, 'calculate'])->name('calculator.calculate');
-
 Route::get(
     '/dashboard', function () {
         return view('dashboard');
@@ -49,3 +45,7 @@ Route::resource('costs', CostController::class)
     ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
+
+
+Route::get('/{lang?}', [CalculatorController::class, 'index']);
+Route::post('/{lang?}', [CalculatorController::class, 'calculate'])->name('calculator.calculate');

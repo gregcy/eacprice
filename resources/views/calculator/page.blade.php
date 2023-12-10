@@ -23,11 +23,11 @@
             <div class="max-w-6xl m-auto p-5">
             <div class="w-full justify-between flex">
                     @if ($currentLocale == 'el')
-                    <span class="ml-auto"><a href="/en/" class="text-white "><img class="h-5 ml-[5px]" src="/images/gb.png" />English</a></span>
-                    <span class="ml-5 underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-1.5" src="/images/gr.png" />Greek</span>
+                    <span class="ml-auto"><a href="/en/" class="text-white "><img class="h-5 ml-[5px]" src="/images/gb.png" />{{ __('English') }}</a></span>
+                    <span class="ml-5 underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-4" src="/images/gr.png" />{{ __('Greek') }}</span>
                     @else
-                    <span class="ml-auto underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-[5px]" src="/images/gb.png" />English</a></span>
-                    <span class="ml-5"><a href="/el/" class="text-white"><img class="h-5 ml-1.5" src="/images/gr.png" />Greek</a></span>
+                    <span class="ml-auto underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-[5px]" src="/images/gb.png" />{{ __('English') }}</a></span>
+                    <span class="ml-5"><a href="/el/" class="text-white"><img class="h-5 ml-1.5" src="/images/gr.png" />{{ __('Greek') }}</a></span>
                     @endif
                 </div>
                 <h1 class="text-4xl font-bold text-white w-full text-center p-8">{{ __('Cyprus Electricity Calculator') }}</h1>
