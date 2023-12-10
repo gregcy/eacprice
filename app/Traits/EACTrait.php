@@ -203,27 +203,28 @@ trait EACTrait
         // Basic Tariff costs
         $tariff = $this->getTariff('08',  $periodStart, $periodEnd);
         $costs->addSource('electricityGeneration', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        $costs->addSource('electricitySupply', $tariff->source_name, $tariff->source, $sourcesSuperscript);
         if (($consumption - $creditUnits) <= 1000) {
             $costs->electricityGeneration = (float) $tariff->energy_charge_subsidy_first * ($consumption - $creditUnits);
             if ($costs->electricityGeneration < 0) {
                 $costs->electricityGeneration = 0;
             }
             if ($includeFixed) {
-                $costs->electricityGeneration = (float) $tariff->supply_subsidy_first;
+                $costs->electricitySupply = (float) $tariff->supply_subsidy_first;
             } else {
                 $costs->electricityGeneration = 0;
             }
         } elseif (($consumption - $creditUnits) > 1000 && ($consumption - $creditUnits) <= 2000) {
             $costs->electricityGeneration = 1000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 1000) * $tariff->energy_charge_subsidy_second;
             if ($includeFixed) {
-                $costs->electricityGeneration = (float) $tariff->supply_subsidy_second;
+                $costs->electricitySupply = (float) $tariff->supply_subsidy_second;
             } else {
                 $costs->electricityGeneration = 0;
             }
         } elseif (($consumption - $creditUnits) > 2000) {
             $costs->electricityGeneration = 2000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 2000) * $tariff->energy_charge_subsidy_third;
             if ($includeFixed) {
-                $costs->electricityGeneration = (float) $tariff->supply_subsidy_third;
+                $costs->electricitySupply = (float) $tariff->supply_subsidy_third;
             } else {
                 $costs->electricityGeneration = 0;
             }
