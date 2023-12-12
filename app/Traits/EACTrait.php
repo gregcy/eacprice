@@ -35,15 +35,15 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 01
      *
-     * @param int      $consumption  Consumption in kWh
-     * @param int      $creditUnits  Credit Units
+     * @param float    $consumption  Consumption in kWh
+     * @param float    $creditUnits  Credit Units
      * @param bool     $includeFixed Include Fixed Charges
      * @param DateTime $periodStart  Period Start date
      * @param DateTime $periodEnd    Period End date
      *
      * @return array
      */
-    public function calculateEACCost01(int $consumption, int $creditUnits, bool $includeFixed, DateTime $periodStart , DateTime $periodEnd): EacCosts
+    public function calculateEACCost01(float $consumption, float $creditUnits, bool $includeFixed, DateTime $periodStart , DateTime $periodEnd): EacCosts
     {
         $lowCostConsumption = 0;
         $highCostConsumption = 0;
@@ -119,15 +119,15 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 02
      *
-     * @param int      $consumptionNormal  Normal cost consumption in kWh
-     * @param int      $consumptionReduced Rediced cost consumpation in kWh
+     * @param float    $consumptionNormal  Normal cost consumption in kWh
+     * @param float    $consumptionReduced Rediced cost consumpation in kWh
      * @param bool     $includeFixed       Include Fixed Charges
      * @param DateTime $periodStart        Period Start date
      * @param DateTime $periodEnd          Period End date
      *
      * @return array
      */
-    public function calculateEACCost02(int $consumptionNormal, int $consumptionReduced, bool $includeFixed, DateTime $periodStart, DateTime $periodEnd): EacCosts
+    public function calculateEACCost02(float $consumptionNormal, float $consumptionReduced, bool $includeFixed, DateTime $periodStart, DateTime $periodEnd): EacCosts
     {
         $costs = new EacCosts();
         $sourcesSuperscript = 1;
@@ -197,15 +197,15 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 08
      *
-     * @param int      $consumption  Normal cost consumption in kWh
-     * @param int      $creditUnits  Rediced cost consumpation in kWh
+     * @param float    $consumption  Normal cost consumption in kWh
+     * @param float    $creditUnits  Rediced cost consumpation in kWh
      * @param bool     $includeFixed Include Fixed Charges
      * @param DateTime $periodStart  Period Start date
      * @param DateTime $periodEnd    Period End date
      *
      * @return array
      */
-    public function calculateEACCost08(int $consumption, int $creditUnits, bool $includeFixed, DateTime $periodStart, DateTime $periodEnd): EacCosts
+    public function calculateEACCost08(float $consumption, float $creditUnits, bool $includeFixed, DateTime $periodStart, DateTime $periodEnd): EacCosts
     {
         $costs = new EacCosts();
         $sourcesSuperscript = 1;
