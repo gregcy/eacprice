@@ -212,7 +212,7 @@ trait EACTrait
 
         // Basic Tariff costs
         $tariff = $this->getTariff('08',  $periodStart, $periodEnd);
-        if (($consumption - $creditUnits) > 0) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                $consumption - $creditUnits) > 0) {
+        if (($consumption - $creditUnits) > 0) {
             $costs->addSource('electricityGeneration', $tariff->source_name, $tariff->source, $sourcesSuperscript);
         }
         if ($includeFixed) {
@@ -242,7 +242,6 @@ trait EACTrait
             } else {
                 $costs->electricitySupply = 0;
             }
-
         }
         $sourcesSuperscript++;
 
