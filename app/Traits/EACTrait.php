@@ -59,11 +59,17 @@ trait EACTrait
         }
         // Basic Tariff costs
         $tariff = $this->getTariff('01',  $periodStart, $periodEnd);
-        $costs->addSource('electricityGeneration', $tariff->source_name, $tariff->source, $sourcesSuperscript);
-        $costs->addSource('networkUsage', $tariff->source_name, $tariff->source, $sourcesSuperscript);
-        $costs->addSource('ancillaryServices', $tariff->source_name, $tariff->source, $sourcesSuperscript);
-        $costs->addSource('meterReading', $tariff->source_name, $tariff->source, $sourcesSuperscript);
-        $costs->addSource('electricitySupply', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        if ($highCostConsumption > 0) {
+            $costs->addSource('electricityGeneration', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        }
+        if ($consumption > 0) {
+            $costs->addSource('networkUsage', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+            $costs->addSource('ancillaryServices', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        }
+        if ($includeFixed) {
+            $costs->addSource('meterReading', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+            $costs->addSource('electricitySupply', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        }
         $costs->electricityGeneration = (float) $tariff->energy_charge_normal * $highCostConsumption;
         $costs->networkUsage = (float) $tariff->network_charge_normal * ($lowCostConsumption + $highCostConsumption);
         $costs->ancillaryServices = (float) $tariff->ancillary_services_normal * ($lowCostConsumption + $highCostConsumption);
@@ -127,11 +133,15 @@ trait EACTrait
         $sourcesSuperscript = 1;
         // Basic Traiff costs
         $tariff = $this->getTariff('02',  $periodStart, $periodEnd);
-        $costs->addSource('electricityGeneration', $tariff->source_name, $tariff->source, $sourcesSuperscript);
-        $costs->addSource('networkUsage', $tariff->source_name, $tariff->source, $sourcesSuperscript);
-        $costs->addSource('ancillaryServices', $tariff->source_name, $tariff->source, $sourcesSuperscript);
-        $costs->addSource('meterReading', $tariff->source_name, $tariff->source, $sourcesSuperscript);
-        $costs->addSource('electricitySupply', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        if ($consumptionNormal + $consumptionReduced > 0) {
+            $costs->addSource('electricityGeneration', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+            $costs->addSource('networkUsage', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+            $costs->addSource('ancillaryServices', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        }
+        if ($includeFixed) {
+            $costs->addSource('meterReading', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+            $costs->addSource('electricitySupply', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        }
         if ($consumptionNormal > 0 ) {
             $costs->electricityGeneration = (float) $tariff->energy_charge_normal * $consumptionNormal;
             $costs->networkUsage = (float) $tariff->network_charge_normal * $consumptionNormal;
@@ -152,7 +162,7 @@ trait EACTrait
         $sourcesSuperscript++;
 
         //Fuel Adjustment costs
-        if ($consumptionNormal + $consumptionReduced > 0) {
+        if ($consumptionNormal > 0 || $consumptionReduced > 0) {
             $adjustment = $this->getAdjustment($periodStart, $periodEnd);
             if ($adjustment->revised_fuel_adjustment_price > 0 ) {
                 $costs->fuelAdjustment = (float) $adjustment->revised_fuel_adjustment_price * ($consumptionNormal + $consumptionReduced);
@@ -202,8 +212,12 @@ trait EACTrait
 
         // Basic Tariff costs
         $tariff = $this->getTariff('08',  $periodStart, $periodEnd);
-        $costs->addSource('electricityGeneration', $tariff->source_name, $tariff->source, $sourcesSuperscript);
-        $costs->addSource('electricitySupply', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        if (($consumption - $creditUnits) > 0) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                $consumption - $creditUnits) > 0) {
+            $costs->addSource('electricityGeneration', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        }
+        if ($includeFixed) {
+            $costs->addSource('electricitySupply', $tariff->source_name, $tariff->source, $sourcesSuperscript);
+        }
         if (($consumption - $creditUnits) <= 1000) {
             $costs->electricityGeneration = (float) $tariff->energy_charge_subsidy_first * ($consumption - $creditUnits);
             if ($costs->electricityGeneration < 0) {
@@ -212,21 +226,21 @@ trait EACTrait
             if ($includeFixed) {
                 $costs->electricitySupply = (float) $tariff->supply_subsidy_first;
             } else {
-                $costs->electricityGeneration = 0;
+                $costs->electricitySupply = 0;
             }
         } elseif (($consumption - $creditUnits) > 1000 && ($consumption - $creditUnits) <= 2000) {
             $costs->electricityGeneration = 1000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 1000) * $tariff->energy_charge_subsidy_second;
             if ($includeFixed) {
                 $costs->electricitySupply = (float) $tariff->supply_subsidy_second;
             } else {
-                $costs->electricityGeneration = 0;
+                $costs->electricitySupply = 0;
             }
         } elseif (($consumption - $creditUnits) > 2000) {
             $costs->electricityGeneration = 2000 * $tariff->energy_charge_subsidy_first + ($consumption - $creditUnits - 2000) * $tariff->energy_charge_subsidy_third;
             if ($includeFixed) {
                 $costs->electricitySupply = (float) $tariff->supply_subsidy_third;
             } else {
-                $costs->electricityGeneration = 0;
+                $costs->electricitySupply = 0;
             }
 
         }
@@ -366,7 +380,7 @@ trait EACTrait
     }
 
     /**
-     * Returns Electricity cost in an array
+     * Returns Electricity cost in an array for Calculator page
      *
      * @param stdClass $costs - Costs object
      *
@@ -375,8 +389,6 @@ trait EACTrait
     public function formatCostsCalculator(EacCosts $costs):array
     {
         $formattedCosts = [];
-        $total = 0;
-        $vatTotal = 0;
         if ($costs->electricityGeneration > 0) {
             $formattedCosts['electricityGeneration'] = new \stdClass();
             $formattedCosts['electricityGeneration']->value = $costs->electricityGeneration;
@@ -433,16 +445,58 @@ trait EACTrait
             $formattedCosts['resEsFund']->color = '#63ffde';
             $formattedCosts['resEsFund']->source = $costs->getSource('resEsFund');
         }
-
-        $formattedCosts['vat'] = new \stdClass();
-        $formattedCosts['vat']->value = $costs->calculateVat();
-        $formattedCosts['vat']->description = __('VAT') . ' (' . $costs->vatRate*100 . ' %)';
-        $formattedCosts['vat']->color = '#ffcd56';
+        if ($costs->calculateVat() > 0) {
+            $formattedCosts['vat'] = new \stdClass();
+            $formattedCosts['vat']->value = $costs->calculateVat();
+            $formattedCosts['vat']->description = __('VAT') . ' (' . $costs->vatRate*100 . ' %)';
+            $formattedCosts['vat']->color = '#ffcd56';
+        }
 
         $formattedCosts['total'] = new \stdClass();
         $formattedCosts['total']->value = $costs->calculateTotal();
         $formattedCosts['total']->description = __('Total');
         $formattedCosts['total']->color = 'transparent';
         return $formattedCosts;
+    }
+
+    /**
+     * Returns Electricity cost in an array for API
+     *
+     * @param stdClass $costs - Costs object
+     *
+     * @return array
+     */
+    public function formatCostsAPI(EacCosts $costs): array
+    {
+        $apiCosts = [];
+
+        if ($costs->electricityGeneration > 0) {
+            $apiCosts['electricityGeneration']= $costs->electricityGeneration;
+        }
+        if ($costs->networkUsage > 0) {
+            $apiCosts['networkUsage'] = $costs->networkUsage;
+        }
+        if ($costs->ancillaryServices > 0) {
+            $apiCosts['ancillaryServices'] = $costs->ancillaryServices;
+        }
+        if ($costs->meterReading > 0) {
+            $apiCosts['meterReading'] = $costs->meterReading;
+        }
+        if ($costs->electricitySupply > 0) {
+            $apiCosts['electricitySupply'] = $costs->electricitySupply;
+        }
+        if ($costs->fuelAdjustment > 0) {
+            $apiCosts['fuelAdjustment'] = $costs->fuelAdjustment;
+        }
+        if ($costs->publicServiceObligation > 0) {
+            $apiCosts['publicServiceObligation'] = $costs->publicServiceObligation;
+        }
+        if ($costs->resEsFund > 0) {
+            $apiCosts['resEsFund'] = $costs->resEsFund;
+        }
+        $apiCosts['vat'] = $costs->calculateVat(6);
+        $apiCosts['total'] = $costs->calculateTotal(6);
+
+        return $apiCosts;
     }
 }

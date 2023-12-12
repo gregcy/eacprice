@@ -45,6 +45,8 @@ Route::resource('costs', CostController::class)
     ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
+require __DIR__.'/api.php';
+
 
 
 Route::get('/{lang?}', [CalculatorController::class, 'index']);

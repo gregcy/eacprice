@@ -21,5 +21,4 @@ Route::middleware('auth:sanctum')->get(
     }
 );
 
-Route::resource('rate', GetCurrentRate::class)
-    ->only(['index']);
+Route::get('/api/getCurrentRate', [GetCurrentRate::class, 'index']);
