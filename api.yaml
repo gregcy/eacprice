@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Cyprus  kWh cost API
+  version: 1.0.0
+  description: An API to get the cost per kWh in Cyprus.
+servers:
+  - url: 'https://eac.greg.cy/api'
+paths:
+  /api/getCurrentRate:
+    get:
+      summary: Get current rate
+      operationId: getCurrentRate
+      parameters:
+        - name: tariffCode
+          in: query
+          description: 'The tariff code for which you want to get the current rate. Allowed values: "01", "02", "08".'
+          required: false
+          schema:
+            type: string
+            default: "01"
+            enum: ["01", "02", "08"]
+        - name: creditUnits
+          in: query
+          description: 'A boolean indicating if you have credit units from net metering.'
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                measurement: €/kWh
+                total: 0.333658
+                breakdown:
+                  electricityGeneration: 0.1035
+                  networkUsage: 0.0302
+                  ancillaryServices: 0.0065
+                  fuelAdjustment: 0.137878
+                  publicServiceObligation: 0.00058
+                  resEsFund: 0.005
+                  vat: 0.052945
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              example:
+                error: 'Invalid input parameters'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              example:
+                error: 'Rate information not available'
