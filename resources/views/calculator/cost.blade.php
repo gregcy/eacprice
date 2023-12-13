@@ -9,6 +9,20 @@
         <div class="w-full md:w-auto pr-4"><span class="font-bold pl-4">{{ __('Consumption During Standard Period') }}:</span><span class="font-normal pl-1">{{ $values['consumption-standard'] }} kWh</span></div>
         <div class="w-full md:w-auto pr-4"><span class="font-bold pl-4">{{ __('Consumption During Economy Period') }}:</span><span class="font-normal pl-1">{{ $values['consumption-economy'] }} kWh</span></div>
         @endif
+        @php
+            $totalValue = floatval(trim($cost['total']->value, "€"));
+            if ($values['tariff'] == 02) {
+                $consumption = floatval($values['consumption-standard']) + floatval($values['consumption-economy']);
+            } else {
+                $consumption = floatval($values['consumption']);
+            }
+            if ($consumption > 0) {
+                $costPerKwh = $totalValue / $consumption;
+            } else {
+                $costPerKwh = 0;
+            }
+        @endphp
+        <div class="w-full md:w-auto pr-4"><span class="font-bold">{{ __('Your cost per kWh') }}:</span><span class="font-normal pl-1">€{{ number_format($costPerKwh, 2) }}</span></div>
     </div>
 </div>
 <div class="flex flex-wrap bg-white p-6">
