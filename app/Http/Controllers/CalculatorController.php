@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\EACTrait;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Traits\EACTrait;
 use NumberFormatter;
 
 class CalculatorController extends Controller
@@ -31,7 +31,7 @@ class CalculatorController extends Controller
             ]
         );
 
-        $values = array(
+        $values = [
             'tariff' => $validated['tariff'],
             'consumption' => $validated['consumption'] ?? 0,
             'credit-amount' => $validated['credit-amount'] ?? 0,
@@ -40,11 +40,10 @@ class CalculatorController extends Controller
             'include-fixed' => $validated['include-fixed'] ?? 0,
             'date-start' => date_create_from_format('Y-m', $validated['period']) ?? date_create('now'),
             'date-end' => date_create_from_format('Y-m', $validated['period']) ?? date_create('now'),
-            'period' => $validated['period']
-        );
+            'period' => $validated['period'],
+        ];
 
-
-        if ($validated['tariff'] == "01") {
+        if ($validated['tariff'] == '01') {
             $cost = $this->calculateEACCost01(
                 $values['consumption'],
                 $values['credit-amount'],
@@ -52,7 +51,7 @@ class CalculatorController extends Controller
                 $values['date-start'],
                 $values['date-end']
             );
-        } else if ($validated['tariff'] == "02") {
+        } elseif ($validated['tariff'] == '02') {
             $cost = $this->calculateEACCost02(
                 $values['consumption-standard'],
                 $values['consumption-economy'],
@@ -60,7 +59,7 @@ class CalculatorController extends Controller
                 $values['date-start'],
                 $values['date-end']
             );
-        } else if ($validated['tariff'] == "08") {
+        } elseif ($validated['tariff'] == '08') {
             $cost = $this->calculateEACCost08(
                 $values['consumption'],
                 $values['credit-amount'],
@@ -74,11 +73,11 @@ class CalculatorController extends Controller
         $currencyFormatter = numfmt_create('en', NumberFormatter::CURRENCY);
         foreach ($formattedCost as $key => $value) {
             if (isset($value->value)) {
-                $formattedCost[$key]->value = numfmt_format_currency($currencyFormatter, $value->value, "EUR");
+                $formattedCost[$key]->value = numfmt_format_currency($currencyFormatter, $value->value, 'EUR');
             }
         }
         $vat_rate = $this->getVatRate($values['date-start'], $values['date-end'], $validated['tariff']);
-        $vat_rate = number_format($vat_rate->value*100, 0, '.', '');
+        $vat_rate = number_format($vat_rate->value * 100, 0, '.', '');
 
         return view(
             'calculator.page',
@@ -86,7 +85,7 @@ class CalculatorController extends Controller
                 'cost' => $formattedCost,
                 'values' => $values,
                 'vat_rate' => $vat_rate,
-                'sources' => $sources
+                'sources' => $sources,
             ]
         );
     }

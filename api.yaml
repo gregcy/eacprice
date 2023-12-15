@@ -1,14 +1,17 @@
 openapi: 3.0.0
 info:
-  title: Cyprus  kWh cost API
+  title: Cyprus Electricity cost API
   version: 1.0.0
-  description: An API to get the cost per kWh in Cyprus.
+  description: An API to get the current cost of electricity in Cyprus.
+  x-logo:
+    url: https://eac.greg.cy/images/calculator.png
+    altText: EAC Calculator
 servers:
   - url: 'https://eac.greg.cy/api'
 paths:
   /api/getCurrentRate:
     get:
-      summary: Get current rate
+      summary: getCurrentRate
       operationId: getCurrentRate
       parameters:
         - name: tariffCode
@@ -47,10 +50,4 @@ paths:
           content:
             application/json:
               example:
-                error: 'Invalid input parameters'
-        '404':
-          description: Not found
-          content:
-            application/json:
-              example:
-                error: 'Rate information not available'
+                error: 'The selected tariff code is invalid.'

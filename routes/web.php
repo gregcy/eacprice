@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\AdjustmentController;
 use App\Http\Controllers\CalculatorController;
+use App\Http\Controllers\CostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TariffController;
-use App\Http\Controllers\CostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,8 +46,6 @@ Route::resource('costs', CostController::class)
 
 require __DIR__.'/auth.php';
 require __DIR__.'/api.php';
-
-
 
 Route::get('/{lang?}', [CalculatorController::class, 'index']);
 Route::post('/{lang?}', [CalculatorController::class, 'calculate'])->name('calculator.calculate');

@@ -5,17 +5,24 @@ namespace App\Classes;
 class EacCosts
 {
     public float $electricityGeneration;
+
     public float $networkUsage;
+
     public float $ancillaryServices;
+
     public float $meterReading;
+
     public float $electricitySupply;
+
     public float $fuelAdjustment;
+
     public float $publicServiceObligation;
+
     public float $resEsFund;
+
     public float $vatRate;
+
     private array $_sources;
-
-
 
     public function __construct()
     {
@@ -34,15 +41,15 @@ class EacCosts
     {
         return round($this->vatRate * ($this->electricityGeneration + $this->networkUsage +
         $this->ancillaryServices + $this->meterReading + $this->electricitySupply +
-        $this->fuelAdjustment + $this->publicServiceObligation) , $decimals);
+        $this->fuelAdjustment + $this->publicServiceObligation), $decimals);
     }
 
     public function calculateTotal(int $decimals = 2): float
     {
         return round(round($this->electricityGeneration, $decimals) + round($this->networkUsage, $decimals) +
         round($this->ancillaryServices, $decimals) + round($this->meterReading, $decimals) +
-        round($this->electricitySupply, $decimals) + round($this->fuelAdjustment, $decimals)+
-        round($this->publicServiceObligation, $decimals) +round($this->resEsFund, $decimals) +
+        round($this->electricitySupply, $decimals) + round($this->fuelAdjustment, $decimals) +
+        round($this->publicServiceObligation, $decimals) + round($this->resEsFund, $decimals) +
         round($this->calculateVat(), $decimals), $decimals);
     }
 
@@ -51,7 +58,7 @@ class EacCosts
         $this->_sources["$cost"] = [
             'description' => $description,
             'link' => $link,
-            'superscript' => $superscript
+            'superscript' => $superscript,
         ];
     }
 
@@ -65,7 +72,7 @@ class EacCosts
         $sourceList = [];
         if (isset($this->_sources)) {
             foreach ($this->_sources as $key => $value) {
-                $sourceList[$value['superscript']] =  [ 'description' => $value['description'] , 'link' => $value['link'] ];
+                $sourceList[$value['superscript']] = ['description' => $value['description'], 'link' => $value['link']];
             }
         }
 

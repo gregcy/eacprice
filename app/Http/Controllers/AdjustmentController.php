@@ -51,7 +51,7 @@ class AdjustmentController extends Controller
                 'cosmos' => 'required|numeric',
                 'revised_fuel_adjustment_price' => 'nullable|numeric',
                 'source' => 'nullable|url',
-                'source_name' => 'nullable|string'
+                'source_name' => 'nullable|string',
             ]
         );
         $request->user()->adjustments()->create($validated);
@@ -98,7 +98,7 @@ class AdjustmentController extends Controller
                 'cosmos' => 'required|numeric',
                 'revised_fuel_adjustment_price' => 'nullable|numeric',
                 'source' => 'nullable|url',
-                'source_name' => 'nullable|string'
+                'source_name' => 'nullable|string',
             ]
         );
 

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\EacCosts;
+use App\Traits\EACTrait;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
-use App\Traits\EACTrait;
-use App\Classes\EacCosts;
 
 class GetCurrentRate extends Controller
 {
@@ -26,30 +25,30 @@ class GetCurrentRate extends Controller
                 ]
             );
         } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(['error' => $e->getMessage()], 422);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
         $tariffCode = request('tariffCode', '01');
         $creditUnits = request('creditUnits', 0);
 
         if ($tariffCode == '01') {
-            if (!$creditUnits) {
+            if (! $creditUnits) {
                 $cost = $this->calculateEACCost01(1, 0, false, date_create('now'), date_create('now'));
-             } else {
-                 $cost = $this->calculateEACCost01(1, 1, false, date_create('now'), date_create('now'));
-             }
-        } else if ($tariffCode == '02') {
-             $time_now = date('H') +3 ;
-             if ($time_now >= 9 && $time_now < 23) {
+            } else {
+                $cost = $this->calculateEACCost01(1, 1, false, date_create('now'), date_create('now'));
+            }
+        } elseif ($tariffCode == '02') {
+            $time_now = date('H') + 3;
+            if ($time_now >= 9 && $time_now < 23) {
                 $cost = $this->calculateEACCost02(1, 0, false, date_create('now'), date_create('now'));
             } else {
-                 $cost = $this->calculateEACCost02(0, 1, false, date_create('now'), date_create('now'));
+                $cost = $this->calculateEACCost02(0, 1, false, date_create('now'), date_create('now'));
             }
-        } else if ($tariffCode == '08') {
-             if (!$creditUnits) {
-                 $cost = $this->calculateEACCost08(1, 0, false, date_create('now'), date_create('now'));
-             } else {
-                 $cost = $this->calculateEACCost08(1, 1, false, date_create('now'), date_create('now'));
-             }
+        } elseif ($tariffCode == '08') {
+            if (! $creditUnits) {
+                $cost = $this->calculateEACCost08(1, 0, false, date_create('now'), date_create('now'));
+            } else {
+                $cost = $this->calculateEACCost08(1, 1, false, date_create('now'), date_create('now'));
+            }
         }
         $cost = $this->formatCostsAPI($cost);
         $total = $cost['total'];

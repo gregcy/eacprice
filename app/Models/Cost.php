@@ -19,7 +19,7 @@ class Cost extends Model
         'suffix',
         'value',
         'source',
-        'source_name'
+        'source_name',
     ];
 
     public function user(): BelongsTo

@@ -23,7 +23,7 @@ class Adjustment extends Model
         'cosmos',
         'revised_fuel_adjustment_price',
         'source',
-        'source_name'
+        'source_name',
 
     ];
 
