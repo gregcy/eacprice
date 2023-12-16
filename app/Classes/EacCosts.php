@@ -6,11 +6,10 @@
  * php version 8.2
  *
  * @category Utilities
- *
- * @author  Greg Andreou <greg.andreou@gmail.com>
- * @license GPL-3.0 https://opensource.org/license/gpl-3-0/
- *
- * @link https://github.com/gregcy/eacprice
+ * @package  EacCosts
+ * @author   Greg Andreou <greg.andreou@gmail.com>
+ * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
+ * @link     https://github.com/gregcy/eacprice
  */
 
 namespace App\Classes;
@@ -18,31 +17,31 @@ namespace App\Classes;
 /**
  * Class EacCosts.
  *  Data scructure and calculations for EAC bill items.
- * @category Utilities
  *
+ * @category Utilities
+ * @package  EacCosts
+ * @author   Greg Andreou <greg.andreou@gmail.com>
+ * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
+ * @link     https://github.com/gregcy/eacprice
  */
 class EacCosts
 {
     public float $electricityGeneration;
-
     public float $networkUsage;
-
     public float $ancillaryServices;
-
     public float $meterReading;
-
     public float $electricitySupply;
-
     public float $fuelAdjustment;
-
     public float $publicServiceObligation;
-
     public float $resEsFund;
-
     public float $vatRate;
-
     private array $_sources;
 
+    /**
+     * EacCosts constructor.
+     *
+     * Initializes a new instance of the EacCosts class.
+     */
     public function __construct()
     {
         $this->electricityGeneration = 0;
@@ -68,8 +67,8 @@ class EacCosts
     {
         return round(
             $this->vatRate * ($this->electricityGeneration + $this->networkUsage +
-            $this->ancillaryServices + $this->meterReading + $this->electricitySupply +
-            $this->fuelAdjustment + $this->publicServiceObligation), $decimals
+            $this->ancillaryServices + $this->meterReading + $this->electricitySupply
+            + $this->fuelAdjustment + $this->publicServiceObligation), $decimals
         );
     }
 
@@ -130,7 +129,7 @@ class EacCosts
     }
 
     /**
-     * Returns a list of source associated with th calculations.
+     * Returns a list of source associated with the calculations.
      *
      * @return array
      */
@@ -139,10 +138,13 @@ class EacCosts
         $sourceList = [];
         if (isset($this->_sources)) {
             foreach ($this->_sources as $key => $value) {
-                $sourceList[$value['superscript']] = ['description' => $value['description'], 'link' => $value['link']];
+                $sourceList[$value['superscript']]
+                    = [
+                        'description' => $value['description'],
+                        'link' => $value['link']
+                    ];
             }
         }
-
         return $sourceList;
     }
 }
