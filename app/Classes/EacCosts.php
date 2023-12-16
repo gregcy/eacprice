@@ -1,28 +1,10 @@
 <?php
 
-/**
- * Path: app/Classes/EacCosts.php
- * Data scructure and calculations for EAC bill items.
- * php version 8.2
- *
- * @category Utilities
- * @package  EacCosts
- * @author   Greg Andreou <greg.andreou@gmail.com>
- * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
- * @link     https://github.com/gregcy/eacprice
- */
-
 namespace App\Classes;
 
 /**
- * Class EacCosts.
+ * Class EacCosts
  * Data scructure and calculations for EAC bill items.
- *
- * @category Utilities
- * @package  EacCosts
- * @author   Greg Andreou <greg.andreou@gmail.com>
- * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
- * @link     https://github.com/gregcy/eacprice
  */
 class EacCosts
 {
@@ -35,7 +17,7 @@ class EacCosts
     public float $publicServiceObligation;
     public float $resEsFund;
     public float $vatRate;
-    private array $_sources;
+    private array $sources;
 
     /**
      * EacCosts constructor.
@@ -58,25 +40,29 @@ class EacCosts
     /**
      * Calculates the VAT cost of the electricity consumption.
      *
-     * @param integer $decimals The number of decimal places to use for calculations
-     *                          and to round result to.
+     * @param integer $decimals The number of decimal places to use for
+     *                          calculations and to round result to.
      *
      * @return float
      */
     public function calculateVat(int $decimals = 2): float
     {
         return round(
-            $this->vatRate * ($this->electricityGeneration + $this->networkUsage +
-            $this->ancillaryServices + $this->meterReading + $this->electricitySupply
-            + $this->fuelAdjustment + $this->publicServiceObligation), $decimals
+            $this->vatRate
+                * ($this->electricityGeneration
+                    + $this->networkUsage +$this->ancillaryServices
+                    + $this->meterReading + $this->electricitySupply
+                    + $this->fuelAdjustment + $this->publicServiceObligation
+                ),
+            $decimals
         );
     }
 
     /**
      * Calculates the total cost of the electricity consumption.
      *
-     * @param integer $decimals The number of decimal places to use for calculations
-     *                          and to round result to.
+     * @param int $decimals The number of decimal places to use for
+     *                      calculations and to round result to.
      *
      * @return float
      */
@@ -91,7 +77,8 @@ class EacCosts
             round($this->fuelAdjustment, $decimals) +
             round($this->publicServiceObligation, $decimals) +
             round($this->resEsFund, $decimals) +
-            round($this->calculateVat(), $decimals), $decimals
+            round($this->calculateVat(), $decimals),
+            $decimals
         );
     }
 
@@ -106,10 +93,12 @@ class EacCosts
      * @return float
      */
     public function addSource(
-        string $cost, string $description,
-        string $link, string $superscript
+        string $cost,
+        string $description,
+        string $link,
+        string $superscript
     ): void {
-        $this->_sources["$cost"] = [
+        $this->sources["$cost"] = [
             'description' => $description,
             'link' => $link,
             'superscript' => $superscript,
@@ -125,7 +114,7 @@ class EacCosts
      */
     public function getSource(string $cost): array
     {
-        return $this->_sources[$cost];
+        return $this->sources[$cost];
     }
 
     /**
@@ -136,8 +125,8 @@ class EacCosts
     public function getSourceList(): array
     {
         $sourceList = [];
-        if (isset($this->_sources)) {
-            foreach ($this->_sources as $key => $value) {
+        if (isset($this->sources)) {
+            foreach ($this->sources as $key => $value) {
                 $sourceList[$value['superscript']]
                     = [
                         'description' => $value['description'],

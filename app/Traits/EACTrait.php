@@ -1,15 +1,8 @@
 <?php
 
 /**
- * Path: app/Traits/EACTrait.php
- * Performs all the calculations for the Electricity Cost for EAC
- * php version 8.2
+ * Trait that provides all calculation methods for the Electricity Cost for EAC
  *
- * @category Utilities
- * @package  EacCosts
- * @author   Greg Andreou <greg.andreou@gmail.com>
- * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
- * @link     https://github.com/gregcy/eacprice
  */
 
 namespace App\Traits;
