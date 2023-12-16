@@ -16,7 +16,7 @@ namespace App\Classes;
 
 /**
  * Class EacCosts.
- *  Data scructure and calculations for EAC bill items.
+ * Data scructure and calculations for EAC bill items.
  *
  * @category Utilities
  * @package  EacCosts
