@@ -9,14 +9,23 @@ namespace App\Classes;
 class EacCosts
 {
     public float $electricityGeneration;
+
     public float $networkUsage;
+
     public float $ancillaryServices;
+
     public float $meterReading;
+
     public float $electricitySupply;
+
     public float $fuelAdjustment;
+
     public float $publicServiceObligation;
+
     public float $resEsFund;
+
     public float $vatRate;
+
     private array $sources;
 
     /**
@@ -40,17 +49,15 @@ class EacCosts
     /**
      * Calculates the VAT cost of the electricity consumption.
      *
-     * @param integer $decimals The number of decimal places to use for
+     * @param  int  $decimals The number of decimal places to use for
      *                          calculations and to round result to.
-     *
-     * @return float
      */
     public function calculateVat(int $decimals = 2): float
     {
         return round(
             $this->vatRate
                 * ($this->electricityGeneration
-                    + $this->networkUsage +$this->ancillaryServices
+                    + $this->networkUsage + $this->ancillaryServices
                     + $this->meterReading + $this->electricitySupply
                     + $this->fuelAdjustment + $this->publicServiceObligation
                 ),
@@ -61,10 +68,8 @@ class EacCosts
     /**
      * Calculates the total cost of the electricity consumption.
      *
-     * @param int $decimals The number of decimal places to use for
+     * @param  int  $decimals The number of decimal places to use for
      *                      calculations and to round result to.
-     *
-     * @return float
      */
     public function calculateTotal(int $decimals = 2): float
     {
@@ -85,11 +90,10 @@ class EacCosts
     /**
      * Adds a source for a cost to the list of sources.
      *
-     * @param string $cost        The cost associated with the source.
-     * @param string $description The description of the source.
-     * @param string $link        The link to the source.
-     * @param string $superscript The superscript to use for the source.
-     *
+     * @param  string  $cost        The cost associated with the source.
+     * @param  string  $description The description of the source.
+     * @param  string  $link        The link to the source.
+     * @param  string  $superscript The superscript to use for the source.
      * @return float
      */
     public function addSource(
@@ -108,9 +112,7 @@ class EacCosts
     /**
      * Returns the source for a specific cost.
      *
-     * @param string $cost The cost associated with the source.
-     *
-     * @return array
+     * @param  string  $cost The cost associated with the source.
      */
     public function getSource(string $cost): array
     {
@@ -119,8 +121,6 @@ class EacCosts
 
     /**
      * Returns a list of source associated with the calculations.
-     *
-     * @return array
      */
     public function getSourceList(): array
     {
@@ -130,10 +130,11 @@ class EacCosts
                 $sourceList[$value['superscript']]
                     = [
                         'description' => $value['description'],
-                        'link' => $value['link']
+                        'link' => $value['link'],
                     ];
             }
         }
+
         return $sourceList;
     }
 }

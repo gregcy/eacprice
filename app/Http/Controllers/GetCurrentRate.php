@@ -32,31 +32,69 @@ class GetCurrentRate extends Controller
 
         if ($tariffCode == '01') {
             if (! $creditUnits) {
-                $cost = $this->calculateEACCost01(1, 0, false, date_create('now'), date_create('now'));
+                $cost = $this->calculateEACCost01(
+                    1,
+                    0,
+                    false,
+                    date_create('now'),
+                    date_create('now')
+                );
             } else {
-                $cost = $this->calculateEACCost01(1, 1, false, date_create('now'), date_create('now'));
+                $cost = $this->calculateEACCost01(
+                    1,
+                    1,
+                    false,
+                    date_create('now'),
+                    date_create('now')
+                );
             }
         } elseif ($tariffCode == '02') {
             $time_now = date('H') + 3;
             if ($time_now >= 9 && $time_now < 23) {
-                $cost = $this->calculateEACCost02(1, 0, false, date_create('now'), date_create('now'));
+                $cost = $this->calculateEACCost02(
+                    1,
+                    0,
+                    false,
+                    date_create('now'),
+                    date_create('now')
+                );
             } else {
-                $cost = $this->calculateEACCost02(0, 1, false, date_create('now'), date_create('now'));
+                $cost = $this->calculateEACCost02(
+                    0,
+                    1,
+                    false,
+                    date_create('now'),
+                    date_create('now')
+                );
             }
         } elseif ($tariffCode == '08') {
             if (! $creditUnits) {
-                $cost = $this->calculateEACCost08(1, 0, false, date_create('now'), date_create('now'));
+                $cost = $this->calculateEACCost08(
+                    1,
+                    0,
+                    false,
+                    date_create('now'),
+                    date_create('now')
+                );
             } else {
-                $cost = $this->calculateEACCost08(1, 1, false, date_create('now'), date_create('now'));
+                $cost = $this->calculateEACCost08(
+                    1,
+                    1,
+                    false,
+                    date_create('now'),
+                    date_create('now')
+                );
             }
         }
         $cost = $this->formatCostsAPI($cost);
         $total = $cost['total'];
         unset($cost['total']);
-        $json = ['measurement' => '€/kWh', 'total' => $total, 'breakdown' => $cost];
+        $json = ['measurement' => '€/kWh',
+            'total' => $total, 'breakdown' => $cost];
 
         return response()->json(
-            $json, 200
+            $json,
+            200
         );
     }
 }

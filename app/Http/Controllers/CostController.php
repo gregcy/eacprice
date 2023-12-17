@@ -10,7 +10,7 @@ use Illuminate\View\View;
 class CostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of all extra costs.
      */
     public function index(): View
     {
@@ -23,7 +23,7 @@ class CostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new extra cost.
      */
     public function create(): View
     {

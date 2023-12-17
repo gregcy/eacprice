@@ -1,15 +1,5 @@
 <?php
-/**
- * Path: app/Models/Adjustment.php
- * Model for EAC Fuel Adjustment prices.
- * php version 8.2
- *
- * @category Models
- * @package  App\Models
- * @author   Greg Andreou <greg.andreou@gmail.com>
- * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
- * @link     https://github.com/gregcy/eacprice
- */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,13 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Adjustment
- * Data scructure for EAC Fuel Adjustment prices.
- *
- * @category Models
- * @package  App\Models
- * @author   Greg Andreou <greg.andreou@gmail.com>
- * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
- * @link     https://github.com/gregcy/eacprice
+ * Model for EAC Fuel Adjustment prices.
  */
 class Adjustment extends Model
 {
@@ -54,8 +38,6 @@ class Adjustment extends Model
 
     /**
      * Get the user that owns the adjustment.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {

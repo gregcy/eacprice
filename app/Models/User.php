@@ -1,15 +1,5 @@
 <?php
-/**
- * Path: app/Models/User.php
- * Model for system User.
- * php version 8.2
- *
- * @category Models
- * @package  App\Models
- * @author   Greg Andreou <greg.andreou@gmail.com>
- * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
- * @link     https://github.com/gregcy/eacprice
- */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,17 +11,13 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * Class User
- *  Model for System User.
- *
- * @category Models
- * @package  App\Models
- * @author   Greg Andreou <greg.andreou@gmail.com>
- * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
- * @link     https://github.com/gregcy/eacprice
+ * Model for System User.
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -66,8 +52,6 @@ class User extends Authenticatable
 
     /**
      * Get the adjustments associated with the current User.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function adjustments(): HasMany
     {
@@ -76,8 +60,6 @@ class User extends Authenticatable
 
     /**
      * Get the tariffs associated with the current User.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tariffs(): HasMany
     {
@@ -86,8 +68,6 @@ class User extends Authenticatable
 
     /**
      * Get the Costs associated with the current User.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function costs(): HasMany
     {

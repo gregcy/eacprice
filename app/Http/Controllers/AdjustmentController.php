@@ -10,20 +10,21 @@ use Illuminate\View\View;
 class AdjustmentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of Adjustments.
      */
     public function index(): View
     {
         return view(
             'adjustments.index',
             [
-                'adjustments' => Adjustment::with('user')->latest('start_date')->paginate(10),
+                'adjustments' => Adjustment::with('user')->
+                    latest('start_date')->paginate(10),
             ]
         );
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Adjustment.
      */
     public function create(): View
     {
@@ -80,8 +81,10 @@ class AdjustmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Adjustment $adjustment): RedirectResponse
-    {
+    public function update(
+        Request $request,
+        Adjustment $adjustment
+    ): RedirectResponse {
         $this->authorize('update', $adjustment);
 
         $validated = $request->validate(

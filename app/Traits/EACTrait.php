@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Trait that provides all calculation methods for the Electricity Cost for EAC
- *
- */
-
 namespace App\Traits;
 
 use App\Classes\EacCosts;
@@ -16,28 +11,24 @@ use stdClass;
 
 /**
  * Trait that provides all calculation methods for the Electricity Cost for EAC
- *
- * @category Utilities
- * @package  EacCosts
- * @author   Greg Andreou <greg.andreou@gmail.com>
- * @license  GPL-3.0 https://opensource.org/license/gpl-3-0/
- * @link     https://github.com/gregcy/eacprice
  */
 trait EACTrait
 {
     /**
      * Returns the Electricity cost over a period for tariff code 01
      *
-     * @param float    $consumption  Consumption in kWh
-     * @param float    $creditUnits  Credit Units
-     * @param bool     $includeFixed Include Fixed Charges
-     * @param DateTime $periodStart  Period Start date
-     * @param DateTime $periodEnd    Period End date
-     *
-     * @return array
+     * @param  float  $consumption  Consumption in kWh
+     * @param  float  $creditUnits  Credit Units
+     * @param  bool  $includeFixed Include Fixed Charges
+     * @param  DateTime  $periodStart  Period Start date
+     * @param  DateTime  $periodEnd    Period End date
      */
-    public function calculateEACCost01(float $consumption, float $creditUnits,
-        bool $includeFixed, DateTime $periodStart, DateTime $periodEnd
+    public function calculateEACCost01(
+        float $consumption,
+        float $creditUnits,
+        bool $includeFixed,
+        DateTime $periodStart,
+        DateTime $periodEnd
     ): EacCosts {
 
         $lowCostConsumption = 0;
@@ -109,10 +100,12 @@ trait EACTrait
         if ($highCostConsumption > 0) {
             $adjustment = $this->getAdjustment($periodStart, $periodEnd);
             if ($adjustment->revised_fuel_adjustment_price > 0) {
-                $costs->fuelAdjustment = $adjustment->revised_fuel_adjustment_price
+                $costs->fuelAdjustment =
+                    $adjustment->revised_fuel_adjustment_price
                     * $highCostConsumption;
             } else {
-                $costs->fuelAdjustment = $adjustment->total * $highCostConsumption;
+                $costs->fuelAdjustment = $adjustment->total
+                    * $highCostConsumption;
             }
             $costs->addSource(
                 'fuelAdjustment',
@@ -162,20 +155,18 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 02
      *
-     * @param float    $consumptionNormal  Normal cost consumption in kWh
-     * @param float    $consumptionReduced Rediced cost consumpation in kWh
-     * @param bool     $includeFixed       Include Fixed Charges
-     * @param DateTime $periodStart        Period Start date
-     * @param DateTime $periodEnd          Period End date
-     *
-     * @return array
+     * @param  float  $consumptionNormal  Normal cost consumption in kWh
+     * @param  float  $consumptionReduced Rediced cost consumpation in kWh
+     * @param  bool  $includeFixed       Include Fixed Charges
+     * @param  DateTime  $periodStart        Period Start date
+     * @param  DateTime  $periodEnd          Period End date
      */
     public function calculateEACCost02(
         float $consumptionNormal,
         float $consumptionReduced,
-        bool $includeFixed, DateTime
-        $periodStart, DateTime
-        $periodEnd
+        bool $includeFixed,
+        DateTime $periodStart,
+        DateTime $periodEnd
     ): EacCosts {
 
         $costs = new EacCosts();
@@ -217,24 +208,24 @@ trait EACTrait
             );
         }
         if ($consumptionNormal > 0) {
-            $costs->electricityGeneration = (float) $tariff->energy_charge_normal
+            $costs->electricityGeneration = $tariff->energy_charge_normal
                 * $consumptionNormal;
-            $costs->networkUsage = (float) $tariff->network_charge_normal
+            $costs->networkUsage = $tariff->network_charge_normal
                 * $consumptionNormal;
-            $costs->ancillaryServices = (float) $tariff->ancillary_services_normal
+            $costs->ancillaryServices = $tariff->ancillary_services_normal
                 * $consumptionNormal;
         }
         if ($consumptionReduced > 0) {
-            $costs->electricityGeneration += (float) $tariff->energy_charge_reduced
+            $costs->electricityGeneration += $tariff->energy_charge_reduced
                 * $consumptionReduced;
-            $costs->networkUsage += (float) $tariff->network_charge_reduced
+            $costs->networkUsage += $tariff->network_charge_reduced
                 * $consumptionReduced;
-            $costs->ancillaryServices += (float) $tariff->ancillary_services_reduced
+            $costs->ancillaryServices += $tariff->ancillary_services_reduced
                 * $consumptionReduced;
         }
         if ($includeFixed) {
-            $costs->meterReading = (float) $tariff->recurring_meter_reading;
-            $costs->electricitySupply = (float) $tariff->recurring_supply_charge;
+            $costs->meterReading = $tariff->recurring_meter_reading;
+            $costs->electricitySupply = $tariff->recurring_supply_charge;
         } else {
             $costs->meterReading = 0;
             $costs->electricitySupply = 0;
@@ -302,12 +293,11 @@ trait EACTrait
     /**
      * Returns the Electricity cost over a period for tariff code 08
      *
-     * @param float    $consumption  Normal cost consumption in kWh
-     * @param float    $creditUnits  Rediced cost consumpation in kWh
-     * @param bool     $includeFixed Include Fixed Charges
-     * @param DateTime $periodStart  Period Start date
-     * @param DateTime $periodEnd    Period End date
-     *
+     * @param  float  $consumption  Normal cost consumption in kWh
+     * @param  float  $creditUnits  Rediced cost consumpation in kWh
+     * @param  bool  $includeFixed Include Fixed Charges
+     * @param  DateTime  $periodStart  Period Start date
+     * @param  DateTime  $periodEnd    Period End date
      * @return array
      */
     public function calculateEACCost08(
@@ -346,11 +336,12 @@ trait EACTrait
                 $costs->electricityGeneration = 0;
             }
             if ($includeFixed) {
-                $costs->electricitySupply = (float) $tariff->supply_subsidy_first;
+                $costs->electricitySupply = $tariff->supply_subsidy_first;
             } else {
                 $costs->electricitySupply = 0;
             }
-        } elseif (($consumption - $creditUnits) > 1000
+        } elseif (
+            ($consumption - $creditUnits) > 1000
             && ($consumption - $creditUnits) <= 2000
         ) {
             $costs->electricityGeneration = 1000
@@ -358,7 +349,7 @@ trait EACTrait
                 + ($consumption - $creditUnits - 1000)
                 * $tariff->energy_charge_subsidy_second;
             if ($includeFixed) {
-                $costs->electricitySupply = (float) $tariff->supply_subsidy_second;
+                $costs->electricitySupply = $tariff->supply_subsidy_second;
             } else {
                 $costs->electricitySupply = 0;
             }
@@ -368,7 +359,7 @@ trait EACTrait
                 + ($consumption - $creditUnits - 2000)
                 * $tariff->energy_charge_subsidy_third;
             if ($includeFixed) {
-                $costs->electricitySupply = (float) $tariff->supply_subsidy_third;
+                $costs->electricitySupply = $tariff->supply_subsidy_third;
             } else {
                 $costs->electricitySupply = 0;
             }
@@ -379,7 +370,8 @@ trait EACTrait
         if ($consumption - $creditUnits > 0) {
             $adjustment = $this->getAdjustment($periodStart, $periodEnd);
             if ($adjustment->revised_fuel_adjustment_price > 0) {
-                $costs->fuelAdjustment = $adjustment->revised_fuel_adjustment_price
+                $costs->fuelAdjustment =
+                    $adjustment->revised_fuel_adjustment_price
                     * ($consumption - $creditUnits);
             } else {
                 $costs->fuelAdjustment = $adjustment->cost
@@ -404,14 +396,14 @@ trait EACTrait
     /**
      * Returns the tariffs for a given tariff code and period
      *
-     * @param string   $tariff      Tariff code
-     * @param DateTime $periodStart Period End date
-     * @param DateTime $periodEnd   Period End date
-     *
-     * @return Tariff
+     * @param  string  $tariff      Tariff code
+     * @param  DateTime  $periodStart Period End date
+     * @param  DateTime  $periodEnd   Period End date
      */
     public function getTariff(
-        string $tariff, DateTime $periodStart, DateTime $periodEnd
+        string $tariff,
+        DateTime $periodStart,
+        DateTime $periodEnd
     ): Tariff {
         return Tariff::where('code', $tariff)
             ->where(
@@ -429,10 +421,8 @@ trait EACTrait
     /**
      * Returns the fuel adjustment for a given period
      *
-     * @param DateTime $periodStart Period Start date
-     * @param DateTime $periodEnd   Period End date
-     *
-     * @return Adjustment
+     * @param  DateTime  $periodStart Period Start date
+     * @param  DateTime  $periodEnd   Period End date
      */
     public function getAdjustment(
         DateTime $periodStart,
@@ -446,16 +436,14 @@ trait EACTrait
     /**
      * Returns the vat rate for a given period
      *
-     * @param DateTime $periodStart Period Start date
-     * @param DateTime $periodEnd   Period End date
-     * @param string   $tariffCode  Tariff Code
-     *
-     * @return Cost
+     * @param  DateTime  $periodStart Period Start date
+     * @param  DateTime  $periodEnd   Period End date
+     * @param  string  $tariffCode  Tariff Code
      */
     public function getVatRate(
         DateTime $periodStart,
         DateTime $periodEnd,
-        string $tariffCode = null
+        ?string $tariffCode = null
     ): Cost {
         return Cost::where('name', '=', 'VAT')
             ->where('start_date', '<=', $periodStart)
@@ -477,10 +465,8 @@ trait EACTrait
     /**
      * Returns the Public Service Obligation for a given period
      *
-     * @param DateTime $periodStart Period Start date
-     * @param DateTime $periodEnd   Period End date
-     *
-     * @return Cost
+     * @param  DateTime  $periodStart Period Start date
+     * @param  DateTime  $periodEnd   Period End date
      */
     public function getPublicServiceObligation(
         DateTime $periodStart,
@@ -502,10 +488,8 @@ trait EACTrait
     /**
      * Returns the RES & ES Fund for a given period
      *
-     * @param DateTime $periodStart Period Start date
-     * @param DateTime $periodEnd   Period End date
-     *
-     * @return Cost
+     * @param  DateTime  $periodStart Period Start date
+     * @param  DateTime  $periodEnd   Period End date
      */
     public function getResEsFund(
         DateTime $periodStart,
@@ -527,9 +511,7 @@ trait EACTrait
     /**
      * Returns Electricity cost in an array for Calculator page
      *
-     * @param EacCosts $costs - Costs object
-     *
-     * @return array
+     * @param  EacCosts  $costs - Costs object
      */
     public function formatCostsCalculator(EacCosts $costs): array
     {
@@ -554,7 +536,8 @@ trait EACTrait
         }
         if ($costs->ancillaryServices > 0) {
             $formattedCosts['ancillaryServices'] = new stdClass();
-            $formattedCosts['ancillaryServices']->value = $costs->ancillaryServices;
+            $formattedCosts['ancillaryServices']->value =
+                $costs->ancillaryServices;
             $formattedCosts['ancillaryServices']->description
                 = __('Ancillary Services');
             $formattedCosts['ancillaryServices']->color = '#ff9f40';
@@ -571,7 +554,8 @@ trait EACTrait
         }
         if ($costs->electricitySupply > 0) {
             $formattedCosts['electricitySupply'] = new stdClass();
-            $formattedCosts['electricitySupply']->value = $costs->electricitySupply;
+            $formattedCosts['electricitySupply']->value =
+                $costs->electricitySupply;
             $formattedCosts['electricitySupply']->description
                 = __('Electricity Supply');
             $formattedCosts['electricitySupply']->color = '#4bc0c0';
@@ -581,7 +565,8 @@ trait EACTrait
         if ($costs->fuelAdjustment > 0) {
             $formattedCosts['fuelAdjustment'] = new stdClass();
             $formattedCosts['fuelAdjustment']->value = $costs->fuelAdjustment;
-            $formattedCosts['fuelAdjustment']->description = __('Fuel Adjustment');
+            $formattedCosts['fuelAdjustment']->description =
+                __('Fuel Adjustment');
             $formattedCosts['fuelAdjustment']->color = '#96f';
             $formattedCosts['fuelAdjustment']->source
                 = $costs->getSource('fuelAdjustment');
@@ -601,13 +586,14 @@ trait EACTrait
             $formattedCosts['resEsFund']->value = $costs->resEsFund;
             $formattedCosts['resEsFund']->description = __('RES and ES Fund');
             $formattedCosts['resEsFund']->color = '#63ffde';
-            $formattedCosts['resEsFund']->source = $costs->getSource('resEsFund');
+            $formattedCosts['resEsFund']->source =
+                $costs->getSource('resEsFund');
         }
         if ($costs->calculateVat() > 0) {
             $formattedCosts['vat'] = new stdClass();
             $formattedCosts['vat']->value = $costs->calculateVat();
             $formattedCosts['vat']->description
-                = __('VAT') . ' (' . $costs->vatRate * 100 . ' %)';
+                = __('VAT').' ('.$costs->vatRate * 100 .' %)';
             $formattedCosts['vat']->color = '#ffcd56';
         }
 
@@ -622,9 +608,7 @@ trait EACTrait
     /**
      * Returns Electricity cost in an array for API
      *
-     * @param EacCosts $costs - Costs object
-     *
-     * @return array
+     * @param  EacCosts  $costs - Costs object
      */
     public function formatCostsAPI(EacCosts $costs): array
     {
@@ -649,7 +633,8 @@ trait EACTrait
             $apiCosts['fuelAdjustment'] = $costs->fuelAdjustment;
         }
         if ($costs->publicServiceObligation > 0) {
-            $apiCosts['publicServiceObligation'] = $costs->publicServiceObligation;
+            $apiCosts['publicServiceObligation'] =
+                $costs->publicServiceObligation;
         }
         if ($costs->resEsFund > 0) {
             $apiCosts['resEsFund'] = $costs->resEsFund;
