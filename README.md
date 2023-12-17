@@ -1,11 +1,13 @@
-<div style="margin: 15px; display: flex; justify-content: center; align-items: center; min-height: 100px">
-    <div style="display: flex; align-items: center;">
-        <img src="https://raw.githubusercontent.com/gregcy/eacprice/master/public/images/calculator.png" width="100" alt="Cyprus Electricity Calculator" style="width: 100px; height: auto; margin-right: 10px;">
-        <h1 style="margin: 0;">Cyprus Electricity Calculator</h1>
-    </div>
-</div>
-<p align="center">
-
+<table>
+<tr>
+    <td>
+        <img src="https://raw.githubusercontent.com/gregcy/eacprice/master/public/images/calculator.png" width="100" alt="Cyprus Electricity Calculator">
+    </td>
+    <td>
+        <h1>Cyprus Electricity Calculator</h1>
+    </td>
+</tr>
+</table>
 
 ## About the Cyprus Electricity Calculator
 
@@ -20,7 +22,7 @@ You can see a live version of the application at [https://eac.greg.cy](https://e
 
 ## Installation/Setup
 
-This is a standard Laravel application. The following steps should be sufficient to get the application up and running. Please note that you will need to have a database setup and the relevant credentials available.
+This is a standard Laravel application. The following steps should be sufficient to get the application up and running. You will need to have a database setup and the relevant credentials available.
 
 1. Clone the repository
 2. Run `composer install`
