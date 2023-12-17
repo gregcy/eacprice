@@ -7,10 +7,17 @@ use App\Traits\EACTrait;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+/**
+ * EAC Get Curremt Rate Controller
+ * {@inheritdoc}
+ */
 class GetCurrentRate extends Controller
 {
     use EACTrait;
 
+    /**
+     * Display the current EAC rate in Json format for API.
+     */
     public function index(Request $request)
     {
         $cost = new EacCosts();

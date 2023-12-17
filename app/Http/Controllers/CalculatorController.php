@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use NumberFormatter;
 
+/**
+ * Caclculator Controller
+ * {@inheritdoc}
+ */
 class CalculatorController extends Controller
 {
     use EACTrait;

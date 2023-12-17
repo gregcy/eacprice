@@ -7,6 +7,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * EAC Extra Cost Controller
+ * {@inheritdoc}
+ */
 class CostController extends Controller
 {
     /**
@@ -33,7 +37,7 @@ class CostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created extra cost in storage.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -56,7 +60,7 @@ class CostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified extra cost.
      */
     public function show(Cost $cost)
     {
@@ -64,7 +68,7 @@ class CostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing th extra cost
      */
     public function edit(Cost $cost): View
     {
@@ -74,7 +78,7 @@ class CostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified extra cost in storage.
      */
     public function update(Request $request, Cost $cost): RedirectResponse
     {
@@ -100,7 +104,7 @@ class CostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified extra cost from storage.
      */
     public function destroy(Cost $cost): RedirectResponse
     {

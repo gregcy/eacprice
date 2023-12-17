@@ -7,6 +7,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * EAC Adjustment Controller
+ * {@inheritdoc}
+ */
 class AdjustmentController extends Controller
 {
     /**
@@ -34,7 +38,7 @@ class AdjustmentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Adjustment in storage.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -61,7 +65,7 @@ class AdjustmentController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Adjustment.
      */
     public function show(Adjustment $adjustment)
     {
@@ -69,7 +73,7 @@ class AdjustmentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the Adustment.
      */
     public function edit(Adjustment $adjustment): View
     {
@@ -79,7 +83,7 @@ class AdjustmentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Adjustment in storage.
      */
     public function update(
         Request $request,
@@ -111,7 +115,7 @@ class AdjustmentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Adjustment from storage.
      */
     public function destroy(Adjustment $adjustment): RedirectResponse
     {

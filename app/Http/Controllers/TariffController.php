@@ -7,10 +7,14 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * EAC Tariff Controller
+ * {@inheritdoc}
+ */
 class TariffController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of Tariffs.
      */
     public function index(): View
     {
@@ -23,7 +27,7 @@ class TariffController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Tariff.
      */
     public function create(): View
     {
@@ -33,7 +37,7 @@ class TariffController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Tariff in storage.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -60,10 +64,6 @@ class TariffController extends Controller
                 'source_name' => 'nullable|string',
             ]
         );
-        // Replace nulls with 0's
-        // $validated = array_map(function ($v) {
-        //     return (is_null($v)) ? 0 : $v;
-        // }, $validated);
         if ($validated['end_date'] == 0) {
             $validated['end_date'] = null;
         }
@@ -73,7 +73,7 @@ class TariffController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Tariff.
      */
     public function show(Tariff $Tariff)
     {
@@ -81,7 +81,7 @@ class TariffController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified Tariff.
      */
     public function edit(Tariff $Tariff): View
     {
@@ -91,7 +91,7 @@ class TariffController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Tariff in storage.
      */
     public function update(Request $request, Tariff $Tariff): RedirectResponse
     {
@@ -136,7 +136,7 @@ class TariffController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Tariff from storage.
      */
     public function destroy(Tariff $Tariff): RedirectResponse
     {
