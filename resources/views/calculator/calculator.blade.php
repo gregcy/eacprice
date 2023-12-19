@@ -113,7 +113,7 @@
         {
             element: document.querySelector('#tariff-select'),
             title: '{{ __('Tariff') }}',
-            intro: '{{ __('The tariff is in the top left corner of your bill') }}: <br/><img src="/images/EAC-Tariff-en.png" alt="{{ __('Tariff') }}" class="mt-4"/>'
+            intro: '{{ __('The tariff is in the top left corner of your bill') }}: <br/><img src="{{ __('/images/EAC-Tariff-en.png') }}" alt="{{ __('Tariff') }}" class="mt-4"/>'
         },
         {
             title: '{{ __('Month') }}',
