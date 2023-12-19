@@ -113,12 +113,12 @@
         {
             element: document.querySelector('#tariff-select'),
             title: '{{ __('Tariff') }}',
-            intro: '{{ __('The tariff is in the top left corner of your bill') }}: <br/><img src="/images/EAC-Tariff-en.png" alt="{{ __('Tariff') }}"/>'
+            intro: '{{ __('The tariff is in the top left corner of your bill') }}: <br/><img src="{{ __('/images/EAC-Tariff-en.png') }}" alt="{{ __('Tariff') }}" class="mt-4"/>'
         },
         {
             title: '{{ __('Month') }}',
             element: document.querySelector('#period'),
-            intro: '{{ __('Select the month your bill was issued. This is the second date of the period') }}:<br/><img src="/images/EAC-Period-en.png" alt="{{ __('Tariff') }}"/>'
+            intro: '{{ __('Select the month your bill was issued. This is the second date of the period') }}:<br/><img src="{{ __('/images/EAC-Period-en.png') }}" alt="{{ __('Date') }}"/>'
         }]
     });
 </script>
