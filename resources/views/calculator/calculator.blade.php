@@ -123,7 +123,7 @@
             {
                 title: '{{ __('Consumption') }}',
                 element: document.querySelector('#consumption'),
-                intro: '{{ __('Select the month your bill was issued. This is the second date of the period') }}:<br/><img src="{{ __('/images/EAC-Period-en.png') }}" alt="{{ __('Date') }}"/>'
+                intro: '{{ __('Consumption is on the left hand side of the bill under the Meter Readings (kWh) heading.  If you have solar panels you should input the third number on the IMP line. Without Solar Panels you should input the Total Consumption') }}:<br/><img src="{{ __('/images/EAC-Consumption-en.png') }}" alt="{{ __('Date') }}"/>'
             },
         ]
     });
