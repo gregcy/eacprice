@@ -1,7 +1,7 @@
 <form id="eac-calculator" class="p-5 mb-2" method="POST" action="{{ route('calculator.calculate',['lang' => app()->getLocale()]) }}">
     @csrf
-    <fieldset id="tariff" class="py-4 w-100">
-        <label for="tariff-select" class="text-lg font-medium pr-2 w-full block md:inline-block md:w-24">{{ __('Tariff') }}:</label>
+    <fieldset class="py-4 w-100">
+        <label for="tariff-select" id="tariff" class="text-lg font-medium pr-2 w-full block md:inline-block md:w-24">{{ __('Tariff') }}:</label>
         <select id="tariff-select" name="tariff"
             class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-md w-full block md:w-[340px]">
             @php
@@ -77,7 +77,7 @@
     <x-primary-button class="mt-4">{{ __('Calculate') }}</x-primary-button>
 
 </form>
-<div id="tour" class="px-5 mb-12 cursor-pointer">
+<div id="tour" class="px-5 mb-12 cursor-pointer" onclick="tour.start()">
     <div class="font-bold text-white bg-blue-700 inline-block px-2 py-1 px-3 rounded-full text-xl shadow-md ml-2 mb-2 md:mb-0 leading-none">?</div>
     <span class="text-lg text-blue-700 font-bold underline">{{ __('How to use the Calculator') }}</span>
 </div>
@@ -105,5 +105,20 @@
                 inputs[i].value = '';
             }
         }
+    });
+</script>
+<script type="module">
+    tour = introJs().setOptions({
+        steps: [
+        {
+            element: document.querySelector('#tariff-select'),
+            title: '{{ __('Tariff') }}',
+            intro: '{{ __('The tariff is in the top left corner of your bill') }}: <br/><img src="/images/EAC-Tariff-en.png" alt="{{ __('Tariff') }}" class="mt-4"/>'
+        },
+        {
+            title: '{{ __('Month') }}',
+            element: document.querySelector('#period'),
+            intro: '{{ __('Select the month the bill ') }}'
+        }]
     });
 </script>
