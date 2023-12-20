@@ -125,6 +125,11 @@
                 element: document.querySelector('#consumption'),
                 intro: '{{ __('Consumption is on the left hand side of the bill under the Meter Readings (kWh) heading.  If you have solar panels you should input the third number on the IMP line. Without Solar Panels you should input the Total Consumption') }}:<br/><img src="{{ __('/images/EAC-Consumption-en.png') }}" alt="{{ __('Date') }}"/>'
             },
+            {
+                title: '{{ __('Returned Solar Power') }}',
+                element: document.querySelector('#credit-amount'),
+                intro: '{{ __('Your total returned power is the sum of credit units brought forward and the third number on the EXP line') }}:<br/><img src="{{ __('/images/EAC-Credit-en.png') }}" alt="{{ __('Date') }}"/>'
+            },
         ]
     });
 </script>
