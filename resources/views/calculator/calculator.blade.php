@@ -130,6 +130,12 @@
                 element: document.querySelector('#credit-amount'),
                 intro: '{{ __('Your total returned power is the sum of credit units brought forward and the third number on the EXP line') }}:<br/><img src="{{ __('/images/EAC-Credit-en.png') }}" alt="{{ __('Date') }}"/>'
             },
+            {
+                title: '{{ __('Include Fixed Costs') }}',
+                element: document.querySelector('#include-fixed'),
+                intro: '{{ __('If checked the fixed costs charged by EAC will be included') }}'
+            },
+
         ]
     });
 </script>
