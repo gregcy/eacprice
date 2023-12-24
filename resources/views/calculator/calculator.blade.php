@@ -109,6 +109,9 @@
 </script>
 <script type="module">
     tour = introJs().setOptions({
+        nextLabel: '{{ __('Next') }}',
+        prevLabel: '{{ __('Back') }}',
+        doneLabel: '{{ __('Done') }}',
         steps: [
             {
                 element: document.querySelector('#tariff-select'),
@@ -133,7 +136,7 @@
             {
                 title: '{{ __('Include Fixed Costs') }}',
                 element: document.querySelector('#include-fixed'),
-                intro: '{{ __('If checked the fixed costs charged by EAC will be included') }}'
+                intro: '{{ __('Select to include the fixed costs charged by EAC in the calculation') }}'
             },
 
         ]

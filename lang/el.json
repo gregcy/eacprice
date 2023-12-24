@@ -29,6 +29,7 @@
     "02 - Two Rate Domestic Use": "02 - Οικιακή Χρήση Διπλής Εγγραφής",
     "08 - Special for Vulnerable Customers": "08 - Οικιακή για Ευάλωτους Καταναλωτές",
     "Calculate": "Υπολογισμός",
+    "How to use the Calculator": "Πώς να χρησιμοποιήσετε τον Υπολογιστή",
     "Month": "Μήνας",
     "January": "Ιανουάριος",
     "February": "Φεβρουάριος",
@@ -53,5 +54,17 @@
     "https://www.eac.com.cy/EN/regulatedactivities/supply/tariffs/Pages/Public-Service-Obligations.aspx": "https://www.eac.com.cy/EL/regulatedactivities/supply/tariffs/Pages/Public-Service-Obligations.aspx",
     "Report of the Parliamentary Energy Committee (In Greek)": "Έκθεση της Κοινοβουλευτικής Επιτροπής Ενέργειας",
     "English": "Αγγλικά",
-    "Greek": "Ελληνικά"
+    "Greek": "Ελληνικά",
+    "The tariff is in the top left corner of your bill": "Η διατίμηση είναι στην πάνω αριστερή γωνία του λογαριασμού",
+    "Select the month your bill was issued. This is the second date of the period": "Επιλέξτε το μήνα που εκδόθηκε ο λογαριασμός σας. Είναι η δεύτερη ημερομηνία της περιόδου",
+    "Consumption is on the left hand side of the bill under the Meter Readings (kWh) heading.  If you have solar panels you should input the third number on the IMP line. Without Solar Panels you should input the Total Consumption": "Η κατανάλωση είναι στην αριστερή μεριά του λογαριασμού κάτω από την επικεφαλίδα Ενδείξεις Μετρητή (kWh). Εάν έχετε ηλιακούς συλλέκτες, πρέπει να εισαγάγετε το τρίτο αριθμό στη γραμμή ΕΙΣ. Χωρίς ηλιακούς συλλέκτες, πρέπει να εισαγάγετε την Συνολική Κατανάλωση",
+    "Your total returned power is the sum of credit units brought forward and the third number on the EXP line" : "Η Επιστρεφόμενη Ηλιακή Ενέργεια είναι το άθροισμα των Πιστωτικών Μονάδων από μεταφορά και του τρίτου αριθμού στη γραμμή ΕΞ",
+    "Select to include the fixed costs charged by EAC in the calculation": "Επιλέξτε για να συμπεριλάβετε τα παγία κόστη που χρεώνει η ΑΗΚ στον υπολογισμό",
+    "/images/EAC-Tariff-en.png": "/images/EAC-Tariff-el.png",
+    "/images/EAC-Period-en.png": "/images/EAC-Period-el.png",
+    "/images/EAC-Consumption-en.png": "/images/EAC-Consumption-el.png",
+    "/images/EAC-Credit-en.png": "/images/EAC-Credit-el.png",
+    "Next": "Επόμενο",
+    "Back": "Πίσω",
+    "Done": "Τέλος"
 }
