@@ -24,9 +24,9 @@
                 <div class="w-full justify-between flex">
                     @if ($currentLocale == 'el')
                     <span class="ml-auto"><a href="/en/" class="text-white "><img class="h-5 ml-[5px]" src="/images/gb.png" />{{ __('English') }}</a></span>
-                    <span class="ml-5 underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-4" src="/images/gr.png" />{{ __('Greek') }}</span>
+                    <span class="ml-5 underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-4" src="/images/gr.png" alt="Greek">{{ __('Greek') }}</span>
                     @else
-                    <span class="ml-auto underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-[5px]" src="/images/gb.png" />{{ __('English') }}</a></span>
+                    <span class="ml-auto underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-[5px]" src="/images/gb.png" alt="English">{{ __('English') }}</span>
                     <span class="ml-5"><a href="/el/" class="text-white"><img class="h-5 ml-1.5" src="/images/gr.png" />{{ __('Greek') }}</a></span>
                     @endif
                 </div>
@@ -39,8 +39,7 @@
                 </div>
                 <div class="text-sm w-full text-white flex justify-between items-center">
                     <p class="align-self-center"> <a href="{{__('https://www.eac.com.cy/EN/Pages/default.aspx') }}" target="_blank" class="underline">{{ __('Click here') }}</a> {{ __('to go to the EAC website.') }}</p>
-                        <img height="65" width="78" src="{{asset('/images/calculator.png')}}" alt="Calculator">
-                    </a>
+                    <img height="65" width="78" src="{{asset('/images/calculator.png')}}" alt="Calculator">
                 </div>
             </div>
         </div>

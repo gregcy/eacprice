@@ -1,3 +1,37 @@
+<script type="module">
+    const tour = introJs().setOptions({
+        nextLabel: '{{ __('Next') }}',
+        prevLabel: '{{ __('Back') }}',
+        doneLabel: '{{ __('Done') }}',
+        steps: [
+            {
+                element: document.querySelector('#tariff-select'),
+                title: '{{ __('Tariff') }}',
+                intro: '{{ __('The tariff is in the top left corner of your bill') }}: <br/><img src="{{ __('/images/EAC-Tariff-en.png') }}" alt="{{ __('Tariff') }}" class="mt-4"/>'
+            },
+            {
+                title: '{{ __('Month') }}',
+                element: document.querySelector('#period'),
+                intro: '{{ __('Select the month your bill was issued. This is the second date of the period') }}:<br/><img src="{{ __('/images/EAC-Period-en.png') }}" alt="{{ __('Date') }}"/>'
+            },
+            {
+                title: '{{ __('Consumption') }}',
+                element: document.querySelector('#consumption'),
+                intro: '{{ __('Consumption is on the left hand side of the bill under the Meter Readings (kWh) heading.  If you have solar panels you should input the third number on the IMP line. Without Solar Panels you should input the Total Consumption') }}:<br/><img src="{{ __('/images/EAC-Consumption-en.png') }}" alt="{{ __('Date') }}"/>'
+            },
+            {
+                title: '{{ __('Returned Solar Power') }}',
+                element: document.querySelector('#credit-amount'),
+                intro: '{{ __('Your total returned power is the sum of credit units brought forward and the third number on the EXP line') }}:<br/><img src="{{ __('/images/EAC-Credit-en.png') }}" alt="{{ __('Date') }}"/>'
+            },
+            {
+                title: '{{ __('Include Fixed Costs') }}',
+                element: document.querySelector('#include-fixed'),
+                intro: '{{ __('Select to include the fixed costs charged by EAC in the calculation') }}'
+            },
+        ]
+    });
+</script>
 <div class="p-5">
     <form id="eac-calculator" class="mb-2" method="POST" action="{{ route('calculator.calculate',['lang' => app()->getLocale()]) }}">
         @csrf
@@ -76,69 +110,35 @@
         </fieldset>
         <x-primary-button class="mt-4">{{ __('Calculate') }}</x-primary-button>
     </form>
+
     <div id="tour" class="cursor-pointer mt-4" onclick="tour.start()">
         <div class="font-bold text-white bg-blue-700 inline-block px-2 py-1 px-3 rounded-full text-xl shadow-md ml-0 mb-2 md:mb-0 leading-none">?</div>
         <span class="text-lg text-blue-700 font-bold underline">{{ __('How to use the Calculator') }}</span>
     </div>
-    <script>
-        const selectElement = document.getElementById('tariff-select');
-        const tariff01 = document.getElementById('tariff01');
-        const tariff02 = document.getElementById('tariff02');
-        const inputs = document.getElementsByTagName('input');
-        selectElement.addEventListener('change', function() {
-            let selectedValue = selectElement.value;
-            if (selectedValue == '01') {
-                tariff01.classList.replace('hidden', 'block');
-                tariff02.classList.replace('block', 'hidden');
-            }
-            else if (selectedValue == '02') {
-                tariff01.classList.replace('block', 'hidden');
-                tariff02.classList.replace('hidden', 'block');
-            }
-            else if (selectedValue == '08') {
-                tariff01.classList.replace('hidden', 'block');
-                tariff02.classList.replace('block','hidden');
-            }
-            for (let i = 0; i < inputs.length; i++) {
-                if (inputs[i].type === 'number') {
-                    inputs[i].value = '';
-                }
-            }
-        });
-    </script>
-    <script type="module">
-        tour = introJs().setOptions({
-            nextLabel: '{{ __('Next') }}',
-            prevLabel: '{{ __('Back') }}',
-            doneLabel: '{{ __('Done') }}',
-            steps: [
-                {
-                    element: document.querySelector('#tariff-select'),
-                    title: '{{ __('Tariff') }}',
-                    intro: '{{ __('The tariff is in the top left corner of your bill') }}: <br/><img src="{{ __('/images/EAC-Tariff-en.png') }}" alt="{{ __('Tariff') }}" class="mt-4"/>'
-                },
-                {
-                    title: '{{ __('Month') }}',
-                    element: document.querySelector('#period'),
-                    intro: '{{ __('Select the month your bill was issued. This is the second date of the period') }}:<br/><img src="{{ __('/images/EAC-Period-en.png') }}" alt="{{ __('Date') }}"/>'
-                },
-                {
-                    title: '{{ __('Consumption') }}',
-                    element: document.querySelector('#consumption'),
-                    intro: '{{ __('Consumption is on the left hand side of the bill under the Meter Readings (kWh) heading.  If you have solar panels you should input the third number on the IMP line. Without Solar Panels you should input the Total Consumption') }}:<br/><img src="{{ __('/images/EAC-Consumption-en.png') }}" alt="{{ __('Date') }}"/>'
-                },
-                {
-                    title: '{{ __('Returned Solar Power') }}',
-                    element: document.querySelector('#credit-amount'),
-                    intro: '{{ __('Your total returned power is the sum of credit units brought forward and the third number on the EXP line') }}:<br/><img src="{{ __('/images/EAC-Credit-en.png') }}" alt="{{ __('Date') }}"/>'
-                },
-                {
-                    title: '{{ __('Include Fixed Costs') }}',
-                    element: document.querySelector('#include-fixed'),
-                    intro: '{{ __('Select to include the fixed costs charged by EAC in the calculation') }}'
-                },
-
-            ]
-        });
-    </script>
 </div>
+<script>
+    const selectElement = document.getElementById('tariff-select');
+    const tariff01 = document.getElementById('tariff01');
+    const tariff02 = document.getElementById('tariff02');
+    const inputs = document.getElementsByTagName('input');
+    selectElement.addEventListener('change', function() {
+        let selectedValue = selectElement.value;
+        if (selectedValue == '01') {
+            tariff01.classList.replace('hidden', 'block');
+            tariff02.classList.replace('block', 'hidden');
+        }
+        else if (selectedValue == '02') {
+            tariff01.classList.replace('block', 'hidden');
+            tariff02.classList.replace('hidden', 'block');
+        }
+        else if (selectedValue == '08') {
+            tariff01.classList.replace('hidden', 'block');
+            tariff02.classList.replace('block','hidden');
+        }
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].type === 'number') {
+                inputs[i].value = '';
+            }
+        }
+    });
+</script>
