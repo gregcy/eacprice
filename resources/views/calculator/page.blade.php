@@ -3,7 +3,7 @@
 @endphp
 
 <!DOCTYPE html>
-<html class="bg-gray-100 h-screen" lang="{{ str_replace('_', '-', $currentLocale ) }}">
+<html class="bg-gray-100 h-screen flex flex-col" lang="{{ str_replace('_', '-', $currentLocale ) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,10 +18,10 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased h-screen w-full flex flex-col">
         <div class="bg-blue-700 w-full">
             <div class="max-w-6xl m-auto p-5">
-            <div class="w-full justify-between flex">
+                <div class="w-full justify-between flex">
                     @if ($currentLocale == 'el')
                     <span class="ml-auto"><a href="/en/" class="text-white "><img class="h-5 ml-[5px]" src="/images/gb.png" />{{ __('English') }}</a></span>
                     <span class="ml-5 underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-4" src="/images/gr.png" />{{ __('Greek') }}</span>
@@ -44,15 +44,26 @@
                 </div>
             </div>
         </div>
-        <div class="bg-gray-100 w-full">
+        <div class="bg-gray-100 w-full p-5 mb-4">
             <div class="max-w-6xl m-auto">
                 @isset($cost)
                     @include('calculator.calculator', ['cost' => $cost])
-                    @include('calculator.cost', ['cost' => $cost])
                 @else
                     @include('calculator.calculator')
                 @endisset
             </div>
         </div>
+        @isset($cost)
+        <div class="bg-white w-full p-5 mb-4">
+            <div class="max-w-6xl m-auto">
+                @include('calculator.cost', ['cost' => $cost])
+            </div>
+        </div>
+        @endisset
+        <footer class="max-w-6xl mx-auto mt-auto p-5 w-full">
+            <div class="text-sm">{{ __('Source Code') }}: <a href="https://github.com/gregcy/eacprice" target="_blank" class="underline text-blue-700">https://github.com/gregcy/eacprice</a></div>
+            <div class="text-sm">{{ __('License') }}: <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline text-blue-700">{{ __('MIT') }}</a></div>
+            <div class="text-sm">{{ __('Calculator Icon') }}: Boca Tutor, <a target="_blank" class="underline text-blue-700" href="https://commons.wikimedia.org/wiki/File:Calculator_icon.svg">Calculator icon</a>, <a target="_blank" class="underline text-blue-700" href="https://creativecommons.org/licenses/by-sa/3.0/legalcode" rel="license">CC BY-SA 3.0</a> </div>
+        </footer>
     </body>
 </html>
