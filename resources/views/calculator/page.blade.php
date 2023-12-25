@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="bg-gray-100 w-full p-5 mb-4">
+        <div class="bg-gray-100 w-full">
             <div class="max-w-6xl m-auto">
                 @isset($cost)
                     @include('calculator.calculator', ['cost' => $cost])
@@ -54,7 +54,7 @@
             </div>
         </div>
         @isset($cost)
-        <div class="bg-white w-full p-5 mb-4">
+        <div class="bg-white w-full">
             <div class="max-w-6xl m-auto">
                 @include('calculator.cost', ['cost' => $cost])
             </div>
