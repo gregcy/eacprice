@@ -8,6 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="description" content="Estimate your electricity cost in Cyprus with our user-friendly calculator. Easily calculate energy expenses, optimize usage, and make informed decisions about your utility consumption. Take control of your electricity bills today.">
 
         <title>{{ __('Cyprus Electricity Calculator') }}</title>
 
@@ -16,6 +17,33 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
 
         <!-- Scripts -->
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org",
+                "@type": "TechArticle",
+                "headline": "Electricity Cost Calculator in Cyprus",
+                "description": "Calculate your electricity cost in Cyprus with our user-friendly online calculator. Optimize energy usage and make informed decisions to manage your utility expenses.",
+                "datePublished": "2023-12-26",
+                "author": {
+                    "@type": "Person",
+                    "name": "Greg Andreou"
+                },
+                "image": "https://eac.greg.cy/images/calculator.png",
+                "publisher": {
+                    "@type": "Person"
+                    "name": "Greg Andreou",
+                    "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://eac.greg.cy/images/calculator.png"
+                    }
+                },
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://eac.greg.cy/"
+                }
+            }
+        </script>
+
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased h-screen w-full flex flex-col">
