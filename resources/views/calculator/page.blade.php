@@ -12,6 +12,9 @@
         <meta property="og:image" content="https://eac.greg.cy/images/calculator-full.png">
         <meta property="og:image:alt" content ="Electricity Cost Calculator in Cyprus">
         <meta property="og:type" content="website" />
+        <meta property="og:description" content="Estimate your electricity cost in Cyprus with our user-friendly calculator. Easily calculate energy expenses, optimize usage, and make informed decisions about your utility consumption. Take control of your electricity bills today.">
+        <meta property="og:title" content="Cyprus Electricity Calculator">
+        <meta property="og:url" content="https://eac.greg.cy/">
 
         <title>{{ __('Cyprus Electricity Calculator') }}</title>
 
