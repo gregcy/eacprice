@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="description" content="Estimate your electricity cost in Cyprus with our user-friendly calculator. Easily calculate energy expenses, optimize usage, and make informed decisions about your utility consumption. Take control of your electricity bills today.">
+        <meta name="og:image" content="https://eac.greg.cy/images/calculator-full.png">
 
         <title>{{ __('Cyprus Electricity Calculator') }}</title>
 
@@ -30,13 +31,13 @@
                     "name": "Greg Andreou",
                     "url": "https://greg.cy/"
                 },
-                "image": "https://eac.greg.cy/images/calculator.png",
+                "image": "https://eac.greg.cy/images/calculator-full.png",
                 "publisher": {
                     "@type": "Person",
                     "name": "Greg Andreou",
                     "logo": {
                     "@type": "ImageObject",
-                    "url": "https://eac.greg.cy/images/calculator.png"
+                    "url": "https://eac.greg.cy/images/calculator-full.png"
                     }
                 },
                 "mainEntityOfPage": {
