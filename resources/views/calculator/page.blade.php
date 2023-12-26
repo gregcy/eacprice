@@ -38,7 +38,7 @@
                     <p>{{ __('This site is not affiliated with the Electricity Authority of Cyprus.') }}</p>
                 </div>
                 <div class="text-sm w-full text-white flex justify-between items-center">
-                    <p class="align-self-center"> <a href="{{__('https://www.eac.com.cy/EN/Pages/default.aspx') }}" target="_blank" class="underline">{{ __('Click here') }}</a> {{ __('to go to the EAC website.') }}</p>
+                    <p class="align-self-center"> <a href="{{__('https://www.eac.com.cy/EN/Pages/default.aspx') }}" target="_blank" class="underline">{{ __('Click here to go to the EAC website.') }}</a></p>
                     <img height="65" width="78" src="{{asset('/images/calculator.png')}}" alt="Calculator">
                 </div>
             </div>
