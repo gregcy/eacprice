@@ -30,7 +30,7 @@
                 },
                 "image": "https://eac.greg.cy/images/calculator.png",
                 "publisher": {
-                    "@type": "Person"
+                    "@type": "Person",
                     "name": "Greg Andreou",
                     "logo": {
                     "@type": "ImageObject",
