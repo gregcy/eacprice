@@ -23,10 +23,11 @@
                 "@type": "TechArticle",
                 "headline": "Electricity Cost Calculator in Cyprus",
                 "description": "Calculate your electricity cost in Cyprus with our user-friendly online calculator. Optimize energy usage and make informed decisions to manage your utility expenses.",
-                "datePublished": "2023-12-26",
+                "datePublished": "2023-12-26T12:00:00+02:00",
                 "author": {
                     "@type": "Person",
-                    "name": "Greg Andreou"
+                    "name": "Greg Andreou",
+                    "url": "https://greg.cy/"
                 },
                 "image": "https://eac.greg.cy/images/calculator.png",
                 "publisher": {

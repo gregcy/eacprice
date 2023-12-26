@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b392080d1672c1dba76979fd95aff3c",
+    "content-hash": "358ab84bff631a74fb47b05d180d58ae",
     "packages": [
         {
             "name": "brick/math",
@@ -647,6 +647,76 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
+        },
+        {
+            "name": "fahlisaputra/laravel-minify",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fahlisaputra/laravel-minify.git",
+                "reference": "8180c6e54b4197002ab69733526baf925571e628"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fahlisaputra/laravel-minify/zipball/8180c6e54b4197002ab69733526baf925571e628",
+                "reference": "8180c6e54b4197002ab69733526baf925571e628",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+                "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+                "illuminate/view": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
+                "php": "^7.2.5 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Fahlisaputra\\Minify\\MinifyServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Helpers.php"
+                ],
+                "psr-4": {
+                    "Fahlisaputra\\Minify\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "fahlisaputra",
+                    "email": "saputra@fahli.net"
+                },
+                {
+                    "name": "DulLah",
+                    "email": "dulah755@gmail.com"
+                }
+            ],
+            "description": "Minify your blade views, html, css and js files on the fly for Laravel 6, 7, 8, 9 and 10",
+            "keywords": [
+                "css-minifier",
+                "html-minifier",
+                "js-minifier",
+                "js-obfuscate",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/fahlisaputra/laravel-minify/issues",
+                "source": "https://github.com/fahlisaputra/laravel-minify/tree/v1.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fahlisaputra",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-10-06T17:54:49+00:00"
         },
         {
             "name": "fruitcake/php-cors",
