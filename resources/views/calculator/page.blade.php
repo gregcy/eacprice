@@ -11,7 +11,7 @@
         <meta name="description" content="Estimate your electricity cost in Cyprus with our user-friendly calculator. Easily calculate energy expenses, optimize usage, and make informed decisions about your utility consumption. Take control of your electricity bills today.">
         <meta property="og:image" content="https://eac.greg.cy/images/calculator-full.png">
         <meta property="og:image:alt" content ="Electricity Cost Calculator in Cyprus">
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="website">
         <meta property="og:description" content="Estimate your electricity cost in Cyprus with our user-friendly calculator. Easily calculate energy expenses, optimize usage, and make informed decisions about your utility consumption. Take control of your electricity bills today.">
         <meta property="og:title" content="Cyprus Electricity Calculator">
         <meta property="og:url" content="https://eac.greg.cy/">
@@ -23,6 +23,7 @@
         <link rel="preload" as="style" href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
 
+        <link rel="canonical" href="https://eac.greg.cy/">
         <!-- Scripts -->
         <script type="application/ld+json">
             {
@@ -51,7 +52,6 @@
                 }
             }
         </script>
-
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased h-screen w-full flex flex-col">
