@@ -44,7 +44,6 @@ return [
      */
     'stores' => [
         CodeZero\Localizer\Stores\SessionStore::class,
-        CodeZero\Localizer\Stores\CookieStore::class,
         CodeZero\Localizer\Stores\AppStore::class,
     ],
 
