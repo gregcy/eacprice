@@ -115,7 +115,7 @@
         </script>
     <div id="tour" class="cursor-pointer mt-4">
         <div class="font-bold text-white bg-blue-700 inline-block px-2 py-1 px-3 rounded-full text-xl shadow-md ml-0 mb-2 md:mb-0 leading-none">?</div>
-        <span class="text-lg text-blue-700 font-bold underline">{{ __('How to use the Calculator') }}</span>
+        <span class="text-lg text-blue-700 font-bold underline pl-2">{{ __('How to use the Calculator') }}</span>
     </div>
 </div>
 <script>

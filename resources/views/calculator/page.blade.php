@@ -112,6 +112,7 @@
             </div>
             <div class="ml-0 md:ml-auto">
                 <div class="text-sm">{{ __('This site only uses first-party & strictly necessary cookies') }}</div>
+                <div class="text-sm text-right"><a href="https://greg.cy/contact" target="_blank" class="underline text-blue-700">{{ __('Contact') }}</a></div>
             </div>
         </footer>
     </body>
