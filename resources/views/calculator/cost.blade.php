@@ -103,7 +103,8 @@
                 ctx.fillStyle = 'rgba(54,162,235,1)';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText('€'+total.toFixed(2), xCoor, yCoor);
+                let graphTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(total);
+                ctx.fillText(graphTotal, xCoor, yCoor);
             }
         };
         const config = {
