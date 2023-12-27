@@ -54,7 +54,7 @@
                     @endif
                 </tr>
             @endforeach
-            <tr><td></td></tr>
+            <tr><td colspan="3"></td></tr>
             @foreach ($sources as $key => $value)
                 <tr>
                     <td colspan="3" class="text-sm">{{ $key}}.<a class="text-blue-600" href="{{ __($value['link']) }}" target="_blank"> {{ __($value['description']) }}</a></td>
