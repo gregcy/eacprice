@@ -24,7 +24,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
 
         <!-- Canonical -->
-        <link rel="canonical" href="https://eac.greg.cy/">
+        <link rel="canonical" href="https://eac.greg.cy">
 
         <!-- Icons -->
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -66,7 +66,7 @@
         <div class="bg-blue-700 w-full">
             <div class="max-w-6xl m-auto p-5">
                 <div class="w-full justify-between flex">
-                    <span><a href="/api" class="text-white items-center px-4 py-2 bg-green-600 font-bold ounded-md shadow-md">{{ __('Try the API') }}</a></span>
+                    <span><a href="/api" class="text-white items-center px-4 py-2 bg-green-700 font-bold ounded-md shadow-md">{{ __('Try the API') }}</a></span>
                     @if ($currentLocale == 'el')
                     <span class="ml-auto"><a href="/en/" class="text-white "><img class="h-5 ml-[5px]" src="/images/gb.png" width="40" height="20" alt="English flag">{{ __('English') }}</a></span>
                     <span class="ml-5 underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-4" src="/images/gr.png" width="30" height="20" alt="Greek flag">{{ __('Greek') }}</span>
