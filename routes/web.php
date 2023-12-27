@@ -49,3 +49,7 @@ require __DIR__.'/api.php';
 
 Route::get('/{lang?}', [CalculatorController::class, 'index']);
 Route::post('/{lang?}', [CalculatorController::class, 'calculate'])->name('calculator.calculate');
+
+Route::get('/api', function () {
+    return response()->file(public_path('api/index.html'));
+});

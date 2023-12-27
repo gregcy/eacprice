@@ -66,6 +66,7 @@
         <div class="bg-blue-700 w-full">
             <div class="max-w-6xl m-auto p-5">
                 <div class="w-full justify-between flex">
+                    <span><a href="/api" class="text-white items-center px-4 py-2 bg-green-600 font-bold ounded-md shadow-md">{{ __('Try the API') }}</a></span>
                     @if ($currentLocale == 'el')
                     <span class="ml-auto"><a href="/en/" class="text-white "><img class="h-5 ml-[5px]" src="/images/gb.png" width="40" height="20" alt="English flag">{{ __('English') }}</a></span>
                     <span class="ml-5 underline decoration-4 underline-offset-8 text-white font-black"><img class="h-5 ml-4" src="/images/gr.png" width="30" height="20" alt="Greek flag">{{ __('Greek') }}</span>
@@ -103,10 +104,15 @@
             </div>
         </div>
         @endisset
-        <footer class="max-w-6xl mx-auto mt-auto p-5 w-full">
-            <div class="text-sm">{{ __('Source Code') }}: <a href="https://github.com/gregcy/eacprice" target="_blank" class="underline text-blue-700">https://github.com/gregcy/eacprice</a></div>
-            <div class="text-sm">{{ __('License') }}: <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline text-blue-700">{{ __('MIT') }}</a></div>
-            <div class="text-sm">{{ __('Calculator Icon') }}: Boca Tutor, <a target="_blank" class="underline text-blue-700" href="https://commons.wikimedia.org/wiki/File:Calculator_icon.svg">Calculator icon</a>, <a target="_blank" class="underline text-blue-700" href="https://creativecommons.org/licenses/by-sa/3.0/legalcode" rel="license">CC BY-SA 3.0</a> </div>
+        <footer class="max-w-6xl mx-auto mt-auto p-5 w-full flex flex-col md:flex-row">
+            <div class="">
+                <div class="text-sm">{{ __('Source Code') }}: <a href="https://github.com/gregcy/eacprice" target="_blank" class="underline text-blue-700">https://github.com/gregcy/eacprice</a></div>
+                <div class="text-sm">{{ __('License') }}: <a href="https://opensource.org/licenses/MIT" target="_blank" class="underline text-blue-700">{{ __('MIT') }}</a></div>
+                <div class="text-sm">{{ __('Calculator Icon') }}: Boca Tutor, <a target="_blank" class="underline text-blue-700" href="https://commons.wikimedia.org/wiki/File:Calculator_icon.svg">Calculator icon</a>, <a target="_blank" class="underline text-blue-700" href="https://creativecommons.org/licenses/by-sa/3.0/legalcode" rel="license">CC BY-SA 3.0</a> </div>
+            </div>
+            <div class="ml-0 md:ml-auto">
+                <div class="text-sm">{{ __('This site only uses first-party & strictly necessary cookies') }}</div>
+            </div>
         </footer>
     </body>
 </html>
