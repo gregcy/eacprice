@@ -105,7 +105,7 @@
                 ctx.textBaseline = 'middle';
                 ctx.fillText('€'+total.toFixed(2), xCoor, yCoor);
             }
-        }
+        };
         const config = {
             type: 'doughnut',
             data,
