@@ -68,12 +68,12 @@
             labels: [
                 @foreach($cost as $key => $value)
                     @if($key != 'total')
-                        '{{ $value->description }}',
+                    decodeHtmlEntities('{!! $value->description !!}'),
                     @endif
                 @endforeach
             ],
             datasets: [{
-                label: '{{ __('Cost') }}',
+                label: '{!! __('Cost') !!}',
                 data: [
                     @foreach($cost as $key => $value)
                     @if($key != 'total')
@@ -121,6 +121,7 @@
                                 let label = context.dataset.label || '';
 
                                 if (label) {
+                                    label = decodeHtmlEntities(label);
                                     label += ': ';
                                 }
                                 if (context.parsed !== null) {
@@ -138,6 +139,11 @@
             document.getElementById('myChart'),
             config
         );
+        function decodeHtmlEntities(html) {
+            var doc = new DOMParser().parseFromString(html, "text/html");
+            return doc.documentElement.textContent;
+        }
+
 
     </script>
 
