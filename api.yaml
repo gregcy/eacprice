@@ -4,10 +4,10 @@ info:
   version: 1.0.0
   description: An API to get the current cost of electricity in Cyprus.
   x-logo:
-    url: https://eac.greg.cy/images/calculator.png
+    url: https://electricity-calculator.cy/images/calculator.png
     altText: EAC Calculator
 servers:
-  - url: 'https://eac.greg.cy/api'
+  - url: 'https://electricity-calculator.cy/api'
 paths:
   /api/getCurrentRate:
     get:
