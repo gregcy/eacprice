@@ -41,7 +41,7 @@
                         '2024-04' => __('April') . ' 2024',
                         '2024-05' => __('May') . ' 2024',
                     ];
-                    $selectedValue = old('period', $values['period'] ?? '2024-04');
+                    $selectedValue = old('period', $values['period'] ?? '2024-05');
                 @endphp
 
                 @foreach($options as $value => $label)
