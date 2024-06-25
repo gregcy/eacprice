@@ -20,7 +20,9 @@ class CalculatorController extends Controller
      */
     public function index(): View
     {
-        return view('calculator.page');
+        return view('calculator.page', [
+            'periods' => $this->getValidPeriods()
+        ]);
     }
 
     public function calculate(Request $request): View
@@ -37,10 +39,7 @@ class CalculatorController extends Controller
                 'credit-amount' => 'nullable|numeric|gte:0',
                 'consumption-standard' => 'nullable|numeric|gte:0',
                 'consumption-economy' => 'nullable|numeric|gte:0',
-                'period' => 'required|in:2023-01,2023-02,2023-03,2023-04,
-                    2023-05,2023-06,2023-07,2023-08,2023-09,
-                    2023-10,2023-11,2023-12,2024-01,2024-02,2024-03,
-                    2024-04,2024-05,2024-06',
+                'period' => 'required|date_format:Y-m',
                 'include-fixed' => 'nullable|boolean',
             ]
         );
@@ -116,6 +115,7 @@ class CalculatorController extends Controller
                 'values' => $values,
                 'vat_rate' => $vat_rate,
                 'sources' => $sources,
+                'periods' => $this->getValidPeriods()
             ]
         );
     }

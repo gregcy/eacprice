@@ -4,7 +4,7 @@
         <fieldset class="py-4 w-100">
             <label for="tariff-select" id="tariff" class="text-lg font-medium pr-2 w-full block md:inline-block md:w-24">{{ __('Tariff') }}:</label>
             <select id="tariff-select" name="tariff"
-                class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-md w-full block md:w-[340px]">
+                class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-md w-full md:w-[340px]">
                 @php
                     $options = [
                         '01' => __('01 - Single Rate Domestic Use'),
@@ -20,32 +20,12 @@
             </select>
             <label for="period" class="text-lg font-medium pr-2 pl-2 mt-4 w-full block md:inline md:w-auto">{{ __('Month') }}:</label>
             <select id="period" name="period"
-                class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-md w-full block md:inline md:w-44">
+                class="inline-block grow border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-md w-full md:inline md:w-44">
                 @php
-                    $options = [
-                        '2023-01' => __('January') . ' 2023',
-                        '2023-02' => __('February') . ' 2023',
-                        '2023-03' => __('March') .  ' 2023',
-                        '2023-04' => __('April') . ' 2023',
-                        '2023-05' => __('May') . ' 2023',
-                        '2023-06' => __('June') . ' 2023',
-                        '2023-07' => __('July') . ' 2023',
-                        '2023-08' => __('August') . ' 2023',
-                        '2023-09' => __('September') . ' 2023',
-                        '2023-10' => __('October') . ' 2023',
-                        '2023-11' => __('November') . ' 2023',
-                        '2023-12' => __('December') . ' 2023',
-                        '2024-01' => __('January') . ' 2024',
-                        '2024-02' => __('February') . ' 2024',
-                        '2024-03' => __('March') .  ' 2024',
-                        '2024-04' => __('April') . ' 2024',
-                        '2024-05' => __('May') . ' 2024',
-                        '2024-06' => __('June') . ' 2024',
-                    ];
-                    $selectedValue = old('period', $values['period'] ?? '2024-06');
+                    $selectedValue = old('period', $values['period'] ?? array_key_last($periods));
                 @endphp
-
-                @foreach($options as $value => $label)
+  
+                @foreach($periods as $value => $label)
                     <option value="{{ $value }}" @if($selectedValue == $value) selected @endif>{{ $label }}</option>
                 @endforeach
             </select>

@@ -6,7 +6,11 @@ use App\Classes\EacCosts;
 use App\Models\Adjustment;
 use App\Models\Cost;
 use App\Models\Tariff;
+use Illuminate\Support\Facades\App;
 use DateTime;
+use DateInterval;
+use DatePeriod;
+use IntlDateFormatter;
 use stdClass;
 
 /**
@@ -643,5 +647,151 @@ trait EACTrait
         $apiCosts['total'] = $costs->calculateTotal(6);
 
         return $apiCosts;
+    }
+
+    /**
+     * Get the valid periods for which we have pricing data
+     * formatted for the calculator dropdown
+     *
+     * @return array The valid periods.
+     */
+    public function getValidPeriods(): array
+    {
+        $periods = [];
+        $tariffs = Tariff::select('start_date', 'end_date')->get();
+        $adjustments = Adjustment::select('start_date', 'end_date')->get();
+        $costs = Cost::select('start_date', 'end_date')->get();
+       
+        $tariffPeriods = [];
+        foreach ($tariffs as $tariff) {
+            $period = $this->getMonthsBetweenDates(
+                $tariff->start_date,
+                $tariff->end_date
+            );
+            $tariffPeriods = array_merge($tariffPeriods, $period);
+        }
+        $tariffPeriods = array_unique($tariffPeriods);
+
+        $adjustmentPeriods = [];
+        foreach ($adjustments as $adjustment) {
+            $period = $this->getMonthsBetweenDates(
+                $adjustment->start_date,
+                $adjustment->end_date
+            );
+            $adjustmentPeriods = array_merge($adjustmentPeriods, $period);
+        }
+        $adjustmentPeriods = array_unique($adjustmentPeriods);
+
+        $costPeriods = [];
+        foreach ($costs as $cost) {
+            $period = $this->getMonthsBetweenDates(
+                $cost->start_date,
+                $cost->end_date
+            );
+            $costPeriods = array_merge($costPeriods, $period);
+        }
+        $costPeriods = array_unique($costPeriods);
+
+        $periods = array_intersect($tariffPeriods, $adjustmentPeriods, $costPeriods);
+        asort($periods);
+        $periods = $this->localizeDates($periods);
+        
+        return $periods;
+    }
+
+    function getCurrentValidPeriod(): string
+    {
+        $periods = $this->getValidPeriods();
+        return array_key_last($periods);
+    }
+
+    /**
+     * Get the months between two dates
+     *
+     * @param  string  $start_date  The start date
+     * @param  string|null  $end_date  The end date
+     * @return array The months between the two dates
+     */
+    public function getMonthsBetweenDates(string $start_date, string|null $end_date): array 
+    {
+        if ($end_date == null) {
+            $end_date = date_format(date_create('now'), 'Y-m-d');
+        }
+        $start = new DateTime($start_date);
+        $end = new DateTime($end_date);
+    
+        // Modify the end date to include the end month
+        $end->modify('first day of next month');
+    
+        $interval = new DateInterval('P1M');
+        $period = new DatePeriod($start, $interval, $end);
+    
+        $months = [];
+        foreach ($period as $date) {
+            $months[] = $date->format('Y-m');
+        }
+        return $months;
+    }
+
+    /**
+     * Localize the dates and outputs them for the Calculator dropdown
+     *
+     * @param  array  $dates  The dates to localize
+     * @return array The localized dates
+     */
+    function localizeDates(array $dates): array {
+        // Define custom month names for Greek locale
+        $customMonths = [
+            'el' => [
+                '01' => 'Ιανουάριος',
+                '02' => 'Φεβρουάριος',
+                '03' => 'Μάρτιος',
+                '04' => 'Απρίλιος',
+                '05' => 'Μάιος',
+                '06' => 'Ιούνιος',
+                '07' => 'Ιούλιος',
+                '08' => 'Αύγουστος',
+                '09' => 'Σεπτέμβριος',
+                '10' => 'Οκτώβριος',
+                '11' => 'Νοέμβριος',
+                '12' => 'Δεκέμβριος',
+            ],
+        ];
+    
+        $result = [];
+    
+        // Get the current locale in Laravel
+        $locale = App::getLocale();
+    
+        foreach ($dates as $date) {
+            // Convert to DateTime object
+            $dateTime = DateTime::createFromFormat('Y-m', $date);
+    
+            // Ensure DateTime object is valid
+            if ($dateTime) {
+                if (isset($customMonths[$locale])) {
+                    // Use custom month names for the locale
+                    $year = $dateTime->format('Y');
+                    $month = $dateTime->format('m');
+                    $formattedDate = $customMonths[$locale][$month] . ' ' . $year;
+                } else {
+                    // Use IntlDateFormatter for other locales
+                    $formatter = new IntlDateFormatter(
+                        $locale,
+                        IntlDateFormatter::LONG,
+                        IntlDateFormatter::NONE,
+                        null,
+                        null,
+                        'MMMM yyyy'
+                    );
+                    $formattedDate = $formatter->format($dateTime);
+                }
+    
+                // Add to result array
+                $result[$date] = $formattedDate;
+            }
+        }
+    
+        return $result;
     }
 }

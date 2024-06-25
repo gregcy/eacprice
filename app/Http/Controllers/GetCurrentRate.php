@@ -37,22 +37,24 @@ class GetCurrentRate extends Controller
         $tariffCode = request('tariffCode', '01');
         $creditUnits = request('creditUnits', 0);
 
+        $latestDataDate = $this->getCurrentValidPeriod();
+
         if ($tariffCode == '01') {
             if (! $creditUnits) {
                 $cost = $this->calculateEACCost01(
                     1,
                     0,
                     false,
-                    date_create('now'),
-                    date_create('now')
+                    date_create($latestDataDate),
+                    date_create($latestDataDate)
                 );
             } else {
                 $cost = $this->calculateEACCost01(
                     1,
                     1,
                     false,
-                    date_create('now'),
-                    date_create('now')
+                    date_create($latestDataDate),
+                    date_create($latestDataDate)
                 );
             }
         } elseif ($tariffCode == '02') {
@@ -62,16 +64,16 @@ class GetCurrentRate extends Controller
                     1,
                     0,
                     false,
-                    date_create('now'),
-                    date_create('now')
+                    date_create($latestDataDate),
+                    date_create($latestDataDate)
                 );
             } else {
                 $cost = $this->calculateEACCost02(
                     0,
                     1,
                     false,
-                    date_create('now'),
-                    date_create('now')
+                    date_create($latestDataDate),
+                    date_create($latestDataDate)
                 );
             }
         } elseif ($tariffCode == '08') {
@@ -80,16 +82,16 @@ class GetCurrentRate extends Controller
                     1,
                     0,
                     false,
-                    date_create('now'),
-                    date_create('now')
+                    date_create($latestDataDate),
+                    date_create($latestDataDate)
                 );
             } else {
                 $cost = $this->calculateEACCost08(
                     1,
                     1,
                     false,
-                    date_create('now'),
-                    date_create('now')
+                    date_create($latestDataDate),
+                    date_create($latestDataDate)
                 );
             }
         }
