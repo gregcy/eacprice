@@ -9,7 +9,7 @@ info:
 servers:
   - url: 'https://electricity-calculator.cy/api'
 paths:
-  /api/getCurrentRate:
+  /getCurrentRate:
     get:
       summary: getCurrentRate
       operationId: getCurrentRate
