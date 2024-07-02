@@ -33,6 +33,7 @@ class Adjustment extends Model
         'revised_fuel_adjustment_price',
         'source',
         'source_name',
+        'user_id',
 
     ];
 
