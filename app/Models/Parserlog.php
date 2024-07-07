@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Parserlog
  *  Model for EAC parser logs
  */
-class Prserlog extends Model
+class Parserlog extends Model
 {
     use HasFactory;
 
