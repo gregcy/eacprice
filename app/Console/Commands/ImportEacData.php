@@ -38,7 +38,7 @@ class ImportEacData extends Command
         $eacData = [];
         try {
             $eacData = $this->eacImporter->importAdjustmentData();
-            $this->info('EAC Fuel Adjustment data  paresed successfully.');
+            $this->info('EAC Fuel Adjustment data paresed successfully.');
             Parserlog::create([
                 'type' => 'Fuel Adjustment Parse',
                 'status' => 'success',
@@ -55,12 +55,21 @@ class ImportEacData extends Command
         }
 
         try {
-            $this->eacImporter->saveAdjustmentData($eacData);
+            $created = $this->eacImporter->saveAdjustmentData($eacData);
+            if ($created == 0) {
+                $message = 'No new Fuel Adjustment records created.';
+            }
+            else if ($created == 1) {
+                $message = '1 new Fuel Adjustment record created.';
+            }
+            else {
+                $message = $created . ' new Fuel Adjustment records created.';
+            }
             $this->info('EAC Fuel Adjustment data imported successfully.');
             Parserlog::create([
                 'type' => 'Fuel Adjustment Import',
                 'status' => 'success',
-                'message' => 'EAC Fuel Adjustment data imported successfully.'
+                'message' => $message
             ]);
         } catch (\Exception $e) {
             $this->error('An error occurred while importing the Fuel Adjustment data: ' . $e->getMessage());

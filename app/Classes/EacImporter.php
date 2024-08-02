@@ -104,9 +104,10 @@ use DOMDocument;
 
     public function saveAdjustmentData(array $adjustments)
     {
+        $created = 0;
         foreach ($adjustments as $adjustment) {
             $dates = $this->getFirstLastDayOfMonth($adjustment['date']);
-            Adjustment::updateOrCreate(
+            $record = Adjustment::updateOrCreate(
                 [
                     'start_date' => $dates[0],
                     'end_date' => $dates[1],
@@ -126,7 +127,11 @@ use DOMDocument;
                     'source_name' => 'EAC - Fuel Price Adjustment',
                 ]
             );
+            if ($record->wasRecentlyCreated) {
+                $created++;
+            }
         }
+        return $created;
     }
 
     private function getFirstLastDayOfMonth(string $date): array
