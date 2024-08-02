@@ -15,7 +15,7 @@ use DOMDocument;
  {
      public function importAdjustmentData(): array
     {
-        static $adjustmentUrl = env('EAC_ADJUSTMENT_URL');
+        $adjustmentUrl = env('EAC_ADJUSTMENT_URL');
         $response = Http::get($adjustmentUrl);
         $htmlString = (string) $response->getBody();
         $pattern = '/<table\b[^>]*>(.*?)<\/table>/s';
