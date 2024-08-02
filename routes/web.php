@@ -18,12 +18,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get(
-    '/dashboard', function () {
-        return view('dashboard');
-    }
-)->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(
     function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,18 +25,6 @@ Route::middleware('auth')->group(
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     }
 );
-
-Route::resource('adjustments', AdjustmentController::class)
-    ->only(['index', 'store', 'edit', 'update', 'create', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('tariffs', TariffController::class)
-    ->only(['index', 'store', 'edit', 'update', 'create', 'destroy'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('costs', CostController::class)
-    ->only(['index', 'store', 'edit', 'update', 'create', 'destroy'])
-    ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
 require __DIR__.'/api.php';

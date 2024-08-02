@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Tariff;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TariffPolicy
 {
@@ -12,7 +13,7 @@ class TariffPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return Auth::check();
     }
 
     /**
@@ -20,7 +21,7 @@ class TariffPolicy
      */
     public function view(User $user, Tariff $tariff): bool
     {
-        //
+        return Auth::check();
     }
 
     /**
@@ -28,7 +29,7 @@ class TariffPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -36,7 +37,7 @@ class TariffPolicy
      */
     public function update(User $user, Tariff $tariff): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -44,7 +45,7 @@ class TariffPolicy
      */
     public function delete(User $user, Tariff $tariff): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -52,7 +53,7 @@ class TariffPolicy
      */
     public function restore(User $user, Tariff $tariff): bool
     {
-        //
+        return Auth::check();
     }
 
     /**
@@ -60,6 +61,6 @@ class TariffPolicy
      */
     public function forceDelete(User $user, Tariff $tariff): bool
     {
-        //
+        return Auth::check();
     }
 }

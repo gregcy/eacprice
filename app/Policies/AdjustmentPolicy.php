@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Adjustment;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AdjustmentPolicy
 {
@@ -12,7 +13,7 @@ class AdjustmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return Auth::check();
     }
 
     /**
@@ -20,7 +21,7 @@ class AdjustmentPolicy
      */
     public function view(User $user, Adjustment $adjustment): bool
     {
-        //
+        return Auth::check();
     }
 
     /**
@@ -28,7 +29,7 @@ class AdjustmentPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -36,7 +37,7 @@ class AdjustmentPolicy
      */
     public function update(User $user, Adjustment $adjustment): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -44,7 +45,7 @@ class AdjustmentPolicy
      */
     public function delete(User $user, Adjustment $adjustment): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -52,7 +53,7 @@ class AdjustmentPolicy
      */
     public function restore(User $user, Adjustment $adjustment): bool
     {
-        //
+        return Auth::check();
     }
 
     /**
@@ -60,6 +61,6 @@ class AdjustmentPolicy
      */
     public function forceDelete(User $user, Adjustment $adjustment): bool
     {
-        //
+        return Auth::check();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Cost;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class CostPolicy
 {
@@ -12,7 +13,7 @@ class CostPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return Auth::check();
     }
 
     /**
@@ -20,7 +21,7 @@ class CostPolicy
      */
     public function view(User $user, Cost $cost): bool
     {
-        //
+        return Auth::check();
     }
 
     /**
@@ -28,7 +29,7 @@ class CostPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -36,7 +37,7 @@ class CostPolicy
      */
     public function update(User $user, Cost $cost): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -44,7 +45,8 @@ class CostPolicy
      */
     public function delete(User $user, Cost $cost): bool
     {
-        return true;
+        return Auth::check();
+        ;
     }
 
     /**
@@ -52,7 +54,7 @@ class CostPolicy
      */
     public function restore(User $user, Cost $cost): bool
     {
-        //
+        return Auth::check();
     }
 
     /**
@@ -60,6 +62,6 @@ class CostPolicy
      */
     public function forceDelete(User $user, Cost $cost): bool
     {
-        //
+        return Auth::check();
     }
 }
