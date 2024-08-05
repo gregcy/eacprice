@@ -16,7 +16,7 @@ use DOMDocument;
  {
      public function importAdjustmentData(): array
     {
-        $adjustmentUrl =  Config::get('app.eac_adjustment_url');
+        $adjustmentUrl = Config::get('app.eac_adjustment_url');
         $response = Http::get($adjustmentUrl);
         $htmlString = (string) $response->getBody();
         $pattern = '/<table\b[^>]*>(.*?)<\/table>/s';
@@ -106,6 +106,7 @@ use DOMDocument;
     public function saveAdjustmentData(array $adjustments)
     {
         $created = 0;
+        $adjustmentUrl = Config::get('app.eac_adjustment_url');
         foreach ($adjustments as $adjustment) {
             $dates = $this->getFirstLastDayOfMonth($adjustment['date']);
             $record = Adjustment::updateOrCreate(
@@ -124,7 +125,7 @@ use DOMDocument;
                     'co2_emissions' => $adjustment['co2_emissions'],
                     'cosmos' => $adjustment['cosmos'],
                     'revised_fuel_adjustment_price' => $adjustment['revised_fuel_adjustment_price'],
-                    'source' => env('EAC_ADJUSTMENT_URL'),
+                    'source' => $adjustmentUrl,
                     'source_name' => 'EAC - Fuel Price Adjustment',
                 ]
             );
