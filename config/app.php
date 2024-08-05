@@ -70,7 +70,18 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Nicosia',
+
+     /*
+    |--------------------------------------------------------------------------
+    | EAC Adjustment URL
+    |--------------------------------------------------------------------------
+    |
+    | Here you can specify the URL of the EAC Adjustment data
+    |
+    */
+
+    'eac_adjustment_url' => env('EAC_ADJUSTMENT_URL'),
 
     /*
     |--------------------------------------------------------------------------

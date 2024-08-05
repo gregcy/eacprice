@@ -4,6 +4,7 @@ namespace App\Classes;
 
 use Illuminate\Support\Facades\Http;
 use App\Models\Adjustment;
+use Illuminate\Support\Facades\Config;
 use DOMDocument;
 
 /**
@@ -15,7 +16,7 @@ use DOMDocument;
  {
      public function importAdjustmentData(): array
     {
-        $adjustmentUrl = env('EAC_ADJUSTMENT_URL');
+        $adjustmentUrl =  Config::get('app.eac_adjustment_url');
         $response = Http::get($adjustmentUrl);
         $htmlString = (string) $response->getBody();
         $pattern = '/<table\b[^>]*>(.*?)<\/table>/s';
