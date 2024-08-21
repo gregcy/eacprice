@@ -1,7 +1,7 @@
 <table>
 <tr>
     <td>
-        <img src="https://raw.githubusercontent.com/gregcy/eacprice/master/public/images/calculator.png" width="100" alt="Cyprus Electricity Calculator">
+        <img src="https://raw.githubusercontent.com/gregcy/eacprice/master/public/images/calculator.webp" width="100" alt="Cyprus Electricity Calculator">
     </td>
     <td>
         <h1>Cyprus Electricity Calculator</h1>
@@ -13,11 +13,13 @@
 
 The Cyprus Electricity Calculator is a web application that allows users to calculate the cost of electricity in Cyprus. The application is built using the Laravel PHP framework.
 
-There are two ways to get information about the cost of electricity. The first is to use the calculator available on the web interface. The second is to use the API.
+There are two ways to get information about electricity costs. 
+1. Use the calculator available on the web interface. 
+2. Access the information via the API.
 
-There is a basic administration interface that allows the management of the EAC tariffs and prices used by the application.
+There is a filament based administration interface that allows the management of the tariffs and prices used by the application to perform the calculations.
 
-You can see a live version of the application at [https://eac.greg.cy](https://eac.greg.cy).
+You can see a live version of the application at [https://electricity-calculator.cy/](https://electricity-calculator.cy/)
 
 
 ## Installation/Setup
