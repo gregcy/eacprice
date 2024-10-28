@@ -20,7 +20,7 @@ There are two ways to get information about electricity costs.
 There is a filament based administration interface that allows the management of the tariffs and prices used by the application to perform the calculations.
 
 You can see a live version of the application at [https://electricity-calculator.cy/](https://electricity-calculator.cy/)
-
+ 
 
 ## Installation/Setup
 
