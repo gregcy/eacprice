@@ -51,6 +51,7 @@ use DOMDocument;
                     $month = trim($values[3]->nodeValue);
                     $month = iconv('UTF-8', 'ASCII//IGNORE', $month);
                     $weighted_fuel_price = trim($values[4]->nodeValue);
+                    $weighted_fuel_price = iconv('UTF-8', 'ASCII//IGNORE', $weighted_fuel_price);
                     $weighted_fuel_price = str_replace(',', '.', $weighted_fuel_price);
 
                 } else if ($voltage == 'LOW'){
