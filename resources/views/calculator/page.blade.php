@@ -9,15 +9,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="description" content="Estimate your electricity cost in Cyprus with our user-friendly calculator. Easily calculate your energy expenses via Web or using our API.">
-        <meta property="og:image" content="https://eac.greg.cy/images/calculator-full.png">
+        <meta property="og:image" content="https://electricity-calculator.cy/images/calculator-full.png">
         <meta property="og:image:alt" content ="Electricity Cost Calculator in Cyprus">
         <meta property="og:type" content="website">
         <meta property="og:description" content="Estimate your electricity cost in Cyprus with our user-friendly calculator. Easily calculate your energy expenses via Web or using our API.">
         <meta property="og:title" content="Cyprus Electricity Calculator">
-        <meta property="og:url" content="https://eac.greg.cy/">
+        <meta property="og:url" content="https://electricity-calculator.cy/">
         <meta name="theme-color" content="#1d4ed8">
 
         <title>{{ __('Cyprus Electricity Calculator') }}</title>
+
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -29,7 +30,16 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
-
+        <!-- Multilingual -->
+        <link rel="alternate" hreflang="en" href="https://electricity-calculator.cy/en" />
+        <link rel="alternate" hreflang="el" href="https://electricity-calculator.cy/el/" />
+        <link rel="alternate" hreflang="x-default" href="https://electricity-calculator.cy/" />
+        <!-- Canonical -->
+        @if($currentLocale == 'el')
+        <link rel="canonical" href="https://electricity-calculator.cy/el/" />
+        @else
+        <link rel="canonical" href="https://electricity-calculator.cy/en/" />
+        @endif
         <!-- Scripts -->
         <script type="application/ld+json">
             {
@@ -43,18 +53,18 @@
                     "name": "Greg Andreou",
                     "url": "https://greg.cy/"
                 },
-                "image": "https://eac.greg.cy/images/calculator-full.png",
+                "image": "https://electricity-calculator.cy/images/calculator-full.png",
                 "publisher": {
                     "@type": "Person",
                     "name": "Greg Andreou",
                     "logo": {
                     "@type": "ImageObject",
-                    "url": "https://eac.greg.cy/images/calculator-full.png"
+                    "url": "https://electricity-calculator.cy/images/calculator-full.png"
                     }
                 },
                 "mainEntityOfPage": {
                     "@type": "WebPage",
-                    "@id": "https://eac.greg.cy/"
+                    "@id": "https://electricity-calculator.cy/"
                 }
             }
         </script>
