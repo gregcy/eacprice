@@ -31,14 +31,14 @@
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
         <!-- Multilingual -->
-        <link rel="alternate" hreflang="en" href="https://electricity-calculator.cy/en" />
+        <link rel="alternate" hreflang="en" href="https://electricity-calculator.cy/en/" />
         <link rel="alternate" hreflang="el" href="https://electricity-calculator.cy/el/" />
         <link rel="alternate" hreflang="x-default" href="https://electricity-calculator.cy/" />
         <!-- Canonical -->
         @if($currentLocale == 'el')
         <link rel="canonical" href="https://electricity-calculator.cy/el/" />
         @else
-        <link rel="canonical" href="https://electricity-calculator.cy/en/" />
+        <link rel="canonical" href="https://electricity-calculator.cy/" />
         @endif
         <!-- Scripts -->
         <script type="application/ld+json">
