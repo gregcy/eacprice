@@ -29,6 +29,7 @@ class Cost extends Model
         'value',
         'source',
         'source_name',
+        'user_id',
     ];
 
     /**
