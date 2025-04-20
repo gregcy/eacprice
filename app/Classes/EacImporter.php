@@ -43,6 +43,8 @@ use DOMDocument;
                 $values = $row->getElementsByTagName('td');
                 $year = trim($values[2]->nodeValue);
                 $year = iconv('UTF-8', 'ASCII//IGNORE', $year);
+                // EAC hasn't updated the year on their table. Hardcode to current year for now.
+                $year = date("Y");
             } else {
                 $values = $row->getElementsByTagName('td');
                 $voltage = trim($values[0]->nodeValue);
